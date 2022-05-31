@@ -51,4 +51,30 @@ async function createVacation(vacation): Promise<VacationModel> {
   return addedVacation;
 }
 
-export { getAllVacations, getOneVacation, createVacation };
+async function updateVacation(vacation): Promise<VacationModel> {
+  const { id, description, destination, imageName, startingDate, endingDate, price, followers } = vacation;
+  const sql = `
+    UPDATE vacations
+    SET
+    description = '${description}', 
+    destination = '${destination}', 
+    startingDate = ${startingDate}, 
+    endingDate = ${endingDate}, 
+    price = ${price}
+    WHERE id = ${id}
+    `;
+  const addedVacation = await dal.execute(sql);
+  console.log(addedVacation);
+  return addedVacation;
+}
+
+async function deleteVacation(id): Promise<VacationModel> {
+  const sql = `
+    DELETE FROM vacations
+    WHERE id = ${id} 
+    `;
+  const deletedVacation = await dal.execute(sql);
+  console.log(deletedVacation);
+  return deletedVacation;
+}
+export { getAllVacations, getOneVacation, createVacation, updateVacation, deleteVacation };
