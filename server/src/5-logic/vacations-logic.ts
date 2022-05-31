@@ -39,4 +39,16 @@ async function getOneVacation(id): Promise<VacationModel> {
   return vacation;
 }
 
-export { getAllVacations, getOneVacation };
+async function createVacation(vacation): Promise<VacationModel> {
+  const { description, destination, imageName, startingDate, endingDate, price, followers } = vacation;
+  const sql = `
+    INSERT INTO
+    vacations (description, destination, startingDate, endingDate, price)
+    VALUES('${description}', '${destination}', ${startingDate}, ${endingDate}, ${price})
+    `;
+  const addedVacation = await dal.execute(sql);
+  console.log(addedVacation);
+  return addedVacation;
+}
+
+export { getAllVacations, getOneVacation, createVacation };

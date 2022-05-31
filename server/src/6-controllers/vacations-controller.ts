@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { getAllVacations, getOneVacation } from '../5-logic/vacations-logic';
+import { getAllVacations, getOneVacation, createVacation } from '../5-logic/vacations-logic';
 const router = express.Router();
 
 router.get('/vacations', async (req: Request, res: Response, next: NextFunction) => {
@@ -14,6 +14,22 @@ router.get('/vacations/:id', async (req: Request, res: Response, next: NextFunct
   try {
     const id = +req.params.id;
     const vacation = await getOneVacation(id);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/vacations', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    //vacation info from form
+    const vacation = {
+      description: 'lo1l',
+      destination: 'lol',
+      startingDate: '0000-00-00',
+      endingDate: '0000-00-00',
+      price: 13,
+    };
+    const addedVacation = await createVacation(vacation);
   } catch (error) {
     next(error);
   }
