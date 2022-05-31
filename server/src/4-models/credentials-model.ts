@@ -1,13 +1,9 @@
 class CredentialsModel {
-  public firstName: string;
-  public lastName: string;
-  public email: string;
+  public username: string;
   public password: string;
 
   public constructor(credentials: CredentialsModel) {
-    this.firstName = credentials.firstName;
-    this.lastName = credentials.lastName;
-    this.email = credentials.email;
+    this.username = credentials.username;
     this.password = credentials.password;
   }
 }

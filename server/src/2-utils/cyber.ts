@@ -4,7 +4,7 @@ import { UnauthorizedError } from '../4-models/errors-model';
 import Role from '../4-models/role-model';
 import UserModel from '../4-models/user-model';
 
-const secret = 'Kittens Are Cute!';
+const secret = 'sodgarua';
 
 function getNewToken(user: UserModel): string {
   // Object to stash inside the token:

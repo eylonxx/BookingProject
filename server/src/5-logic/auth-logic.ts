@@ -6,19 +6,19 @@ import Role from '../4-models/role-model';
 import UserModel from '../4-models/user-model';
 
 async function register(user: UserModel): Promise<string> {
+  const { firstName, lastName, username, password } = user;
   // Returns back token (JWT)
 
-  // Get all users:
-  //some sql code
-
-  // Generate id and role:
-  //some sql code
+  // Set role:
+  user.role = Role.User;
 
   // Add to users collection:
-  //some sql code
-
-  // Save back to file:
-  //some sql code
+  const sql = `
+    INSERT INTO users
+    (firstName, lastName, username, password)
+    VALUES(${firstName}, ${lastName}, ${username}, ${password})
+`;
+  const addedUser = await dal.execute(sql);
 
   // Generate token:
   const token = cyber.getNewToken(user);
@@ -27,24 +27,27 @@ async function register(user: UserModel): Promise<string> {
   return token;
 }
 
-// async function login(credentials: CredentialsModel): Promise<string> {
-//   //   credentials.email = credentials.email.toLowerCase();
-//   // Joi Validation - השלימו בזמנכם הפנוי
-//   // Get all users:
-//   // server.use('/api', authController);
-//   // Check credentials:
-//   // server.use('/api', authController);
-//   // If user not exist:
-//   //   if (!user) {
-//   //     throw new UnauthorizedError('Incorrect username or password');
-//   //   }
-//   // Generate token:
-//   //   const token = cyber.getNewToken(user);
-//   // Return the token:
-//   //   return token;
-// }
+async function login(credentials: CredentialsModel): Promise<string> {
+  const { username, password } = credentials;
+  // Check credentials:
+  const sql = `
+    SELECT * FROM users
+    WHERE username = ${username} AND password = ${password}
+`;
+
+  // If user not exist:
+  if (!user) {
+    throw new UnauthorizedError('Incorrect username or password');
+  }
+
+  // Generate token:
+  const token = cyber.getNewToken(user);
+
+  // Return the token:
+  return token;
+}
 
 export default {
   register,
-  //   login,
+  login,
 };
