@@ -16,7 +16,7 @@ async function register(user: UserModel): Promise<string> {
   const sql = `
     INSERT INTO users
     (firstName, lastName, username, password)
-    VALUES(${firstName}, ${lastName}, ${username}, ${password})
+    VALUES('${firstName}', '${lastName}', '${username}', '${password}')
 `;
   const addedUser = await dal.execute(sql);
 
@@ -32,9 +32,9 @@ async function login(credentials: CredentialsModel): Promise<string> {
   // Check credentials:
   const sql = `
     SELECT * FROM users
-    WHERE username = ${username} AND password = ${password}
+    WHERE username = '${username}' AND password = '${password}';
 `;
-
+  const user = await dal.execute(sql);
   // If user not exist:
   if (!user) {
     throw new UnauthorizedError('Incorrect username or password');

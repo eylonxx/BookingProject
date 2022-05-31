@@ -13,6 +13,7 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
 
     // Register:
     const token = await authLogic.register(user);
+    console.log(token);
 
     // Return token:
     res.status(201).json(token);
@@ -28,10 +29,10 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
     const credentials = new CredentialsModel(req.body);
 
     // Login:
-    // const token = await authLogic.login(credentials);
+    const token = await authLogic.login(credentials);
 
     // Return token:
-    // response.json(token);
+    res.json(token);
   } catch (err: any) {
     next(err);
   }
