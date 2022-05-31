@@ -4,7 +4,7 @@ const connection = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'northwind',
+  database: 'booking',
 });
 
 function execute(sql: string): Promise<any> {

@@ -1,50 +1,40 @@
-// import express, { NextFunction, Request, Response } from "express";
-// import CredentialsModel from "../4-models/credentials-model";
-// import UserModel from "../4-models/user-model";
-// import logic from "../5-logic/auth-logic";
+import express, { NextFunction, Request, Response } from 'express';
+import CredentialsModel from '../4-models/credentials-model';
+import UserModel from '../4-models/user-model';
+import authLogic from '../5-logic/auth-logic';
 
-// const router = express.Router(); // Capital R for the Router function!
+const router = express.Router();
 
-// // POST http://localhost:3001/api/auth/register
-// router.post("/auth/register", async (request: Request, response: Response, next: NextFunction) => {
+// POST http://localhost:3001/register
+router.post('/register', async (request: Request, response: Response, next: NextFunction) => {
+  try {
+    // Create user object:
+    const user = new UserModel(request.body);
 
-//     try {
+    // Register:
+    const token = await authLogic.register(user);
 
-//         // Create user object:
-//         const user = new UserModel(request.body);
+    // Return token:
+    response.status(201).json(token);
+  } catch (err: any) {
+    next(err);
+  }
+});
 
-//         // Register:
-//         const token = await logic.register(user);
+// POST http://localhost:3001/login
+router.post('/login', async (request: Request, response: Response, next: NextFunction) => {
+  try {
+    // Create credentials object
+    const credentials = new CredentialsModel(request.body);
 
-//         // Return token:
-//         response.status(201).json(token);
+    // Login:
+    // const token = await authLogic.login(credentials);
 
-//     }
-//     catch(err: any) {
-//         next(err);
-//     }
+    // Return token:
+    // response.json(token);
+  } catch (err: any) {
+    next(err);
+  }
+});
 
-// });
-
-// // POST http://localhost:3001/api/auth/login
-// router.post("/auth/login", async (request: Request, response: Response, next: NextFunction) => {
-
-//     try {
-
-//         // Create credentials object
-//         const credentials = new CredentialsModel(request.body);
-
-//         // Login:
-//         const token = await logic.login(credentials);
-
-//         // Return token:
-//         response.json(token);
-
-//     }
-//     catch(err: any) {
-//         next(err);
-//     }
-
-// });
-
-// export default router; // Export all routes from this controller.
+export default router; // Export all routes from this controller.

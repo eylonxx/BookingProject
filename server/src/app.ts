@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 // import authController from "./6-controllers/auth-controller";
 import catchAll from './3-middleware/catch-all';
+import vacationsController from './6-controllers/vacations-controller';
+import authController from './6-controllers/auth-controller';
 import { RouteNotFound } from './4-models/errors-model';
 
 // Create server:
@@ -10,7 +12,8 @@ const server = express();
 server.use(express.json());
 
 // Transfer requests to the controller:
-// server.use('/api', authController);
+server.use(vacationsController);
+server.use(authController);
 
 // If route not found:
 server.use('*', (request: Request, response: Response, next: NextFunction) => {
