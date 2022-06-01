@@ -11,6 +11,7 @@ const router = express.Router();
 router.get('/vacations', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const vacations = await getAllVacations();
+    res.json(vacations);
   } catch (error) {
     next(error);
   }

@@ -1,5 +1,9 @@
 import React from 'react';
-
-export default function Vacation() {
-  return <div>Vacation</div>;
+import VacationModel from '../../../Models/vacationModel';
+interface VacationProps {
+  vacation: VacationModel;
+}
+export default function Vacation(props: VacationProps) {
+  const { description, destination, startingDate, endingDate, price, followers } = props.vacation;
+  return <div></div>;
 }

@@ -16,7 +16,6 @@ async function getAllVacations(): Promise<VacationModel[]> {
     FROM vacations
     `;
   const vacations = await dal.execute(sql);
-  console.log(vacations);
   return vacations;
 }
 
@@ -35,7 +34,6 @@ async function getOneVacation(id): Promise<VacationModel> {
     WHERE id = ${id}
     `;
   const vacation = await dal.execute(sql);
-  console.log(vacation);
   return vacation;
 }
 
@@ -47,7 +45,6 @@ async function createVacation(vacation): Promise<VacationModel> {
     VALUES('${description}', '${destination}', ${startingDate}, ${endingDate}, ${price})
     `;
   const addedVacation = await dal.execute(sql);
-  console.log(addedVacation);
   return addedVacation;
 }
 
@@ -64,7 +61,6 @@ async function updateVacation(vacation): Promise<VacationModel> {
     WHERE id = ${id}
     `;
   const addedVacation = await dal.execute(sql);
-  console.log(addedVacation);
   return addedVacation;
 }
 
@@ -74,7 +70,6 @@ async function deleteVacation(id): Promise<VacationModel> {
     WHERE id = ${id} 
     `;
   const deletedVacation = await dal.execute(sql);
-  console.log(deletedVacation);
   return deletedVacation;
 }
 export { getAllVacations, getOneVacation, createVacation, updateVacation, deleteVacation };

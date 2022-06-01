@@ -1,6 +1,18 @@
+import axios from 'axios';
+import VacationModel from '../Models/vacationModel';
+
 class VacationService {
   // Get all vacations:
-  public async getAllVacation() {}
+  public async getAllVacations(): Promise<VacationModel[]> {
+    let vacations: VacationModel[] = [];
+    await axios
+      .get<VacationModel[]>('http://localhost:3001/vacations')
+      .then((response) => {
+        vacations = response.data;
+      })
+      .catch((e) => console.log(e));
+    return vacations;
+  }
   // Get one vacation by id:
   public async getOneVacation() {}
   // Add new vacation:
