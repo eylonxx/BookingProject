@@ -1,0 +1,21 @@
+.PageLayout {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.PageLayout,
+.PageLayout > * {
+  border: 1px solid black;
+}
+
+.PageLayout > header,
+footer {
+  height: 5vh;
+  margin: 0 auto;
+}
+.PageLayout > main {
+  height: 90vh;
+  margin: 0 auto;
+}
