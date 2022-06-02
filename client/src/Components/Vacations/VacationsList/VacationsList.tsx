@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import VacationModel from '../../../Models/vacationModel';
 import vacationService from '../../../Services/VacationService';
 import Vacation from '../Vacation/Vacation';
+import './VacationsList.css';
 
 export default function VacationsList(): JSX.Element {
   const [vacations, setVacations] = useState<VacationModel[]>([]);
@@ -44,7 +45,7 @@ export default function VacationsList(): JSX.Element {
   ];
 
   return (
-    <div>
+    <div className="VacationsList">
       {vacationsSeeds.map((vacation) => (
         <Vacation vacation={vacation} />
       ))}

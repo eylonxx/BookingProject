@@ -5,17 +5,21 @@
   flex-direction: column;
   align-items: center;
 }
-.PageLayout,
-.PageLayout > * {
-  border: 1px solid black;
-}
 
-.PageLayout > header,
-footer {
+.PageLayout > header {
   height: 5vh;
   margin: 0 auto;
 }
 .PageLayout > main {
   height: 90vh;
   margin: 0 auto;
+}
+
+.PageLayout > footer {
+  display: flex;
+  height: 5vh;
+  justify-content: center;
+  align-items: center;
+  background-color: #404040;
+  padding: a;
 }
