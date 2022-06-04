@@ -14,12 +14,22 @@ class VacationService {
     return vacations;
   }
   // Get one vacation by id:
-  public async getOneVacation() {}
-  // Add new vacation:
-  public async createVacation() {}
-  // Update existing vacation:
+  public async getOneVacation(id: number): Promise<VacationModel> {
+    const vacations = await this.getAllVacations();
+    const vacation = vacations.find((vac): boolean => {
+      return vac.id === id;
+    });
+    return vacation;
+  }
+  // Add a new vacation:
+  public async createVacation(newVaction: VacationModel): Promise<VacationModel> {
+    const response = await axios.post('http://localhost:3001/vacations', newVaction);
+    const addedVacation = response.data;
+    return addedVacation;
+  }
+  // Update an existing vacation:
   public async updateVacation() {}
-  // Delete existing vacation by id:
+  // Delete an existing vacation by id:
   public async deleteVacation() {}
 }
 const vacationService = new VacationService();

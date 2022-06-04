@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import VacationModel from '../../../Models/vacationModel';
+import vacationService from '../../../Services/VacationService';
 import './Vacation.css';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -18,8 +19,22 @@ interface VacationProps {
   vacation: VacationModel;
 }
 export default function Vacation(props: VacationProps): JSX.Element {
-  const { description, destination, startingDate, endingDate, price, followers } = props.vacation;
+  const { id, description, destination, startingDate, endingDate, price, followers } = props.vacation;
   const dates = `${startingDate} until ${endingDate}`;
+  useEffect(
+    //save to local state or redux
+    () => {
+      vacationService
+        .getOneVacation(id)
+        .then((vacation) => {
+          console.log(vacation);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    []
+  );
   return (
     <div className="Vacation">
       <Card sx={{ maxWidth: 345 }}>

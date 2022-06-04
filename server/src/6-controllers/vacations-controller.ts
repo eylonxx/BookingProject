@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import VacationModel from '../4-models/vacation-model';
 import {
   getAllVacations,
   getOneVacation,
@@ -21,6 +22,7 @@ router.get('/vacations/:id', async (req: Request, res: Response, next: NextFunct
   try {
     const id = +req.params.id;
     const vacation = await getOneVacation(id);
+    res.json(vacation);
   } catch (error) {
     next(error);
   }
@@ -29,14 +31,9 @@ router.get('/vacations/:id', async (req: Request, res: Response, next: NextFunct
 router.post('/vacations', async (req: Request, res: Response, next: NextFunction) => {
   try {
     //vacation info from form
-    const vacation = {
-      description: 'lo1l',
-      destination: 'lol',
-      startingDate: '0000-00-00',
-      endingDate: '0000-00-00',
-      price: 13,
-    };
+    const vacation = new VacationModel(req.body);
     const addedVacation = await createVacation(vacation);
+    res.json(addedVacation);
   } catch (error) {
     next(error);
   }
