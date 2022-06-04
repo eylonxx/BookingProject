@@ -41,16 +41,11 @@ router.post('/vacations', async (req: Request, res: Response, next: NextFunction
 
 router.put('/vacations/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = +req.params.id;
-    const vacation = {
-      id: id,
-      description: 'lo133l',
-      destination: 'lol',
-      startingDate: '0000-00-00',
-      endingDate: '0000-00-00',
-      price: 13,
-    };
+    const vacation = new VacationModel(req.body);
     const addedVacation = await updateVacation(vacation);
+    console.log(addedVacation);
+
+    res.json(addedVacation);
   } catch (error) {
     next(error);
   }

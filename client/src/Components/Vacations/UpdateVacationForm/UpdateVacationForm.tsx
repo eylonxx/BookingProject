@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import VacationModel from '../../../Models/vacationModel';
 import vacationService from '../../../Services/VacationService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function NewVacationForm() {
-  const { register, handleSubmit } = useForm<VacationModel>({ defaultValues: {} });
+export default function UpdateVacationForm() {
+  const { register, handleSubmit, setValue } = useForm<VacationModel>();
   const navigate = useNavigate();
+  const params = useParams();
   const onSubmit: SubmitHandler<VacationModel> = async (vacation) => {
-    await vacationService.createVacation(vacation);
+    vacation.id = +params.id;
+    await vacationService.updateVacation(vacation);
     navigate('/vacations');
   };
+
+  useEffect(() => {
+    const id: number = +params.id;
+    vacationService.getOneVacation(id).then((vacToUpdate) => {
+      setValue('description', vacToUpdate.description);
+      setValue('destination', vacToUpdate.destination);
+      setValue('startingDate', vacToUpdate.startingDate);
+      setValue('endingDate', vacToUpdate.endingDate);
+      setValue('imageName', vacToUpdate.imageName);
+      setValue('price', vacToUpdate.price);
+    });
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

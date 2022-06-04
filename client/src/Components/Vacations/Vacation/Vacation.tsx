@@ -8,12 +8,13 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
 
 interface VacationProps {
   vacation: VacationModel;
@@ -21,14 +22,20 @@ interface VacationProps {
 export default function Vacation(props: VacationProps): JSX.Element {
   const { id, description, destination, startingDate, endingDate, price, followers } = props.vacation;
   const dates = `${startingDate} until ${endingDate}`;
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    await vacationService.deleteVacation(id);
+    alert('Product has been deleted.');
+    navigate('/products');
+  };
+
   useEffect(
     //save to local state or redux
     () => {
       vacationService
         .getOneVacation(id)
-        .then((vacation) => {
-          console.log(vacation);
-        })
+        .then((vacation) => {})
         .catch((e) => {
           console.log(e);
         });
@@ -45,8 +52,8 @@ export default function Vacation(props: VacationProps): JSX.Element {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
+            <IconButton onClick={handleDelete} aria-label="delete">
+              <DeleteIcon />
             </IconButton>
           }
           title={destination}

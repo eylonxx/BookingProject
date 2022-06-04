@@ -11,6 +11,7 @@ function execute(sql: string): Promise<any> {
   return new Promise<any>((resolve, reject) => {
     connection.query(sql, (err, result) => {
       if (err) {
+        console.log(err);
         reject(err);
         return;
       }

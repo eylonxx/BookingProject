@@ -28,9 +28,18 @@ class VacationService {
     return addedVacation;
   }
   // Update an existing vacation:
-  public async updateVacation() {}
+  public async updateVacation(vacationToUpdate: VacationModel) {
+    const { id } = vacationToUpdate;
+    const response = await axios.put(`http://localhost:3001/vacations/${id}`, vacationToUpdate);
+    const updatedVaction = response.data;
+    return updatedVaction;
+  }
   // Delete an existing vacation by id:
-  public async deleteVacation() {}
+  public async deleteVacation(id: number) {
+    const response = await axios.delete(`http://localhost:3001/vacations/${id}`);
+    const deletedVacation = response.data;
+    return deletedVacation;
+  }
 }
 const vacationService = new VacationService();
 
