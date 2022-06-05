@@ -10,7 +10,7 @@ async function register(user: UserModel): Promise<string> {
   // Returns back token (JWT)
 
   // Set role:
-  // user.role = Role.User;
+  user.role = Role.User;
 
   // Add to users collection:
   const sql = `

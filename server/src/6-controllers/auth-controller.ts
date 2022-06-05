@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import CredentialsModel from '../4-models/credentials-model';
 import UserModel from '../4-models/user-model';
 import authLogic from '../5-logic/auth-logic';
-
+import roleModel from '../4-models/role-model';
 const router = express.Router();
 
 // POST http://localhost:3001/register
