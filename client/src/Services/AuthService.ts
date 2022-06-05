@@ -16,10 +16,10 @@ class AuthService {
     //save token to redux
   }
   //logout
-  //get token, find user, remove token
+  //get token, find user, remove token from redux
 
   //isloggedin
-  //get token, verify token, used for middleware
+  //get token, verify token, used for redux
 }
 const authService = new AuthService();
 export default authService;
