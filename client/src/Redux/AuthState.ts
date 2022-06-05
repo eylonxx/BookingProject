@@ -1,20 +1,20 @@
 import jwtDecode from 'jwt-decode';
 import UserModel from '../Models/userModel';
 
-// 1. Products State - The global state relate to products:
+// 1. Auth State - The global state relate to Auth:
 export class AuthState {
   public user: UserModel = null;
   public token: string = null;
 }
 
-// 2. Products Action Type - list of actions we can do on the above ProductsState:
+// 2. Auth Action Type - list of actions we can do on the above AuthState:
 export enum AuthActionType {
   Register = 'Register',
   Login = 'Login',
   Logout = 'Logout',
 }
 
-// 3. Product Action - interface for building a single action from the above ProductsActionType
+// 3. Product Action - interface for building a single action from the above AuthActionType
 export interface AuthAction {
   type: AuthActionType; // The type of the acton to perform.
   payload?: string; // The data we need to do that action
@@ -30,11 +30,11 @@ export function loginAction(token: string): AuthAction {
   return action;
 }
 export function logoutAction(): AuthAction {
-  const action: AuthAction = { type: AuthActionType.Register };
+  const action: AuthAction = { type: AuthActionType.Logout };
   return action;
 }
 
-// 5. Products Reducer - Do any of the above actions:
+// 5. Auth Reducer - Do any of the above actions:
 export function AuthReducer(currentState: AuthState = new AuthState(), action: AuthAction): AuthState {
   const newState = { ...currentState };
   switch (action.type) {
