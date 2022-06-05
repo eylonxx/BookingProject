@@ -29,14 +29,18 @@ async function register(user: UserModel): Promise<string> {
 
 async function login(credentials: CredentialsModel): Promise<string> {
   const { username, password } = credentials;
+
   // Check credentials:
   const sql = `
-    SELECT * FROM users
+    SELECT * FROM users 
     WHERE username = '${username}' AND password = '${password}';
 `;
+
   const user = await dal.execute(sql);
+  console.log(user);
+
   // If user not exist:
-  if (!user) {
+  if (user.length < 1) {
     throw new UnauthorizedError('Incorrect username or password');
   }
 
