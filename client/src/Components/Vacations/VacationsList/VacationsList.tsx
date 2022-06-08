@@ -22,7 +22,6 @@ export default function VacationsList(): JSX.Element {
     },
     []
   );
-  console.log(store.getState().authState.token);
 
   // const vacationsSeeds = [
   //   {
