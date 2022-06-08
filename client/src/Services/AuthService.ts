@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from '../Utils/config';
 import UserModel from '../Models/userModel';
 import CredentialsModel from '../Models/credentialsModel';
 import store from '../Redux/Store';
@@ -7,14 +8,14 @@ import { loginAction, logoutAction, registerAction } from '../Redux/AuthState';
 class AuthService {
   //register
   public async register(user: UserModel): Promise<void> {
-    const response = await axios.post<string>('http://localhost:3001/api/register', user);
+    const response = await axios.post<string>(config.registerUrl, user);
     const token = response.data;
     store.dispatch(registerAction(token));
     //save token to redux, login right after registration
   }
   //login
   public async login(credentials: CredentialsModel): Promise<void> {
-    const response = await axios.post<string>('http://localhost:3001/api/login', credentials);
+    const response = await axios.post<string>(config.loginUrl, credentials);
     const token = response.data;
     store.dispatch(loginAction(token));
     //save token to redux

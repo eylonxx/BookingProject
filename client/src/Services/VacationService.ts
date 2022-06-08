@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from '../Utils/config';
 import VacationModel from '../Models/vacationModel';
 import {
   fetchVacationsAction,
@@ -14,7 +15,7 @@ class VacationService {
   public async getAllVacations(): Promise<VacationModel[]> {
     let vacations: VacationModel[] = store.getState().vacationState.vacations;
     await axios
-      .get<VacationModel[]>('http://localhost:3001/api/vacations', {
+      .get<VacationModel[]>(config.vacationsUrl, {
         headers: {
           Authorization: 'Bearer ' + store.getState().authState.token,
         },
@@ -36,7 +37,7 @@ class VacationService {
   }
   // Add a new vacation:
   public async createVacation(newVaction: VacationModel): Promise<VacationModel> {
-    const response = await axios.post('http://localhost:3001/api/vacations', newVaction);
+    const response = await axios.post(config.vacationsUrl, newVaction);
     const addedVacation = response.data;
     store.dispatch(addVacationAction(addedVacation));
     return addedVacation;
@@ -44,14 +45,14 @@ class VacationService {
   // Update an existing vacation:
   public async updateVacation(vacationToUpdate: VacationModel) {
     const { id } = vacationToUpdate;
-    const response = await axios.put(`http://localhost:3001/api/vacations/${id}`, vacationToUpdate);
+    const response = await axios.put(config.vacationsUrl + id, vacationToUpdate);
     const updatedVacation = response.data;
     store.dispatch(updateVacationAction(updatedVacation));
     return updatedVacation;
   }
   // Delete an existing vacation by id:
   public async deleteVacation(id: number) {
-    const response = await axios.delete(`http://localhost:3001/api/vacations/${id}`);
+    const response = await axios.delete(config.vacationsUrl + id);
     const deletedVacation = response.data;
     store.dispatch(deleteVacationAction(deletedVacation));
 

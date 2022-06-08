@@ -4,7 +4,7 @@ import VacationModel from '../4-models/vacation-model';
 import vacationsLogic from '../5-logic/vacations-logic';
 const router = express.Router();
 
-router.get('/vacations', verifyLoggedIn, async (req: Request, res: Response, next: NextFunction) => {
+router.get('/vacations', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const vacations = await vacationsLogic.getAllVacations();
     res.json(vacations);
