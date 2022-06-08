@@ -14,7 +14,7 @@ export default function LoginPage() {
       await authService.login(user);
       reset();
       alert('You have been succesfully logged in.');
-      navigate('/home');
+      navigate('/vacations');
     } catch (e: any) {
       reset();
       alert(e);

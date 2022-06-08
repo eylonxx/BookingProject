@@ -7,12 +7,12 @@ import Vacation from '../../Vacations/Vacation/Vacation';
 import NewVacationForm from '../../Vacations/NewVacationForm/NewVacationForm';
 import UpdateVacationForm from '../../Vacations/UpdateVacationForm/UpdateVacationForm';
 import PageNotFound from '../PageNotFound/PageNotFound';
-
+import { Navigate } from 'react-router-dom';
 export default function Routing() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<h1>trrrrrrrrrrrrrrrrrrest</h1>} />
+        <Route path="/" element={<Navigate to="/vacations" />} />
         <Route path="/vacations" element={<VacationsList />} />
         <Route path="/vacations/new" element={<NewVacationForm />} />
         <Route path="/vacations/edit/:id" element={<UpdateVacationForm />} />

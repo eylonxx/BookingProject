@@ -11,7 +11,7 @@ export default function RegisterPage() {
     try {
       await authService.register(user);
       alert('You have been succesfully registered.');
-      navigate('/home');
+      navigate('/vacations');
     } catch (error) {
       console.log(error);
     }

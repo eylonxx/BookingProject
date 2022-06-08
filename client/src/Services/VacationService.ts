@@ -14,7 +14,11 @@ class VacationService {
   public async getAllVacations(): Promise<VacationModel[]> {
     let vacations: VacationModel[] = store.getState().vacationState.vacations;
     await axios
-      .get<VacationModel[]>('http://localhost:3001/api/vacations')
+      .get<VacationModel[]>('http://localhost:3001/api/vacations', {
+        headers: {
+          Authorization: 'Bearer ' + store.getState().authState.token,
+        },
+      })
       .then((response) => {
         vacations = response.data;
       })
