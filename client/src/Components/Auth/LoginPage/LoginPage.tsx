@@ -25,9 +25,19 @@ export default function LoginPage() {
     <div>
       <form onSubmit={handleSubmit(sendData)}>
         <label>Username:</label>
-        <input type="text" {...register('username')} />
+        <input
+          type="text"
+          {...register('username', {
+            required: { value: true, message: 'Enter a username' },
+          })}
+        />
         <label>Password:</label>
-        <input type="password" {...register('password')} />
+        <input
+          type="password"
+          {...register('password', {
+            required: { value: true, message: 'Enter a password' },
+          })}
+        />
         <button>Login</button>
       </form>
     </div>
