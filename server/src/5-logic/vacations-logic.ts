@@ -1,4 +1,5 @@
 import dal from '../2-utils/dal';
+import { OkPacket } from 'mysql';
 import { ResourceNotFound, ValidationError } from '../4-models/errors-model';
 import VacationModel from '../4-models/vacation-model';
 
@@ -38,14 +39,21 @@ async function getOneVacation(id): Promise<VacationModel> {
 }
 
 async function createVacation(vacation): Promise<VacationModel> {
+  //joi validation
+  const errors = vacation.validatePost();
+  if (errors) {
+    throw new ValidationError(errors);
+  }
+
   const { description, destination, imageName, startingDate, endingDate, price, followers } = vacation;
   const sql = `
     INSERT INTO
     vacations (description, destination, startingDate, endingDate, price)
     VALUES('${description}', '${destination}', ${startingDate}, ${endingDate}, ${price})
     `;
-  const addedVacation = await dal.execute(sql);
-  return addedVacation;
+  const result: OkPacket = await dal.execute(sql);
+  vacation.id = result.insertId;
+  return vacation;
 }
 
 async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
