@@ -25,7 +25,7 @@ async function register(user: UserModel): Promise<string> {
   const addedUser = await dal.execute(sql);
 
   // Generate token:
-  const token = cyber.getNewToken(user);
+  const token = cyber.getNewToken(addedUser);
 
   // Return the token:
   return token;

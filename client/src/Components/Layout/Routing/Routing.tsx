@@ -6,6 +6,7 @@ import RegisterPage from '../../Auth/RegisterPage/RegisterPage';
 import Vacation from '../../Vacations/Vacation/Vacation';
 import NewVacationForm from '../../Vacations/NewVacationForm/NewVacationForm';
 import UpdateVacationForm from '../../Vacations/UpdateVacationForm/UpdateVacationForm';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 export default function Routing() {
   return (
@@ -17,6 +18,7 @@ export default function Routing() {
         <Route path="/vacations/edit/:id" element={<UpdateVacationForm />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );
