@@ -1,4 +1,5 @@
 import Role from './role-model';
+import Joi from 'joi';
 
 class UserModel {
   public id: number;
@@ -16,6 +17,18 @@ class UserModel {
     this.password = user.password;
     this.role = user.role;
   }
+  public static postValidationSchema = Joi.object({
+    id: Joi.forbidden(),
+    firstName: Joi.string().required().min(2).max(16),
+    lastName: Joi.string().required().min(2).max(16),
+    username: Joi.string().required().min(4).max(16),
+    password: Joi.string().required().min(4).max(16),
+    role: Joi.string(),
+  });
+
+  public validatePost(): string {
+    const result = UserModel.postValidationSchema.validate(this);
+    return result.error?.message;
+  }
 }
-//add joi
 export default UserModel;

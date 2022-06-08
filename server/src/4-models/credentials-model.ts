@@ -7,5 +7,5 @@ class CredentialsModel {
     this.password = credentials.password;
   }
 }
-
+//not sure if joi needed
 export default CredentialsModel;

@@ -1,11 +1,15 @@
 import cyber from '../2-utils/cyber';
 import dal from '../2-utils/dal';
 import CredentialsModel from '../4-models/credentials-model';
-import { UnauthorizedError } from '../4-models/errors-model';
+import { UnauthorizedError, ValidationError } from '../4-models/errors-model';
 import Role from '../4-models/role-model';
 import UserModel from '../4-models/user-model';
 
 async function register(user: UserModel): Promise<string> {
+  const errors = user.validatePost();
+  if (errors) {
+    throw new ValidationError(errors);
+  }
   const { firstName, lastName, username, password } = user;
   // Returns back token (JWT)
 

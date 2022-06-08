@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import VacationModel from '../../../Models/vacationModel';
 import vacationService from '../../../Services/VacationService';
