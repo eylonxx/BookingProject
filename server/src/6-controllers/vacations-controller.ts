@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import verifyLoggedIn from '../3-middleware/verify-logged-in';
 import VacationModel from '../4-models/vacation-model';
 import {
   getAllVacations,
@@ -9,7 +10,7 @@ import {
 } from '../5-logic/vacations-logic';
 const router = express.Router();
 
-router.get('/vacations', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/vacations', verifyLoggedIn, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const vacations = await getAllVacations();
     res.json(vacations);
@@ -44,7 +45,6 @@ router.put('/vacations/:id', async (req: Request, res: Response, next: NextFunct
     const vacation = new VacationModel(req.body);
     const addedVacation = await updateVacation(vacation);
     console.log(addedVacation);
-
     res.json(addedVacation);
   } catch (error) {
     next(error);

@@ -17,5 +17,5 @@ class UserModel {
     this.role = user.role;
   }
 }
-
+//add joi
 export default UserModel;

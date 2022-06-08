@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import VacationModel from '../../../Models/vacationModel';
+import store from '../../../Redux/Store';
 import vacationService from '../../../Services/VacationService';
 import Vacation from '../Vacation/Vacation';
 import './VacationsList.css';
@@ -21,6 +22,8 @@ export default function VacationsList(): JSX.Element {
     },
     []
   );
+  console.log(store.getState().authState.user);
+
   // const vacationsSeeds = [
   //   {
   //     id: 1,
