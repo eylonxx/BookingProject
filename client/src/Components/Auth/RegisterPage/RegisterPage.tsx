@@ -20,11 +20,15 @@ export default function RegisterPage() {
   const myHelper = {
     firstName: {
       required: 'first name is required',
-      minLength: 'name must be between 2-16 characters',
-      maxLength: 'name must be between 2-16 characters',
     },
     lastName: {
       required: 'last name is required',
+    },
+    username: {
+      required: 'username is required',
+    },
+    password: {
+      required: 'password is required',
     },
   };
 
@@ -89,31 +93,11 @@ export default function RegisterPage() {
               type="text"
               label="Username"
               error={error !== undefined}
-              // helperText={error ? myHelper.username.required : ''}
+              helperText={error ? myHelper.username.required : ''}
             />
           )}
         />
 
-        <Controller
-          name="username"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: true,
-            minLength: 4,
-            maxLength: 16,
-          }}
-          render={({ field, fieldState: { error } }) => (
-            <TextField
-              {...field}
-              {...register('username')}
-              type="text"
-              label="Username"
-              error={error !== undefined}
-              // helperText={error ? myHelper.username.required : ''}
-            />
-          )}
-        />
         <Controller
           name="password"
           control={control}
@@ -130,7 +114,7 @@ export default function RegisterPage() {
               type="text"
               label="Password"
               error={error !== undefined}
-              // helperText={error ? myHelper.password.required : ''}
+              helperText={error ? myHelper.password.required : ''}
             />
           )}
         />
