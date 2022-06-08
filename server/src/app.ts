@@ -14,8 +14,8 @@ server.use(express.json());
 server.use(cors());
 
 // Transfer requests to the controller:
-server.use(vacationsController);
-server.use(authController);
+server.use('/api/', vacationsController);
+server.use('/api/', authController);
 
 // If route not found:
 server.use('*', (request: Request, response: Response, next: NextFunction) => {

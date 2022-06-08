@@ -49,6 +49,7 @@ router.delete('/vacations/:id', async (req: Request, res: Response, next: NextFu
   try {
     const id = +req.params.id;
     await vacationsLogic.deleteVacation(id);
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }
