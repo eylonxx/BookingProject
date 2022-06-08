@@ -1,7 +1,6 @@
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { TextField } from '@mui/material';
-import Button from '@mui/material/Button';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import UserModel from '../../../Models/userModel';
 import authService from '../../../Services/AuthService';
@@ -26,12 +25,6 @@ export default function RegisterPage() {
     },
     lastName: {
       required: 'last name is required',
-    },
-    username: {
-      required: 'username is required',
-    },
-    password: {
-      required: 'password is required',
     },
   };
 
@@ -96,11 +89,31 @@ export default function RegisterPage() {
               type="text"
               label="Username"
               error={error !== undefined}
-              helperText={error ? myHelper.username.required : ''}
+              // helperText={error ? myHelper.username.required : ''}
             />
           )}
         />
 
+        <Controller
+          name="username"
+          control={control}
+          defaultValue=""
+          rules={{
+            required: true,
+            minLength: 4,
+            maxLength: 16,
+          }}
+          render={({ field, fieldState: { error } }) => (
+            <TextField
+              {...field}
+              {...register('username')}
+              type="text"
+              label="Username"
+              error={error !== undefined}
+              // helperText={error ? myHelper.username.required : ''}
+            />
+          )}
+        />
         <Controller
           name="password"
           control={control}
@@ -114,15 +127,15 @@ export default function RegisterPage() {
             <TextField
               {...field}
               {...register('password')}
-              type="password"
+              type="text"
               label="Password"
               error={error !== undefined}
-              helperText={error ? myHelper.password.required : ''}
+              // helperText={error ? myHelper.password.required : ''}
             />
           )}
         />
 
-        <Button variant="contained" disableElevation>
+        <Button type="submit" variant="contained">
           Register
         </Button>
       </form>
