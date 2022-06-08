@@ -83,4 +83,4 @@ async function deleteVacation(id): Promise<VacationModel> {
   const deletedVacation = await dal.execute(sql);
   return deletedVacation;
 }
-export { getAllVacations, getOneVacation, createVacation, updateVacation, deleteVacation };
+export default { getAllVacations, getOneVacation, createVacation, updateVacation, deleteVacation };
