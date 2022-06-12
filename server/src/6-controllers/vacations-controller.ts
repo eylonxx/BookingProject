@@ -5,7 +5,7 @@ import VacationModel from '../4-models/vacation-model';
 import vacationsLogic from '../5-logic/vacations-logic';
 const router = express.Router();
 
-router.get('/vacations', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/vacations', verifyLoggedIn, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const vacations = await vacationsLogic.getAllVacations();
     res.json(vacations);
@@ -14,7 +14,7 @@ router.get('/vacations', async (req: Request, res: Response, next: NextFunction)
   }
 });
 
-router.get('/vacations/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/vacations/:id', verifyLoggedIn, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = +req.params.id;
     const vacation = await vacationsLogic.getOneVacation(id);
@@ -24,7 +24,7 @@ router.get('/vacations/:id', async (req: Request, res: Response, next: NextFunct
   }
 });
 
-router.post('/vacations', verifyLoggedIn, async (req: Request, res: Response, next: NextFunction) => {
+router.post('/vacations', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     //vacation info from form
     const vacation = new VacationModel(req.body);

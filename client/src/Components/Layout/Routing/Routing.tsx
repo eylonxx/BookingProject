@@ -12,7 +12,7 @@ export default function Routing() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Navigate to="/vacations" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/vacations" element={<VacationsList />} />
         <Route path="/vacations/new" element={<NewVacationForm />} />
         <Route path="/vacations/edit/:id" element={<UpdateVacationForm />} />

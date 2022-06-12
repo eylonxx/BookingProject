@@ -23,13 +23,17 @@ interface VacationProps {
 }
 export default function Vacation(props: VacationProps): JSX.Element {
   const { id, description, destination, startingDate, endingDate, price, followers } = props.vacation;
+  //get all vacations that current user follows
+
   const [follow, setFollow] = useState(false);
+
   const userId: number = store.getState().authState.user?.id;
   const dates = `${startingDate} until ${endingDate}`;
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log(store.getState().authState.user);
+    //load all vacations
   }, []);
 
   const handleDelete = async () => {
@@ -39,8 +43,9 @@ export default function Vacation(props: VacationProps): JSX.Element {
   };
 
   const handleFollow = async (vacationId: number, userId: number) => {
-    setFollow(!follow);
     follow ? await followersService.unfollow(vacationId, userId) : await followersService.follow(vacationId, userId);
+    setFollow(!follow);
+    console.log(follow);
   };
 
   useEffect(
