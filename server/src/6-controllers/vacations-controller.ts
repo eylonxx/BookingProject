@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import verifyAdmin from '../3-middleware/verify-admin';
 import verifyLoggedIn from '../3-middleware/verify-logged-in';
 import VacationModel from '../4-models/vacation-model';
 import vacationsLogic from '../5-logic/vacations-logic';
@@ -23,7 +24,7 @@ router.get('/vacations/:id', async (req: Request, res: Response, next: NextFunct
   }
 });
 
-router.post('/vacations', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/vacations', verifyLoggedIn, async (req: Request, res: Response, next: NextFunction) => {
   try {
     //vacation info from form
     const vacation = new VacationModel(req.body);
@@ -34,7 +35,7 @@ router.post('/vacations', async (req: Request, res: Response, next: NextFunction
   }
 });
 
-router.put('/vacations/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.put('/vacations/:id', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const vacation = new VacationModel(req.body);
     const updatedVacation = await vacationsLogic.updateVacation(vacation);
@@ -45,7 +46,7 @@ router.put('/vacations/:id', async (req: Request, res: Response, next: NextFunct
   }
 });
 
-router.delete('/vacations/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/vacations/:id', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = +req.params.id;
     await vacationsLogic.deleteVacation(id);

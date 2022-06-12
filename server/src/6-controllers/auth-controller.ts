@@ -5,7 +5,7 @@ import authLogic from '../5-logic/auth-logic';
 import roleModel from '../4-models/role-model';
 const router = express.Router();
 
-// POST http://localhost:3001/register
+// POST http://localhost:3001/auth/register
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Create user object:
@@ -22,7 +22,7 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
   }
 });
 
-// POST http://localhost:3001/login
+// POST http://localhost:3001/auth/login
 router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Create credentials object
