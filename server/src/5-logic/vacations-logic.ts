@@ -68,7 +68,12 @@ async function createVacation(vacation): Promise<VacationModel> {
 }
 
 async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
-  const { id, description, destination, imageName, startingDate, endingDate, price, followers } = vacation;
+  const errors = vacation.validatePut();
+  if (errors) {
+    throw new ValidationError(errors);
+  }
+
+  const { id, description, destination, startingDate, endingDate, price } = vacation;
 
   if (vacation.image) {
     //delete old image from images folders
@@ -105,12 +110,12 @@ async function deleteVacation(id): Promise<VacationModel> {
     `;
   const deletedVacation = await dal.execute(sql);
 
-  sql = `
-  SELECT * from vacations
-  WHERE id = ${id}
-  `;
-  const oldImageToDelete = await dal.execute(sql);
-  console.log(oldImageToDelete);
+  // sql = `
+  // SELECT * from vacations
+  // WHERE id = ${id}
+  // `;
+  // const oldImageToDelete = await dal.execute(sql);
+  // console.log(oldImageToDelete);
 
   //delete from images folders
   return deletedVacation;
