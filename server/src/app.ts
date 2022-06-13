@@ -5,6 +5,7 @@ import vacationsController from './6-controllers/vacations-controller';
 import authController from './6-controllers/auth-controller';
 import followController from './6-controllers/follow-controller';
 import { RouteNotFound } from './4-models/errors-model';
+import expressFileUpload from 'express-fileupload';
 import cors from 'cors';
 
 // Create server:
@@ -14,6 +15,7 @@ const server = express();
 server.use(express.json());
 server.use(cors());
 
+server.use(expressFileUpload());
 // Transfer requests to the controller:
 server.use('/api/', vacationsController);
 server.use('/api/', followController);

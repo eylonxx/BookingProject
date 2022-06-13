@@ -2,6 +2,8 @@ import dal from '../2-utils/dal';
 import { OkPacket } from 'mysql';
 import { ResourceNotFound, ValidationError } from '../4-models/errors-model';
 import VacationModel from '../4-models/vacation-model';
+import { v4 as uuid } from 'uuid';
+import fs from 'fs/promises';
 
 async function getAllVacations(): Promise<VacationModel[]> {
   const sql = `
@@ -44,12 +46,21 @@ async function createVacation(vacation): Promise<VacationModel> {
   if (errors) {
     throw new ValidationError(errors);
   }
+  if (vacation.image) {
+    const dotIndex = vacation.image.name.lastIndexOf('.');
+    const imageExtension = vacation.image.name.substring(dotIndex);
+    vacation.imageName = uuid() + imageExtension;
+    await vacation.image.mv('./src/1-assets/images/' + vacation.imageName);
 
-  const { description, destination, imageName, startingDate, endingDate, price, followers } = vacation;
+    //dont want to return the image
+    delete vacation.image;
+  }
+
+  const { description, destination, startingDate, endingDate, price } = vacation;
   const sql = `
     INSERT INTO
-    vacations (description, destination, startingDate, endingDate, price)
-    VALUES('${description}', '${destination}', ${startingDate}, ${endingDate}, ${price})
+    vacations (description, destination, imageName, startingDate, endingDate, price)
+    VALUES('${description}', '${destination}', '${vacation.imageName}', ${startingDate}, ${endingDate}, ${price})
     `;
   const result: OkPacket = await dal.execute(sql);
   vacation.id = result.insertId;
@@ -58,12 +69,24 @@ async function createVacation(vacation): Promise<VacationModel> {
 
 async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
   const { id, description, destination, imageName, startingDate, endingDate, price, followers } = vacation;
+
+  if (vacation.image) {
+    //delete old image from images folders
+    const dotIndex = vacation.image.name.lastIndexOf('.');
+    const imageExtension = vacation.image.name.substring(dotIndex);
+    vacation.imageName = uuid() + imageExtension;
+    await vacation.image.mv('./src/1-assets/images/' + vacation.imageName);
+
+    //dont want to return the image
+    delete vacation.image;
+  }
+
   const sql = `
     UPDATE vacations
     SET 
     description = '${description}', 
     destination = '${destination}', 
-    imageName = '${imageName}',
+    imageName = '${vacation.image}',
     startingDate = ${startingDate}, 
     endingDate = ${endingDate}, 
     price = ${price}
@@ -76,11 +99,20 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
 }
 
 async function deleteVacation(id): Promise<VacationModel> {
-  const sql = `
+  let sql = `
     DELETE FROM vacations
     WHERE id = ${id} 
     `;
   const deletedVacation = await dal.execute(sql);
+
+  sql = `
+  SELECT * from vacations
+  WHERE id = ${id}
+  `;
+  const oldImageToDelete = await dal.execute(sql);
+  console.log(oldImageToDelete);
+
+  //delete from images folders
   return deletedVacation;
 }
 export default { getAllVacations, getOneVacation, createVacation, updateVacation, deleteVacation };
