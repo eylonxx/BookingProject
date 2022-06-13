@@ -7,7 +7,11 @@ import './VacationsList.css';
 
 export default function VacationsList(): JSX.Element {
   const [vacations, setVacations] = useState<VacationModel[]>([]);
-  //get vacations from vacationservice that uses axios to fetch from the server
+  //how to get followed vacations?
+  //get user id (redux), use a service to obtain all vacations that a user follows from sql query.
+  //now i have all the vacations that a user follows
+  //pass
+  const userToken = store.getState().authState.token;
 
   useEffect(
     //save to local state or redux
