@@ -4,16 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import CredentialsModel from '../../../Models/credentialsModel';
 import UserModel from '../../../Models/userModel';
 import authService from '../../../Services/AuthService';
-import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Paper from '@mui/material/Paper';
-
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
+import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -51,31 +45,28 @@ export default function LoginPage() {
         <div className="inner-header flex">
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
-              <Paper elevation={3}>
+              <Paper elevation={3} sx={{ borderRadius: '15px', paddingTop: 6 }}>
+                <Typography component="h1" variant="h3" sx={{ color: '#404040' }}>
+                  Login
+                </Typography>
+                <Typography component="h1" variant="subtitle1" sx={{ color: '#404040' }}>
+                  Enter your credentials
+                </Typography>
                 <CssBaseline />
                 <Box
                   component="form"
                   onSubmit={handleSubmit(sendData)}
                   noValidate
                   sx={{
-                    mt: 1,
                     gap: '10px',
                     display: 'flex',
-                    borderRadius: '16px',
                     flexDirection: 'column',
-                    justifyContent: 'flex-end',
+                    justifyContent: 'center',
                     alignItems: 'center',
                     width: '400px',
-                    height: '400px',
+                    height: '300px',
                   }}
                 >
-                  <Typography component="h1" variant="h3" sx={{ color: '#404040' }}>
-                    Login
-                  </Typography>
-                  <Typography component="h1" variant="subtitle1" sx={{ color: '#404040' }}>
-                    Enter your credentials
-                  </Typography>
-
                   <Controller
                     name="username"
                     control={control}
@@ -124,7 +115,7 @@ export default function LoginPage() {
                     variant="contained"
                     sx={{
                       mt: 3,
-                      mb: 2,
+                      pb: 2,
                       padding: 2,
                       width: '85%',
                       background: 'linear-gradient(60deg, rgba(84, 58, 183, 1) 0%, rgba(0, 172, 193, 1) 100%)',
@@ -132,6 +123,12 @@ export default function LoginPage() {
                   >
                     Login
                   </Button>
+
+                  <Link to="/register" style={{ textDecoration: 'none' }}>
+                    <Typography component="span" variant="subtitle1" sx={{ color: '#404040', fontSize: '14px' }}>
+                      Not a member? Register now!
+                    </Typography>
+                  </Link>
                 </Box>
               </Paper>
             </Container>
