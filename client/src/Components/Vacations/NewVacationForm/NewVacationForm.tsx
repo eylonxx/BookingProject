@@ -21,8 +21,6 @@ export default function NewVacationForm() {
     // vacation.price = +vacation.price;
     // string for formdata
     vacation.image = vacation.image[0];
-    console.log(vacation.image);
-
     await vacationService.createVacation(vacation);
     navigate('/vacations');
   };

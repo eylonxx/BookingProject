@@ -44,7 +44,6 @@ class VacationService {
   }
   // Add a new vacation:
   public async createVacation(newVacation: VacationModel): Promise<VacationModel> {
-    console.log(newVacation);
     const bodyFormData = new FormData();
     bodyFormData.append('description', newVacation.description);
     bodyFormData.append('destination', newVacation.destination);
