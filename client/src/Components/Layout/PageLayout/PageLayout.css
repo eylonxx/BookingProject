@@ -12,7 +12,8 @@
 }
 .PageLayout > main {
   height: 90vh;
-  margin: 0 auto;
+  margin: auto;
+  width: 100vw;
 }
 
 .PageLayout > footer {
