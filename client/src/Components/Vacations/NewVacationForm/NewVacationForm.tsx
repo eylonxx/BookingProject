@@ -30,7 +30,7 @@ export default function NewVacationForm() {
   const validationHandler = {
     description: handleErrorText('Please enter a description', 'Must be between 4-255 characters'),
     destination: handleErrorText('Please enter a destination', 'Must be between 4-255 characters'),
-    image: handleErrorText('Please upload an image', 'Must be between 4-255 characters'),
+    image: handleErrorText('Please upload an image'),
     startingDate: handleErrorText('Please enter a date', 'Must be between 4-16 characters'),
     endingDate: handleErrorText('Please enter a date', 'Must be between 4-16 characters'),
     price: handleErrorText('Please enter a price', 'Must be between 0-100,000'),
@@ -147,10 +147,9 @@ export default function NewVacationForm() {
                           {...field}
                           {...register('image')}
                           type="file"
-                          onChange={(e: any) => {
-                            console.log(e.target.files);
-                          }}
+                          onChange={(e: any) => {}}
                           label="Image"
+                          InputLabelProps={{ shrink: true }}
                           error={error !== undefined}
                           helperText={error ? validationHandler.image(error.type) : ''}
                         >
@@ -182,6 +181,7 @@ export default function NewVacationForm() {
                           {...field}
                           {...register('startingDate')}
                           type="date"
+                          InputLabelProps={{ shrink: true }}
                           label="Starting date"
                           error={error !== undefined}
                           helperText={error ? validationHandler.startingDate(error.type) : ''}
@@ -212,6 +212,7 @@ export default function NewVacationForm() {
                           {...field}
                           {...register('endingDate')}
                           type="date"
+                          InputLabelProps={{ shrink: true }}
                           label="Ending date"
                           error={error !== undefined}
                           helperText={error ? validationHandler.endingDate(error.type) : ''}
@@ -240,6 +241,7 @@ export default function NewVacationForm() {
                           {...field}
                           {...register('price')}
                           type="number"
+                          onChange={(e) => {}}
                           label="Price"
                           error={error !== undefined}
                           helperText={error ? validationHandler.price(error.type) : ''}
