@@ -38,8 +38,21 @@ class VacationService {
   // Add a new vacation:
   public async createVacation(newVacation: VacationModel): Promise<VacationModel> {
     console.log(newVacation);
+    const bodyFormData = new FormData();
+    bodyFormData.append('description', newVacation.description);
+    bodyFormData.append('destination', newVacation.destination);
+    bodyFormData.append('startingDate', newVacation.startingDate);
+    bodyFormData.append('endingDate', newVacation.endingDate);
+    bodyFormData.append('price', newVacation.price.toString());
+    bodyFormData.append('image', newVacation.image, newVacation.image.name);
 
-    const response = await axios.post(config.vacationsUrl, newVacation);
+    const response = await axios({
+      method: 'POST',
+      data: bodyFormData,
+      url: config.vacationsUrl,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
     const addedVacation = response.data;
     store.dispatch(addVacationAction(addedVacation));
     return addedVacation;

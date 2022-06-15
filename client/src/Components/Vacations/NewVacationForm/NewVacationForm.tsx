@@ -18,8 +18,8 @@ export default function NewVacationForm() {
   const { register, handleSubmit, control } = useForm<VacationModel>();
   const navigate = useNavigate();
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
-    console.log(vacation);
-    vacation.price = +vacation.price;
+    // vacation.price = +vacation.price;
+    // string for formdata
     vacation.image = vacation.image[0];
     console.log(vacation.image);
 
