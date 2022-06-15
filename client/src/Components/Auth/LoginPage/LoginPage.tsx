@@ -28,12 +28,29 @@ export default function LoginPage() {
       alert(e);
     }
   }
+
   const myHelper = {
-    username: {
-      required: 'Please enter a username',
+    username: (error: string) => {
+      switch (error) {
+        case 'required':
+          return 'Please enter a username';
+        case 'minLength':
+        case 'maxLength':
+          return 'Must be between 4-16 characters';
+        default:
+          return '';
+      }
     },
-    password: {
-      required: 'Please enter a password',
+    password: (error: string) => {
+      switch (error) {
+        case 'required':
+          return 'Please enter a password';
+        case 'minLength':
+        case 'maxLength':
+          return 'Must be between 4-16 characters';
+        default:
+          return '';
+      }
     },
   };
 
@@ -45,13 +62,19 @@ export default function LoginPage() {
         <div className="inner-header flex">
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
-              <Paper elevation={3} sx={{ borderRadius: '15px', paddingTop: 6 }}>
-                <Typography component="h1" variant="h3" sx={{ color: '#404040' }}>
-                  Login
-                </Typography>
-                <Typography component="h1" variant="subtitle1" sx={{ color: '#404040' }}>
-                  Enter your credentials
-                </Typography>
+              <Paper elevation={3} sx={{ borderRadius: '15px', paddingTop: 7 }}>
+                <Box
+                  sx={{
+                    marginBottom: '30px',
+                  }}
+                >
+                  <Typography component="h1" variant="h3" sx={{ color: '#404040' }}>
+                    Login
+                  </Typography>
+                  <Typography component="h1" variant="subtitle1" sx={{ color: '#404040' }}>
+                    Enter your credentials
+                  </Typography>
+                </Box>
                 <CssBaseline />
                 <Box
                   component="form"
@@ -73,19 +96,26 @@ export default function LoginPage() {
                     defaultValue=""
                     rules={{
                       required: true,
+                      minLength: 4,
+                      maxLength: 16,
                     }}
                     render={({ field, fieldState: { error } }) => (
                       <TextField
                         sx={{
-                          marginTop: '20px',
-                          width: '85%',
+                          width: '340px',
+                          marginBottom: '15px',
+                          '&  .MuiFormHelperText-root.Mui-error': {
+                            // styles for helper text error msg
+                            position: 'absolute',
+                            top: '55px',
+                          },
                         }}
                         {...field}
                         {...register('username')}
                         type="text"
                         label="Username"
                         error={error !== undefined}
-                        helperText={error ? myHelper.username.required : ''}
+                        helperText={error ? myHelper.username(error.type) : ''}
                       />
                     )}
                   />
@@ -95,18 +125,20 @@ export default function LoginPage() {
                     defaultValue=""
                     rules={{
                       required: true,
+                      minLength: 4,
+                      maxLength: 16,
                     }}
                     render={({ field, fieldState: { error } }) => (
                       <TextField
                         sx={{
-                          width: '85%',
+                          width: '340px',
                         }}
                         {...field}
                         {...register('password')}
                         type="text"
                         label="Password"
                         error={error !== undefined}
-                        helperText={error ? myHelper.password.required : ''}
+                        helperText={error ? myHelper.password(error.type) : ' '}
                       />
                     )}
                   />
