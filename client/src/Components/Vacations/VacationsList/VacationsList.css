@@ -1,5 +1,7 @@
 .VacationsList {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
+  height: 97vh;
+  background: linear-gradient(60deg, rgba(84, 58, 183, 1) 0%, rgba(0, 172, 193, 1) 100%);
 }

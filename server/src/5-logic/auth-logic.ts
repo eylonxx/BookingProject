@@ -19,8 +19,8 @@ async function register(user: UserModel): Promise<string> {
   // Add to users collection:
   const sql = `
     INSERT INTO users
-    (firstName, lastName, username, password)
-    VALUES('${firstName}', '${lastName}', '${username}', '${password}')
+    (firstName, lastName, username, password, role)
+    VALUES('${firstName}', '${lastName}', '${username}', '${password}', '${user.role}')
 `;
   const addedUser = await dal.execute(sql);
 

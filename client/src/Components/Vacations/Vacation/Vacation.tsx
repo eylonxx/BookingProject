@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import VacationModel from '../../../Models/vacationModel';
 import vacationService from '../../../Services/VacationService';
 import './Vacation.css';
+import monke from '../../../Assets/Images/monke.jpg';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -14,7 +15,9 @@ import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import store from '../../../Redux/Store';
 import followersService from '../../../Services/FollowersService';
 
@@ -38,8 +41,8 @@ export default function Vacation(props: VacationProps): JSX.Element {
 
   const handleDelete = async () => {
     await vacationService.deleteVacation(id);
-    alert('Product has been deleted.');
-    navigate('/products');
+    alert('Vacation has been deleted.');
+    navigate('/vacations');
   };
 
   const handleFollow = async (vacationId: number, userId: number) => {
@@ -48,39 +51,30 @@ export default function Vacation(props: VacationProps): JSX.Element {
     console.log(follow);
   };
 
-  useEffect(
-    //save to local state or redux
-    () => {
-      vacationService
-        .getOneVacation(id)
-        .then((vacation) => {})
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-    []
-  );
   return (
     <div className="Vacation">
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ width: '450px', height: '500px' }}>
         <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              R
-            </Avatar>
-          }
           action={
-            <IconButton onClick={handleDelete} aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
+            <ButtonGroup aria-label="outlined primary button group">
+              <IconButton aria-label="delete">
+                <DeleteIcon onClick={handleDelete} />
+              </IconButton>
+              <IconButton>
+                <EditIcon />
+              </IconButton>
+            </ButtonGroup>
           }
           title={destination}
           subheader={dates}
         />
-        <CardMedia component="img" height="194" image="/static/images/cards/paella.jpg" alt="Destination's image" />
+        <CardMedia component="img" height="280" image={monke} alt="Destination's image" />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {description}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {price}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -91,10 +85,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
             }}
             aria-label="add to favorites"
           >
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
+            <FavoriteIcon sx={{ fontSize: '2rem' }} />
           </IconButton>
         </CardActions>
       </Card>

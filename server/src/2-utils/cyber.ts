@@ -24,7 +24,7 @@ function verifyToken(request: Request): Promise<boolean> {
 
     // If no such header sent:
     if (!header) {
-      reject(new UnauthorizedError('No token sent'));
+      reject(new UnauthorizedError('No token sent at all'));
       return;
     }
 

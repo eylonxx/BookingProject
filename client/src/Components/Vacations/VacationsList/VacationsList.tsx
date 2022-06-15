@@ -26,7 +26,7 @@ export default function VacationsList(): JSX.Element {
           console.log(e);
         });
     },
-    []
+    [vacations]
   );
 
   return (
