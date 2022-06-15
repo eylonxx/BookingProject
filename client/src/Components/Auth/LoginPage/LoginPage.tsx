@@ -43,10 +43,10 @@ export default function LoginPage() {
         <div className="inner-header flex">
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
-              <Paper elevation={3} sx={{ borderRadius: '15px', paddingTop: 7 }}>
+              <Paper elevation={3} sx={{ borderRadius: '15px', paddingTop: 2, width: '400px', height: '420px' }}>
                 <Box
                   sx={{
-                    marginBottom: '30px',
+                    marginBottom: '15px',
                   }}
                 >
                   <Typography component="h1" variant="h3" sx={{ color: '#404040' }}>
@@ -62,73 +62,73 @@ export default function LoginPage() {
                   onSubmit={handleSubmit(sendData)}
                   noValidate
                   sx={{
-                    gap: '10px',
+                    boxSizing: 'border-box',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'center',
+                    justifyContent: 'flex-start',
                     alignItems: 'center',
-                    width: '400px',
-                    height: '300px',
                   }}
                 >
-                  <Controller
-                    name="username"
-                    control={control}
-                    defaultValue=""
-                    rules={{
-                      required: true,
-                      minLength: 4,
-                      maxLength: 16,
-                    }}
-                    render={({ field, fieldState: { error } }) => (
-                      <TextField
-                        sx={{
-                          width: '340px',
-                          marginBottom: '15px',
-                          '&  .MuiFormHelperText-root.Mui-error': {
-                            // styles for helper text error msg
-                            position: 'absolute',
-                            top: '55px',
-                          },
-                        }}
-                        {...field}
-                        {...register('username')}
-                        type="text"
-                        label="Username"
-                        error={error !== undefined}
-                        helperText={error ? validationHandler.username(error.type) : ''}
-                      />
-                    )}
-                  />
-                  <Controller
-                    name="password"
-                    control={control}
-                    defaultValue=""
-                    rules={{
-                      required: true,
-                      minLength: 4,
-                      maxLength: 16,
-                    }}
-                    render={({ field, fieldState: { error } }) => (
-                      <TextField
-                        sx={{
-                          width: '340px',
-                        }}
-                        {...field}
-                        {...register('password')}
-                        type="text"
-                        label="Password"
-                        error={error !== undefined}
-                        helperText={error ? validationHandler.password(error.type) : ' '}
-                      />
-                    )}
-                  />
+                  <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <Controller
+                      name="username"
+                      control={control}
+                      defaultValue=""
+                      rules={{
+                        required: true,
+                        minLength: 4,
+                        maxLength: 16,
+                      }}
+                      render={({ field, fieldState: { error } }) => (
+                        <TextField
+                          sx={{
+                            width: '340px',
+                            marginBottom: '15px',
+                            '&  .MuiFormHelperText-root.Mui-error': {
+                              // styles for helper text error msg
+                              position: 'absolute',
+                              top: '55px',
+                            },
+                          }}
+                          {...field}
+                          {...register('username')}
+                          type="text"
+                          label="Username"
+                          error={error !== undefined}
+                          helperText={error ? validationHandler.username(error.type) : ''}
+                        />
+                      )}
+                    />
+                    <Controller
+                      name="password"
+                      control={control}
+                      defaultValue=""
+                      rules={{
+                        required: true,
+                        minLength: 4,
+                        maxLength: 16,
+                      }}
+                      render={({ field, fieldState: { error } }) => (
+                        <TextField
+                          sx={{
+                            width: '340px',
+                          }}
+                          {...field}
+                          {...register('password')}
+                          type="text"
+                          label="Password"
+                          error={error !== undefined}
+                          helperText={error ? validationHandler.password(error.type) : ' '}
+                        />
+                      )}
+                    />
+                  </Box>
+
                   <Button
                     type="submit"
                     variant="contained"
                     sx={{
-                      mt: 3,
-                      pb: 2,
+                      mt: 2,
                       padding: 2,
                       width: '85%',
                       background: 'linear-gradient(60deg, rgba(84, 58, 183, 1) 0%, rgba(0, 172, 193, 1) 100%)',

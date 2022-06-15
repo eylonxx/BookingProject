@@ -13,9 +13,6 @@ export default function PageLayout() {
       <main>
         <Routing />
       </main>
-      <footer>
-        <Footer />
-      </footer>
     </div>
   );
 }
