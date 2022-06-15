@@ -45,6 +45,10 @@ export default function Vacation(props: VacationProps): JSX.Element {
     navigate('/vacations');
   };
 
+  const handleEdit = () => {
+    navigate(`edit/${id}`);
+  };
+
   const handleFollow = async (vacationId: number, userId: number) => {
     follow ? await followersService.unfollow(vacationId, userId) : await followersService.follow(vacationId, userId);
     setFollow(!follow);
@@ -61,7 +65,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
                 <DeleteIcon onClick={handleDelete} />
               </IconButton>
               <IconButton>
-                <EditIcon />
+                <EditIcon onClick={handleEdit} />
               </IconButton>
             </ButtonGroup>
           }
