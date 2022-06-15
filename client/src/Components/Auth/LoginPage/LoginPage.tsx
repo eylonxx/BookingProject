@@ -1,3 +1,4 @@
+import { handleErrorText } from '../authUtils';
 import { Button, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -29,29 +30,9 @@ export default function LoginPage() {
     }
   }
 
-  const myHelper = {
-    username: (error: string) => {
-      switch (error) {
-        case 'required':
-          return 'Please enter a username';
-        case 'minLength':
-        case 'maxLength':
-          return 'Must be between 4-16 characters';
-        default:
-          return '';
-      }
-    },
-    password: (error: string) => {
-      switch (error) {
-        case 'required':
-          return 'Please enter a password';
-        case 'minLength':
-        case 'maxLength':
-          return 'Must be between 4-16 characters';
-        default:
-          return '';
-      }
-    },
+  const validationHandler = {
+    username: handleErrorText('Please enter a username', 'Must be between 4-16 characters'),
+    password: handleErrorText('Please enter a password', 'Must be between 4-16 characters'),
   };
 
   const theme = createTheme();
@@ -115,7 +96,7 @@ export default function LoginPage() {
                         type="text"
                         label="Username"
                         error={error !== undefined}
-                        helperText={error ? myHelper.username(error.type) : ''}
+                        helperText={error ? validationHandler.username(error.type) : ''}
                       />
                     )}
                   />
@@ -138,7 +119,7 @@ export default function LoginPage() {
                         type="text"
                         label="Password"
                         error={error !== undefined}
-                        helperText={error ? myHelper.password(error.type) : ' '}
+                        helperText={error ? validationHandler.password(error.type) : ' '}
                       />
                     )}
                   />

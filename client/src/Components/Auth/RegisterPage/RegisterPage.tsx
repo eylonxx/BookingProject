@@ -4,6 +4,7 @@ import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import UserModel from '../../../Models/userModel';
 import authService from '../../../Services/AuthService';
+import { handleErrorText } from '../authUtils';
 
 export default function RegisterPage() {
   const { register, handleSubmit, control } = useForm<UserModel>();
@@ -17,19 +18,11 @@ export default function RegisterPage() {
       console.log(error);
     }
   }
-  const myHelper = {
-    firstName: {
-      required: 'first name is required',
-    },
-    lastName: {
-      required: 'last name is required',
-    },
-    username: {
-      required: 'username is required',
-    },
-    password: {
-      required: 'password is required',
-    },
+  const validationHandler = {
+    username: handleErrorText('Please enter a username', 'Must be between 4-16 characters'),
+    password: handleErrorText('Please enter a password', 'Must be between 4-16 characters'),
+    firstName: handleErrorText('Please enter a password', 'Must be between 2-16 characters'),
+    lastName: handleErrorText('Please enter a password', 'Must be between 2-16 characters'),
   };
 
   return (
@@ -51,7 +44,7 @@ export default function RegisterPage() {
               type="text"
               label="First Name"
               error={error !== undefined}
-              helperText={error ? myHelper.firstName.required : ''}
+              helperText={error ? validationHandler.firstName(error.type) : ''}
             />
           )}
         />
@@ -72,7 +65,7 @@ export default function RegisterPage() {
               type="text"
               label="Last Name"
               error={error !== undefined}
-              helperText={error ? myHelper.lastName.required : ''}
+              helperText={error ? validationHandler.lastName(error.type) : ''}
             />
           )}
         />
@@ -93,7 +86,7 @@ export default function RegisterPage() {
               type="text"
               label="Username"
               error={error !== undefined}
-              helperText={error ? myHelper.username.required : ''}
+              helperText={error ? validationHandler.username(error.type) : ''}
             />
           )}
         />
@@ -114,7 +107,7 @@ export default function RegisterPage() {
               type="text"
               label="Password"
               error={error !== undefined}
-              helperText={error ? myHelper.password.required : ''}
+              helperText={error ? validationHandler.password(error.type) : ''}
             />
           )}
         />
