@@ -1,4 +1,4 @@
-import { handleErrorText } from '../authUtils';
+import { handleErrorText } from '../../../Utils/formValidation';
 import { Button, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';

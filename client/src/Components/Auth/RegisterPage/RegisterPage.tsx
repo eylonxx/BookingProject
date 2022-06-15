@@ -4,7 +4,7 @@ import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import UserModel from '../../../Models/userModel';
 import authService from '../../../Services/AuthService';
-import { handleErrorText } from '../authUtils';
+import { handleErrorText } from '../../../Utils/formValidation';
 import Paper from '@mui/material/Paper';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Link } from 'react-router-dom';
