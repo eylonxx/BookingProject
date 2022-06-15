@@ -22,6 +22,13 @@ class VacationService {
       })
       .then((response) => {
         vacations = response.data;
+        vacations = vacations.map((vac) => {
+          return {
+            ...vac,
+            startingDate: vac.startingDate.substring(0, 10),
+            endingDate: vac.endingDate.substring(0, 10),
+          };
+        });
       })
       .catch((e) => console.log(e));
     store.dispatch(fetchVacationsAction(vacations));

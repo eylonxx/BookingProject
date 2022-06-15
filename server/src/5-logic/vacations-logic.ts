@@ -60,7 +60,7 @@ async function createVacation(vacation): Promise<VacationModel> {
   const sql = `
     INSERT INTO
     vacations (description, destination, imageName, startingDate, endingDate, price)
-    VALUES('${description}', '${destination}', '${vacation.imageName}', ${startingDate}, ${endingDate}, ${price})
+    VALUES('${description}', '${destination}', '${vacation.imageName}', '${startingDate}', '${endingDate}', ${price})
     `;
   const result: OkPacket = await dal.execute(sql);
   vacation.id = result.insertId;

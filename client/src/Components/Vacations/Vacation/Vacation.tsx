@@ -34,11 +34,6 @@ export default function Vacation(props: VacationProps): JSX.Element {
   const dates = `${startingDate} until ${endingDate}`;
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(store.getState().authState.user);
-    //load all vacations
-  }, []);
-
   const handleDelete = async () => {
     await vacationService.deleteVacation(id);
     alert('Vacation has been deleted.');
@@ -61,11 +56,11 @@ export default function Vacation(props: VacationProps): JSX.Element {
         <CardHeader
           action={
             <ButtonGroup aria-label="outlined primary button group">
-              <IconButton aria-label="delete">
-                <DeleteIcon onClick={handleDelete} />
+              <IconButton onClick={handleDelete} aria-label="delete">
+                <DeleteIcon />
               </IconButton>
-              <IconButton>
-                <EditIcon onClick={handleEdit} />
+              <IconButton onClick={handleEdit}>
+                <EditIcon />
               </IconButton>
             </ButtonGroup>
           }

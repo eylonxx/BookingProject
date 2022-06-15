@@ -32,7 +32,7 @@ export default function VacationsList(): JSX.Element {
   return (
     <div className="VacationsList">
       {vacations.map((vacation) => (
-        <Vacation vacation={vacation} />
+        <Vacation key={vacation.id} vacation={vacation} />
       ))}
     </div>
   );
