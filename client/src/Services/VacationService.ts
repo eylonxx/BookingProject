@@ -36,8 +36,10 @@ class VacationService {
     return vacation;
   }
   // Add a new vacation:
-  public async createVacation(newVaction: VacationModel): Promise<VacationModel> {
-    const response = await axios.post(config.vacationsUrl, newVaction);
+  public async createVacation(newVacation: VacationModel): Promise<VacationModel> {
+    console.log(newVacation);
+
+    const response = await axios.post(config.vacationsUrl, newVacation);
     const addedVacation = response.data;
     store.dispatch(addVacationAction(addedVacation));
     return addedVacation;

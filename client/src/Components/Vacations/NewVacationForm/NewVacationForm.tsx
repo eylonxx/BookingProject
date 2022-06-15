@@ -12,43 +12,46 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { handleErrorText } from '../../../Utils/formValidation';
+import './NewVacationForm.css';
 
 export default function NewVacationForm() {
   const { register, handleSubmit, control } = useForm<VacationModel>();
   const navigate = useNavigate();
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
+    console.log(vacation);
+    vacation.price = +vacation.price;
+    vacation.image = vacation.image[0];
+    console.log(vacation.image);
+
     await vacationService.createVacation(vacation);
     navigate('/vacations');
   };
 
   const validationHandler = {
-    description: handleErrorText('Please enter a description', 'Must be between 4-16 characters'),
-    destination: handleErrorText('Please enter a destination', 'Must be between 4-16 characters'),
-    imageName: handleErrorText('Please upload an image', 'Must be between 4-16 characters'),
+    description: handleErrorText('Please enter a description', 'Must be between 4-255 characters'),
+    destination: handleErrorText('Please enter a destination', 'Must be between 4-255 characters'),
+    image: handleErrorText('Please upload an image', 'Must be between 4-255 characters'),
     startingDate: handleErrorText('Please enter a date', 'Must be between 4-16 characters'),
     endingDate: handleErrorText('Please enter a date', 'Must be between 4-16 characters'),
-    price: handleErrorText('Please enter a price', 'Must be between 4-16 characters'),
+    price: handleErrorText('Please enter a price', 'Must be between 0-100,000'),
   };
 
   const theme = createTheme();
 
   return (
     <div>
-      <div className="header">
-        <div className="inner-header flex">
+      <div className="NewVacationForm-header">
+        <div className="NewVacationForm-inner-header NewVacationForm-flex">
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
-              <Paper elevation={3} sx={{ borderRadius: '15px', paddingTop: 2, width: '400px', height: '600px' }}>
+              <Paper elevation={3} sx={{ borderRadius: '15px', paddingTop: 2, width: '400px', height: '700px' }}>
                 <Box
                   sx={{
                     marginBottom: '15px',
                   }}
                 >
                   <Typography component="h1" variant="h3" sx={{ color: '#404040' }}>
-                    Login
-                  </Typography>
-                  <Typography component="h1" variant="subtitle1" sx={{ color: '#404040' }}>
-                    Enter your credentials
+                    New vacation
                   </Typography>
                 </Box>
                 <CssBaseline />
@@ -125,13 +128,10 @@ export default function NewVacationForm() {
                       )}
                     />
                     <Controller
-                      name="imageName"
+                      name="image"
                       control={control}
-                      defaultValue=""
                       rules={{
                         required: true,
-                        minLength: 4,
-                        maxLength: 255,
                       }}
                       render={({ field, fieldState: { error } }) => (
                         <TextField
@@ -145,12 +145,17 @@ export default function NewVacationForm() {
                             },
                           }}
                           {...field}
-                          {...register('imageName')}
-                          type="text"
-                          label="Image Name"
+                          {...register('image')}
+                          type="file"
+                          onChange={(e: any) => {
+                            console.log(e.target.files);
+                          }}
+                          label="Image"
                           error={error !== undefined}
-                          helperText={error ? validationHandler.imageName(error.type) : ''}
-                        />
+                          helperText={error ? validationHandler.image(error.type) : ''}
+                        >
+                          <input type="file" />
+                        </TextField>
                       )}
                     />
 
@@ -218,8 +223,8 @@ export default function NewVacationForm() {
                       control={control}
                       rules={{
                         required: true,
-                        minLength: 4,
-                        maxLength: 255,
+                        min: 0,
+                        max: 100000,
                       }}
                       render={({ field, fieldState: { error } }) => (
                         <TextField
@@ -253,7 +258,7 @@ export default function NewVacationForm() {
                       background: 'linear-gradient(60deg, rgba(84, 58, 183, 1) 0%, rgba(0, 172, 193, 1) 100%)',
                     }}
                   >
-                    Login
+                    Create
                   </Button>
                 </Box>
               </Paper>

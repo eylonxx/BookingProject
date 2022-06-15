@@ -31,7 +31,11 @@ router.get('/vacations/:id', verifyLoggedIn, async (req: Request, res: Response,
 router.post('/vacations', async (req: Request, res: Response, next: NextFunction) => {
   try {
     //vacation info from form
+    console.log(req.body);
+
     req.body.image = req.files?.image;
+    console.log(req.files.image);
+
     const vacation = new VacationModel(req.body);
     const addedVacation = await vacationsLogic.createVacation(vacation);
     res.json(addedVacation);

@@ -3,6 +3,7 @@ class VacationModel {
   public description: string;
   public destination: string;
   public imageName: string;
+  public image: any;
   public startingDate: string;
   public endingDate: string;
   public price: number;
