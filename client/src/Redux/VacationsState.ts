@@ -44,7 +44,6 @@ export function VacationsReducer(
   action: VacationsAction
 ): VacationsState {
   const newState = { ...currentState };
-  console.log('1');
 
   switch (action.type) {
     case VacationsActionType.FetchVacations:
@@ -63,14 +62,8 @@ export function VacationsReducer(
       break;
 
     case VacationsActionType.DeleteVacation:
-      console.log('2');
-      const indexToDelete = newState.vacations.findIndex((vac) => vac.id === action.payload); // <-- here payload is the id to delete.
-      if (indexToDelete >= 0) {
-        newState.vacations = newState.vacations.splice(indexToDelete, 1);
-      }
-      console.log('3');
+      newState.vacations = newState.vacations.filter((vac) => vac.id !== action.payload.id);
       break;
   }
-  console.log('4');
   return newState;
 }

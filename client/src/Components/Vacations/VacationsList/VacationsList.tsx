@@ -28,8 +28,6 @@ export default function VacationsList(): JSX.Element {
 
       const unsubscribe = store.subscribe(() => {
         setVacations(store.getState().vacationState.vacations);
-        console.log(vacations);
-        console.log(store.getState().vacationState.vacations);
       });
       return () => unsubscribe();
     },

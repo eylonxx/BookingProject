@@ -98,13 +98,18 @@ class VacationService {
 
   // Delete an existing vacation by id:
   public async deleteVacation(id: number) {
+    let deletedVacation: any = {};
     let sessionToken = window.sessionStorage.getItem('token');
-    const response = await axios.delete(config.vacationsUrl + id, {
-      headers: {
-        Authorization: 'Bearer ' + sessionToken,
-      },
-    });
-    const deletedVacation = response.data;
+    await axios
+      .delete<VacationModel>(config.vacationsUrl + id, {
+        headers: {
+          Authorization: 'Bearer ' + sessionToken,
+        },
+      })
+      .then((res) => {
+        deletedVacation = res.data;
+      });
+
     store.dispatch(deleteVacationAction(deletedVacation));
     return deletedVacation;
   }

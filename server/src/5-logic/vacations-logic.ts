@@ -107,6 +107,7 @@ async function deleteVacation(id): Promise<VacationModel> {
   let sql = `
     DELETE FROM vacations
     WHERE id = ${id} 
+    RETURNING *
     `;
   const deletedVacation = await dal.execute(sql);
 
@@ -118,6 +119,7 @@ async function deleteVacation(id): Promise<VacationModel> {
   // console.log(oldImageToDelete);
 
   //delete from images folders
-  return deletedVacation;
+
+  return deletedVacation[0];
 }
 export default { getAllVacations, getOneVacation, createVacation, updateVacation, deleteVacation };
