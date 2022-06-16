@@ -53,9 +53,9 @@ function verifyToken(request: Request): Promise<boolean> {
   });
 }
 
-function getTokenRole(request: Request): Role {
+function getTokenRole(req: Request): Role {
   // Extract token header (authorization: Bearer the-token):
-  const header = request.headers.authorization;
+  const header = req.headers.authorization;
 
   // Extract the token:
   const token = header.substring(7);
@@ -64,7 +64,7 @@ function getTokenRole(request: Request): Role {
   const payload = jwt.decode(token);
 
   // Extract user:
-  const user = (payload as any).user;
+  const user = (payload as any).user[0];
 
   // return role:
   return user.role;

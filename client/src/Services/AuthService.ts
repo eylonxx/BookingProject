@@ -10,6 +10,7 @@ class AuthService {
   public async register(user: UserModel): Promise<void> {
     const response = await axios.post<string>(config.registerUrl, user);
     const token = response.data;
+    window.sessionStorage.setItem('token', token);
     store.dispatch(registerAction(token));
     //save token to redux, login right after registration
   }
@@ -17,11 +18,13 @@ class AuthService {
   public async login(credentials: CredentialsModel): Promise<void> {
     const response = await axios.post<string>(config.loginUrl, credentials);
     const token = response.data;
+    window.sessionStorage.setItem('token', token);
     store.dispatch(loginAction(token));
     //save token to redux
   }
   //logout
   public async logout() {
+    window.sessionStorage.removeItem('token');
     store.dispatch(logoutAction());
   }
   //get token, find user, remove token from redux

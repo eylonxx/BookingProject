@@ -9,7 +9,7 @@ import { RouteNotFound } from '../4-models/errors-model';
 
 const router = express.Router();
 
-router.get('/vacations', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/vacations', verifyLoggedIn, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const vacations = await vacationsLogic.getAllVacations();
     res.json(vacations);
@@ -18,7 +18,7 @@ router.get('/vacations', async (req: Request, res: Response, next: NextFunction)
   }
 });
 
-router.get('/vacations/:id', verifyLoggedIn, async (req: Request, res: Response, next: NextFunction) => {
+router.get('/vacations/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = +req.params.id;
     const vacation = await vacationsLogic.getOneVacation(id);
@@ -28,7 +28,7 @@ router.get('/vacations/:id', verifyLoggedIn, async (req: Request, res: Response,
   }
 });
 
-router.post('/vacations', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/vacations', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     //vacation info from form
     req.body.image = req.files?.image;
@@ -43,7 +43,9 @@ router.post('/vacations', async (req: Request, res: Response, next: NextFunction
 
 router.put('/vacations/:id', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
+    req.body.id = +req.body.id;
     const vacation = new VacationModel(req.body);
+    console.log(vacation);
     const updatedVacation = await vacationsLogic.updateVacation(vacation);
     console.log(updatedVacation);
     res.json(updatedVacation);
@@ -52,7 +54,7 @@ router.put('/vacations/:id', verifyAdmin, async (req: Request, res: Response, ne
   }
 });
 
-router.delete('/vacations/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/vacations/:id', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = +req.params.id;
     await vacationsLogic.deleteVacation(id);

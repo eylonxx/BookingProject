@@ -36,8 +36,6 @@ export default function Vacation(props: VacationProps): JSX.Element {
 
   const handleDelete = async () => {
     await vacationService.deleteVacation(id);
-    alert('Vacation has been deleted.');
-    navigate('/vacations');
   };
 
   const handleEdit = () => {

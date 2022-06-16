@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import VacationModel from '../../../Models/vacationModel';
 import store from '../../../Redux/Store';
 import vacationService from '../../../Services/VacationService';
+
 import Vacation from '../Vacation/Vacation';
 import './VacationsList.css';
 
@@ -19,13 +20,20 @@ export default function VacationsList(): JSX.Element {
       vacationService
         .getAllVacations()
         .then((allVacations) => {
-          setVacations(allVacations);
+          setVacations(allVacations); //redux
         })
         .catch((e) => {
           console.log(e);
         });
+
+      const unsubscribe = store.subscribe(() => {
+        setVacations(store.getState().vacationState.vacations);
+        console.log(vacations);
+        console.log(store.getState().vacationState.vacations);
+      });
+      return () => unsubscribe();
     },
-    [vacations]
+    []
   );
 
   return (

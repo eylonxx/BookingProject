@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import VacationModel from '../../../Models/vacationModel';
 import vacationService from '../../../Services/VacationService';
@@ -22,6 +21,10 @@ export default function UpdateVacationForm() {
   const params = useParams();
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
     vacation.id = +params.id;
+    if (vacation.image.length > 0) {
+      vacation.image = vacation.image[0];
+    }
+
     await vacationService.updateVacation(vacation);
     navigate('/vacations');
   };
@@ -138,9 +141,7 @@ export default function UpdateVacationForm() {
                     <Controller
                       name="image"
                       control={control}
-                      rules={{
-                        required: true,
-                      }}
+                      rules={{}}
                       render={({ field, fieldState: { error } }) => (
                         <TextField
                           sx={{

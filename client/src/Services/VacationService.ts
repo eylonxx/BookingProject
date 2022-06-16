@@ -14,10 +14,11 @@ class VacationService {
   // Get all vacations:
   public async getAllVacations(): Promise<VacationModel[]> {
     let vacations: VacationModel[] = store.getState().vacationState.vacations;
+    let sessionToken = window.sessionStorage.getItem('token');
     await axios
       .get<VacationModel[]>(config.vacationsUrl, {
         headers: {
-          Authorization: 'Bearer ' + store.getState().authState.token,
+          Authorization: 'Bearer ' + sessionToken,
         },
       })
       .then((response) => {
@@ -44,6 +45,7 @@ class VacationService {
   }
   // Add a new vacation:
   public async createVacation(newVacation: VacationModel): Promise<VacationModel> {
+    let sessionToken = window.sessionStorage.getItem('token');
     const bodyFormData = new FormData();
     bodyFormData.append('description', newVacation.description);
     bodyFormData.append('destination', newVacation.destination);
@@ -56,7 +58,7 @@ class VacationService {
       method: 'POST',
       data: bodyFormData,
       url: config.vacationsUrl,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: { 'Content-Type': 'multipart/form-data', Authorization: 'Bearer ' + sessionToken },
     });
 
     const addedVacation = response.data;
@@ -65,18 +67,45 @@ class VacationService {
   }
   // Update an existing vacation:
   public async updateVacation(vacationToUpdate: VacationModel) {
+    let sessionToken = window.sessionStorage.getItem('token');
+
     const { id } = vacationToUpdate;
-    const response = await axios.put(config.vacationsUrl + id, vacationToUpdate);
+
+    const bodyFormData = new FormData();
+    bodyFormData.append('id', id.toString());
+    bodyFormData.append('description', vacationToUpdate.description);
+    bodyFormData.append('destination', vacationToUpdate.destination);
+    bodyFormData.append('startingDate', vacationToUpdate.startingDate);
+    bodyFormData.append('endingDate', vacationToUpdate.endingDate);
+    bodyFormData.append('price', vacationToUpdate.price.toString());
+    console.log(vacationToUpdate.image);
+
+    if (vacationToUpdate.image.length > 0) {
+      bodyFormData.append('image', vacationToUpdate.image, vacationToUpdate.image.name);
+    }
+
+    const response = await axios({
+      method: 'PUT',
+      data: bodyFormData,
+      url: config.vacationsUrl + id,
+      headers: { 'Content-Type': 'multipart/form-data', Authorization: 'Bearer ' + sessionToken },
+    });
+
     const updatedVacation = response.data;
     store.dispatch(updateVacationAction(updatedVacation));
     return updatedVacation;
   }
+
   // Delete an existing vacation by id:
   public async deleteVacation(id: number) {
-    const response = await axios.delete(config.vacationsUrl + id);
+    let sessionToken = window.sessionStorage.getItem('token');
+    const response = await axios.delete(config.vacationsUrl + id, {
+      headers: {
+        Authorization: 'Bearer ' + sessionToken,
+      },
+    });
     const deletedVacation = response.data;
     store.dispatch(deleteVacationAction(deletedVacation));
-
     return deletedVacation;
   }
 }
