@@ -45,7 +45,6 @@ export default function Vacation(props: VacationProps): JSX.Element {
   const handleFollow = async (vacationId: number, userId: number) => {
     follow ? await followersService.unfollow(vacationId, userId) : await followersService.follow(vacationId, userId);
     setFollow(!follow);
-    console.log(follow);
   };
 
   return (

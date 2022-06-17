@@ -108,6 +108,9 @@ class VacationService {
       })
       .then((res) => {
         deletedVacation = res.data;
+      })
+      .catch((e) => {
+        console.log(e);
       });
 
     store.dispatch(deleteVacationAction(deletedVacation));

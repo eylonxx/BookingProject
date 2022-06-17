@@ -38,7 +38,6 @@ async function login(credentials: CredentialsModel): Promise<string> {
   const { username, password } = credentials;
 
   credentials.password = cyber.hashPassword(credentials.password);
-  console.log(credentials.password);
 
   // Check credentials:
   const sql = `
@@ -47,7 +46,6 @@ async function login(credentials: CredentialsModel): Promise<string> {
 `;
 
   const users = await dal.execute(sql);
-  console.log(users);
 
   // If user not exist:
   if (users.length === 0) {

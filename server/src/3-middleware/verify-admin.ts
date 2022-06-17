@@ -7,6 +7,7 @@ async function verifyAdmin(request: Request, response: Response, next: NextFunct
   try {
     await cyber.verifyToken(request);
     const role = cyber.getTokenRole(request);
+    console.log(role);
 
     if (role !== Role.Admin) {
       const err = new ForbiddenError('You are not an Admin!');
