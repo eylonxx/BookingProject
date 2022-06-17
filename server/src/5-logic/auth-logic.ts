@@ -16,11 +16,14 @@ async function register(user: UserModel): Promise<string> {
   // Set role:
   user.role = Role.User;
 
+  //hash and salt
+  user.password = cyber.hashPassword(password);
+
   // Add to users collection:
   const sql = `
     INSERT INTO users
     (firstName, lastName, username, password, role)
-    VALUES('${firstName}', '${lastName}', '${username}', '${password}', '${user.role}')
+    VALUES('${firstName}', '${lastName}', '${username}', '${user.password}', '${user.role}')
 `;
   const addedUser = await dal.execute(sql);
 
@@ -34,19 +37,23 @@ async function register(user: UserModel): Promise<string> {
 async function login(credentials: CredentialsModel): Promise<string> {
   const { username, password } = credentials;
 
+  credentials.password = cyber.hashPassword(credentials.password);
+  console.log(credentials.password);
+
   // Check credentials:
   const sql = `
     SELECT * FROM users 
-    WHERE username = '${username}' AND password = '${password}';
+    WHERE username = '${username}' AND password = '${credentials.password}';
 `;
 
-  const user = await dal.execute(sql);
-  console.log(user);
+  const users = await dal.execute(sql);
+  console.log(users);
 
   // If user not exist:
-  if (user.length < 1) {
+  if (users.length === 0) {
     throw new UnauthorizedError('Incorrect username or password');
   }
+  const user = users[0];
 
   // Generate token:
   const token = cyber.getNewToken(user);

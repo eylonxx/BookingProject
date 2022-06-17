@@ -1,10 +1,12 @@
 import { Request } from 'express';
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { UnauthorizedError } from '../4-models/errors-model';
 import Role from '../4-models/role-model';
 import UserModel from '../4-models/user-model';
 
 const secret = 'sodgarua';
+const salt = 'badsalt';
 
 function getNewToken(user: UserModel): string {
   // Object to stash inside the token:
@@ -70,8 +72,16 @@ function getTokenRole(req: Request): Role {
   return user.role;
 }
 
+function hashPassword(plainText: string): string {
+  const hashText = crypto.createHmac('sha512', salt).update(plainText).digest('hex');
+  console.log(hashText);
+
+  return hashText;
+}
+
 export default {
   getNewToken,
   verifyToken,
   getTokenRole,
+  hashPassword,
 };
