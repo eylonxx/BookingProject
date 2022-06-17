@@ -110,6 +110,7 @@ async function deleteVacation(id): Promise<VacationModel> {
     RETURNING *
     `;
   const deletedVacation = await dal.execute(sql);
+  console.log(deletedVacation);
 
   // sql = `
   // SELECT * from vacations

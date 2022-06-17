@@ -13,7 +13,6 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
 
     // Register:
     const token = await authLogic.register(user);
-    console.log(token);
 
     // Return token:
     res.status(201).json(token);
