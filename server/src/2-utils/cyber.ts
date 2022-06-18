@@ -64,7 +64,6 @@ function getTokenRole(req: Request): Role {
 
   // Extract payload:
   const payload = jwt.decode(token);
-  console.log(payload);
 
   // Extract user:
   const user = (payload as any).user;
