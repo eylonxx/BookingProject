@@ -5,11 +5,26 @@ import { UnauthorizedError, ValidationError } from '../4-models/errors-model';
 import Role from '../4-models/role-model';
 import UserModel from '../4-models/user-model';
 
+async function checkUsername(username: string): Promise<boolean> {
+  const sql = `
+  SELECT username
+  FROM users
+  WHERE username = '${username}'
+  `;
+  const users = await dal.execute(sql);
+  return users.length > 0;
+}
+
 async function register(user: UserModel): Promise<string> {
   const errors = user.validatePost();
   if (errors) {
     throw new ValidationError(errors);
   }
+
+  if (await checkUsername(user.username)) {
+    throw new ValidationError(`${user.username}' already exists`);
+  }
+
   const { firstName, lastName, username, password } = user;
   // Returns back token (JWT)
 
