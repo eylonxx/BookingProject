@@ -8,11 +8,7 @@ import './VacationsList.css';
 
 export default function VacationsList(): JSX.Element {
   const [vacations, setVacations] = useState<VacationModel[]>([]);
-  //how to get followed vacations?
-  //setup redux for follows
-  //follow and unfollow functions
-  //on each vacation component have the follow and unfollow events call redux to change the state and change the heart to active\not active with redux.
-  //on redux have it pull all current followed vacations with a special sql query from the followers table
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   useEffect(
     //save to local state or redux
@@ -28,6 +24,8 @@ export default function VacationsList(): JSX.Element {
 
       const unsubscribe = store.subscribe(() => {
         setVacations(store.getState().vacationState.vacations);
+        const loggedIn = store.getState().authState.isLoggedIn;
+        if (loggedIn) setIsAdmin(store.getState().authState.user.role === 'Admin');
       });
       return () => unsubscribe();
     },
@@ -37,7 +35,7 @@ export default function VacationsList(): JSX.Element {
   return (
     <div className="VacationsList">
       {vacations.map((vacation) => (
-        <Vacation key={vacation.id} vacation={vacation} />
+        <Vacation canEdit={isAdmin} key={vacation.id} vacation={vacation} />
       ))}
     </div>
   );

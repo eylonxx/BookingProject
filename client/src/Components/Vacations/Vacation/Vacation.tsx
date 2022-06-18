@@ -23,6 +23,7 @@ import followersService from '../../../Services/FollowersService';
 
 interface VacationProps {
   vacation: VacationModel;
+  canEdit: boolean;
 }
 export default function Vacation(props: VacationProps): JSX.Element {
   const { id, description, destination, startingDate, endingDate, price, followers } = props.vacation;
@@ -52,14 +53,16 @@ export default function Vacation(props: VacationProps): JSX.Element {
       <Card sx={{ width: '450px', height: '500px' }}>
         <CardHeader
           action={
-            <ButtonGroup aria-label="outlined primary button group">
-              <IconButton onClick={handleDelete} aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-              <IconButton onClick={handleEdit}>
-                <EditIcon />
-              </IconButton>
-            </ButtonGroup>
+            props.canEdit && (
+              <ButtonGroup aria-label="outlined primary button group">
+                <IconButton onClick={handleDelete} aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton onClick={handleEdit}>
+                  <EditIcon />
+                </IconButton>
+              </ButtonGroup>
+            )
           }
           title={destination}
           subheader={dates}

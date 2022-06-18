@@ -17,10 +17,9 @@ class AuthService {
   //login
   public async login(credentials: CredentialsModel): Promise<void> {
     const response = await axios.post(config.loginUrl, credentials);
-    const userObj = response.data;
-    window.sessionStorage.setItem('token', userObj.token);
-    window.sessionStorage.setItem('name', userObj.name);
-    store.dispatch(loginAction(userObj.token));
+    const token = response.data;
+    window.sessionStorage.setItem('token', token);
+    store.dispatch(loginAction(token));
     //save token to redux
   }
   //logout

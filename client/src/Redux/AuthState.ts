@@ -5,6 +5,7 @@ import UserModel from '../Models/userModel';
 export class AuthState {
   public user: UserModel = null;
   public token: string = null;
+  public isLoggedIn: boolean = false;
 }
 
 // 2. Auth Action Type - list of actions we can do on the above AuthState:
@@ -12,12 +13,13 @@ export enum AuthActionType {
   Register = 'Register',
   Login = 'Login',
   Logout = 'Logout',
+  Relog = 'Relog',
 }
 
 // 3. Product Action - interface for building a single action from the above AuthActionType
 export interface AuthAction {
   type: AuthActionType; // The type of the acton to perform.
-  payload?: string; // The data we need to do that action
+  payload?: any; // The data we need to do that action
 }
 
 // 4. Action Creators - Functions for creating suitable Action objects:
@@ -33,6 +35,10 @@ export function logoutAction(): AuthAction {
   const action: AuthAction = { type: AuthActionType.Logout };
   return action;
 }
+export function RelogAction(user: UserModel, token: string): AuthAction {
+  const action: AuthAction = { type: AuthActionType.Relog, payload: { user, token } };
+  return action;
+}
 
 // 5. Auth Reducer - Do any of the above actions:
 export function AuthReducer(currentState: AuthState = new AuthState(), action: AuthAction): AuthState {
@@ -43,10 +49,17 @@ export function AuthReducer(currentState: AuthState = new AuthState(), action: A
       const token = action.payload;
       newState.token = token;
       newState.user = (jwtDecode(token) as any).user;
+      newState.isLoggedIn = true;
+      break;
+    case AuthActionType.Relog:
+      newState.user = action.payload.user;
+      newState.token = action.payload.token;
+      newState.isLoggedIn = true;
       break;
     case AuthActionType.Logout:
       newState.user = null;
       newState.token = null;
+      newState.isLoggedIn = false;
       break;
   }
   return newState;

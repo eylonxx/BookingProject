@@ -75,7 +75,6 @@ function getTokenRole(req: Request): Role {
 
 function hashPassword(plainText: string): string {
   const hashText = crypto.createHmac('sha512', salt).update(plainText).digest('hex');
-  console.log(hashText);
 
   return hashText;
 }

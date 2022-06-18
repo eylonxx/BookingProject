@@ -98,7 +98,6 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     WHERE id = ${id}
     `;
   const updatedVacation = await dal.execute(sql);
-  console.log(updatedVacation);
 
   return updatedVacation;
 }
@@ -110,16 +109,6 @@ async function deleteVacation(id): Promise<VacationModel> {
     RETURNING *
     `;
   const deletedVacation = await dal.execute(sql);
-  console.log(deletedVacation);
-
-  // sql = `
-  // SELECT * from vacations
-  // WHERE id = ${id}
-  // `;
-  // const oldImageToDelete = await dal.execute(sql);
-  // console.log(oldImageToDelete);
-
-  //delete from images folders
 
   return deletedVacation[0];
 }

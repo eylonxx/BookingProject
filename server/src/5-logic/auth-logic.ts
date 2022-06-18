@@ -20,13 +20,18 @@ async function register(user: UserModel): Promise<string> {
   user.password = cyber.hashPassword(password);
 
   // Add to users collection:
-  const sql = `
+  let sql = `
     INSERT INTO users
     (firstName, lastName, username, password, role)
-    VALUES('${firstName}', '${lastName}', '${username}', '${user.password}', '${user.role}')
-`;
-  const addedUser = await dal.execute(sql);
+    VALUES('${firstName}', '${lastName}', '${username}', '${user.password}', '${user.role}') 
+    `;
 
+  await dal.execute(sql);
+  sql = `
+  SELECT * FROM users
+  WHERE id = LAST_INSERT_ID()`;
+  const addedUsers = await dal.execute(sql);
+  const addedUser = addedUsers[0];
   // Generate token:
   const token = cyber.getNewToken(addedUser);
 
@@ -34,7 +39,7 @@ async function register(user: UserModel): Promise<string> {
   return token;
 }
 
-async function login(credentials: CredentialsModel): Promise<object> {
+async function login(credentials: CredentialsModel): Promise<string> {
   const { username, password } = credentials;
 
   credentials.password = cyber.hashPassword(credentials.password);
@@ -56,10 +61,8 @@ async function login(credentials: CredentialsModel): Promise<object> {
   // Generate token:
   const token = cyber.getNewToken(user);
 
-  const userObj = { name: user.firstName, token: token };
-
   // Return the token:
-  return userObj;
+  return token;
 }
 
 export default {

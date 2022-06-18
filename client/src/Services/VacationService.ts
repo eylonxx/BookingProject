@@ -78,7 +78,6 @@ class VacationService {
     bodyFormData.append('startingDate', vacationToUpdate.startingDate);
     bodyFormData.append('endingDate', vacationToUpdate.endingDate);
     bodyFormData.append('price', vacationToUpdate.price.toString());
-    console.log(vacationToUpdate.image);
 
     if (vacationToUpdate.image.length > 0) {
       bodyFormData.append('image', vacationToUpdate.image, vacationToUpdate.image.name);

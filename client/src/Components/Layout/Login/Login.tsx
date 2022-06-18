@@ -8,20 +8,29 @@ import UserModel from '../../../Models/userModel';
 
 export default function Login() {
   const navigate = useNavigate();
-  let firstName: string = window.sessionStorage.getItem('name');
-  // useEffect(() => {
-  //   firstName = window.sessionStorage.getItem('name');
-  // }, []);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [name, setName] = useState<string>('Guest');
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      setIsLoggedIn(store.getState().authState.isLoggedIn);
+      console.log(store.getState().authState.user);
+
+      setName(store.getState().authState.user?.firstName);
+    });
+    return () => unsubscribe();
+  });
+
   const handleLogout = async () => {
     await authService.logout();
     navigate('/login');
   };
 
   const renderHeader = () => {
-    if (firstName) {
+    if (isLoggedIn) {
       return (
         <div>
-          <span>Hello, {firstName}! </span>
+          <span>Hello, {name}! </span>
           <span
             onClick={() => {
               handleLogout();

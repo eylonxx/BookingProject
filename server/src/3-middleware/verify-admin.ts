@@ -5,11 +5,8 @@ import Role from '../4-models/role-model';
 
 async function verifyAdmin(req: Request, res: Response, next: NextFunction) {
   try {
-    console.log('hi');
-
     await cyber.verifyToken(req);
     const role = cyber.getTokenRole(req);
-    console.log(role);
 
     if (role !== Role.Admin) {
       const err = new ForbiddenError('You are not an Admin!');
