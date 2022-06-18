@@ -34,7 +34,7 @@ async function register(user: UserModel): Promise<string> {
   return token;
 }
 
-async function login(credentials: CredentialsModel): Promise<string> {
+async function login(credentials: CredentialsModel): Promise<object> {
   const { username, password } = credentials;
 
   credentials.password = cyber.hashPassword(credentials.password);
@@ -56,8 +56,10 @@ async function login(credentials: CredentialsModel): Promise<string> {
   // Generate token:
   const token = cyber.getNewToken(user);
 
+  const userObj = { name: user.firstName, token: token };
+
   // Return the token:
-  return token;
+  return userObj;
 }
 
 export default {

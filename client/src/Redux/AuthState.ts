@@ -43,8 +43,6 @@ export function AuthReducer(currentState: AuthState = new AuthState(), action: A
       const token = action.payload;
       newState.token = token;
       newState.user = (jwtDecode(token) as any).user;
-      console.log(newState);
-
       break;
     case AuthActionType.Logout:
       newState.user = null;

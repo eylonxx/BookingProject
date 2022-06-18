@@ -16,15 +16,17 @@ class AuthService {
   }
   //login
   public async login(credentials: CredentialsModel): Promise<void> {
-    const response = await axios.post<string>(config.loginUrl, credentials);
-    const token = response.data;
-    window.sessionStorage.setItem('token', token);
-    store.dispatch(loginAction(token));
+    const response = await axios.post(config.loginUrl, credentials);
+    const userObj = response.data;
+    window.sessionStorage.setItem('token', userObj.token);
+    window.sessionStorage.setItem('name', userObj.name);
+    store.dispatch(loginAction(userObj.token));
     //save token to redux
   }
   //logout
   public async logout() {
     window.sessionStorage.removeItem('token');
+    window.sessionStorage.removeItem('name');
     store.dispatch(logoutAction());
   }
   //get token, find user, remove token from redux
