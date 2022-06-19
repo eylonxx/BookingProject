@@ -14,7 +14,6 @@ export default function Login() {
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
       setIsLoggedIn(store.getState().authState.isLoggedIn);
-      console.log(store.getState().authState.user);
 
       setName(store.getState().authState.user?.firstName);
     });

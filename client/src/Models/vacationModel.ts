@@ -8,6 +8,7 @@ class VacationModel {
   public endingDate: string;
   public price: number;
   public followers: number;
+  public isFollowed: boolean;
 
   public constructor(vacation: VacationModel) {
     this.id = vacation.id;
@@ -18,6 +19,7 @@ class VacationModel {
     this.endingDate = vacation.endingDate;
     this.price = vacation.price;
     this.followers = vacation.followers;
+    this.isFollowed = false;
   }
 }
 

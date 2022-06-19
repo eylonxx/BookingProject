@@ -4,6 +4,7 @@ class Config {
   public registerUrl = '';
   public followUrl = '';
   public unfollowUrl = '';
+  public getAllFollowedVacs = '';
 }
 
 class DevelopmentConfig extends Config {
@@ -12,6 +13,7 @@ class DevelopmentConfig extends Config {
   public registerUrl = 'http://localhost:3001/auth/register';
   public followUrl = 'http://localhost:3001/api/follow';
   public unfollowUrl = 'http://localhost:3001/api/unfollow';
+  public getAllFollowedVacs = 'http://localhost:3001/api/follow';
 }
 
 class ProductionConfig extends Config {
@@ -20,6 +22,7 @@ class ProductionConfig extends Config {
   public registerUrl = 'http://localhost:3001/auth/register';
   public followUrl = 'http://localhost:3001/api/follow';
   public unfollowUrl = 'http://localhost:3001/api/unfollow';
+  public getAllFollowedVacs = 'http://localhost:3001/api/follow';
 }
 const config = process.env.NODE_ENV === 'development' ? new DevelopmentConfig() : new ProductionConfig();
 

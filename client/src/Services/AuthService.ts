@@ -4,6 +4,7 @@ import UserModel from '../Models/userModel';
 import CredentialsModel from '../Models/credentialsModel';
 import store from '../Redux/Store';
 import { loginAction, logoutAction, registerAction } from '../Redux/AuthState';
+import jwtDecode from 'jwt-decode';
 
 class AuthService {
   //register
@@ -15,11 +16,13 @@ class AuthService {
     //save token to redux, login right after registration
   }
   //login
-  public async login(credentials: CredentialsModel): Promise<void> {
+  public async login(credentials: CredentialsModel): Promise<UserModel> {
     const response = await axios.post(config.loginUrl, credentials);
     const token = response.data;
+    const user = (jwtDecode(token) as any).user;
     window.sessionStorage.setItem('token', token);
     store.dispatch(loginAction(token));
+    return user;
     //save token to redux
   }
   //logout

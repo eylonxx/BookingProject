@@ -1,4 +1,5 @@
 import VacationModel from '../Models/vacationModel';
+import vacationService from '../Services/VacationService';
 
 // 1. Vacations State - The global state relate to Vacations:
 export class VacationsState {
@@ -11,6 +12,8 @@ export enum VacationsActionType {
   AddVacation = 'AddVacation',
   UpdateVacation = 'UpdateVacation',
   DeleteVacation = 'DeleteVacation',
+  UpdateFollowing = 'UpdateFollowing',
+  UpdateFollowVacation = 'UpdateFollowVacation',
   // AddVacationToCart = "AddVacationToCart"
 }
 
@@ -37,7 +40,14 @@ export function deleteVacationAction(id: number): VacationsAction {
   const action: VacationsAction = { type: VacationsActionType.DeleteVacation, payload: id };
   return action;
 }
-
+export function updateFollowingAction(ids: string[]): VacationsAction {
+  const action: VacationsAction = { type: VacationsActionType.UpdateFollowing, payload: ids };
+  return action;
+}
+export function updateFollowVacationAction(id: number): VacationsAction {
+  const action: VacationsAction = { type: VacationsActionType.UpdateFollowVacation, payload: id };
+  return action;
+}
 // 5. Vacations Reducer - Do any of the above actions:
 export function VacationsReducer(
   currentState: VacationsState = new VacationsState(),
@@ -63,6 +73,28 @@ export function VacationsReducer(
 
     case VacationsActionType.DeleteVacation:
       newState.vacations = newState.vacations.filter((vac) => vac.id !== action.payload.id);
+      break;
+
+    case VacationsActionType.UpdateFollowing:
+      const ids = action.payload.data.flatMap((obj: any) => obj.vacationId);
+
+      newState.vacations = newState.vacations.map((vac) => {
+        //ids [1, 14, 15]
+        // isfollowed false
+
+        if (ids.includes(vac.id)) vac.isFollowed = true;
+        return vac;
+      });
+      break;
+    case VacationsActionType.UpdateFollowVacation:
+      newState.vacations = newState.vacations.map((vac) => {
+        if (vac.id === action.payload) {
+          vac.isFollowed = !vac.isFollowed;
+          vac.followers = vac.isFollowed === true ? vac.followers + 1 : vac.followers - 1;
+        }
+        return vac;
+      });
+      console.log(newState.vacations);
       break;
   }
   return newState;

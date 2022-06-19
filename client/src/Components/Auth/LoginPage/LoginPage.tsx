@@ -18,9 +18,10 @@ export default function LoginPage() {
   const { register, handleSubmit, reset, control } = useForm<UserModel>();
   const navigate = useNavigate();
 
-  async function sendData(user: CredentialsModel) {
+  async function sendData(credentials: CredentialsModel) {
     try {
-      await authService.login(user);
+      const user = await authService.login(credentials);
+
       reset();
       alert('You have been succesfully logged in.');
       navigate('/vacations');

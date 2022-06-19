@@ -20,16 +20,16 @@ import { useNavigate } from 'react-router-dom';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import store from '../../../Redux/Store';
 import followersService from '../../../Services/FollowersService';
+import { updateFollowVacationAction } from '../../../Redux/VacationsState';
 
 interface VacationProps {
   vacation: VacationModel;
   canEdit: boolean;
+  followed: boolean;
 }
 export default function Vacation(props: VacationProps): JSX.Element {
   const { id, description, destination, startingDate, endingDate, price, followers } = props.vacation;
   //get all vacations that current user follows
-
-  const [follow, setFollow] = useState(false);
 
   const userId: number = store.getState().authState.user?.id;
   const dates = `${startingDate} until ${endingDate}`;
@@ -44,8 +44,13 @@ export default function Vacation(props: VacationProps): JSX.Element {
   };
 
   const handleFollow = async (vacationId: number, userId: number) => {
-    follow ? await followersService.unfollow(vacationId, userId) : await followersService.follow(vacationId, userId);
-    setFollow(!follow);
+    if (props.followed) {
+      followersService.unfollow(vacationId, userId);
+    } else {
+      followersService.follow(vacationId, userId);
+    }
+
+    store.dispatch(updateFollowVacationAction(vacationId));
   };
 
   return (
@@ -70,7 +75,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
         <CardMedia component="img" height="280" image={monke} alt="Destination's image" />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            {description}
+            {description} {followers}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {price}
@@ -78,6 +83,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
         </CardContent>
         <CardActions disableSpacing>
           <IconButton
+            color={props.followed ? 'error' : 'default'}
             // change color when active
             onClick={() => {
               handleFollow(id, userId);

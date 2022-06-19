@@ -13,7 +13,7 @@ import store from '../Redux/Store';
 class VacationService {
   // Get all vacations:
   public async getAllVacations(): Promise<VacationModel[]> {
-    let vacations: VacationModel[] = store.getState().vacationState.vacations;
+    let vacations: VacationModel[] = [];
     let sessionToken = window.sessionStorage.getItem('token');
     await axios
       .get<VacationModel[]>(config.vacationsUrl, {
@@ -28,6 +28,7 @@ class VacationService {
             ...vac,
             startingDate: vac.startingDate.substring(0, 10),
             endingDate: vac.endingDate.substring(0, 10),
+            isFollowed: false,
           };
         });
       })
