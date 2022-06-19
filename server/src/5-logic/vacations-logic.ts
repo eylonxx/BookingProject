@@ -68,6 +68,8 @@ async function createVacation(vacation): Promise<VacationModel> {
 }
 
 async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
+  console.log(vacation);
+
   const errors = vacation.validatePut();
   if (errors) {
     throw new ValidationError(errors);

@@ -24,6 +24,7 @@ export default function UpdateVacationForm() {
     if (vacation.image.length > 0) {
       vacation.image = vacation.image[0];
     }
+    console.log(vacation);
 
     await vacationService.updateVacation(vacation);
     navigate('/vacations');

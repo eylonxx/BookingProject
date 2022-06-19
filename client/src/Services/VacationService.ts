@@ -73,7 +73,6 @@ class VacationService {
     const { id } = vacationToUpdate;
 
     const bodyFormData = new FormData();
-    bodyFormData.append('id', id.toString());
     bodyFormData.append('description', vacationToUpdate.description);
     bodyFormData.append('destination', vacationToUpdate.destination);
     bodyFormData.append('startingDate', vacationToUpdate.startingDate);
