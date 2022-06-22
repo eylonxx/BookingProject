@@ -1,5 +1,4 @@
 import VacationModel from '../Models/vacationModel';
-import vacationService from '../Services/VacationService';
 
 // 1. Vacations State - The global state relate to Vacations:
 export class VacationsState {

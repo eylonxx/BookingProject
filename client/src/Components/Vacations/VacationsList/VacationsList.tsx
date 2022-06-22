@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import VacationModel from '../../../Models/vacationModel';
 import store from '../../../Redux/Store';
 import followersService from '../../../Services/FollowersService';
@@ -34,6 +35,7 @@ export default function VacationsList(): JSX.Element {
 
   return (
     <div className="VacationsList">
+      <Link to="/charts">charts</Link>
       {vacations.map((vacation) => (
         <Vacation followed={vacation.isFollowed} canEdit={isAdmin} key={vacation.id} vacation={vacation} />
       ))}
