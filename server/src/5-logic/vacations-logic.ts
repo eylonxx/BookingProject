@@ -1,9 +1,8 @@
-import dal from '../2-utils/dal';
 import { OkPacket } from 'mysql';
-import { ResourceNotFound, ValidationError } from '../4-models/errors-model';
-import VacationModel from '../4-models/vacation-model';
 import { v4 as uuid } from 'uuid';
-import fs from 'fs/promises';
+import dal from '../2-utils/dal';
+import { ValidationError } from '../4-models/errors-model';
+import VacationModel from '../4-models/vacation-model';
 
 async function getAllVacations(): Promise<VacationModel[]> {
   const sql = `
@@ -46,6 +45,7 @@ async function createVacation(vacation): Promise<VacationModel> {
   if (errors) {
     throw new ValidationError(errors);
   }
+
   if (vacation.image) {
     const dotIndex = vacation.image.name.lastIndexOf('.');
     const imageExtension = vacation.image.name.substring(dotIndex);
@@ -68,8 +68,6 @@ async function createVacation(vacation): Promise<VacationModel> {
 }
 
 async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
-  console.log(vacation);
-
   const errors = vacation.validatePut();
   if (errors) {
     throw new ValidationError(errors);
@@ -78,7 +76,6 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
   const { id, description, destination, startingDate, endingDate, price } = vacation;
 
   if (vacation.image) {
-    //delete old image from images folders
     const dotIndex = vacation.image.name.lastIndexOf('.');
     const imageExtension = vacation.image.name.substring(dotIndex);
     vacation.imageName = uuid() + imageExtension;
@@ -88,14 +85,15 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     delete vacation.image;
   }
 
+  // check for empty image
   const sql = `
     UPDATE vacations
     SET 
     description = '${description}', 
     destination = '${destination}', 
-    imageName = '${vacation.image}',
-    startingDate = ${startingDate}, 
-    endingDate = ${endingDate}, 
+    ${vacation.imageName ? `imageName = ${vacation.imageName},` : ''}
+    startingDate = '${startingDate}', 
+    endingDate = '${endingDate}', 
     price = ${price}
     WHERE id = ${id}
     `;

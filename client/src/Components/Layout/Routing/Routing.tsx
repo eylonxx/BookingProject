@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import VacationsList from '../../Vacations/VacationsList/VacationsList';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import LoginPage from '../../Auth/LoginPage/LoginPage';
 import RegisterPage from '../../Auth/RegisterPage/RegisterPage';
 import NewVacationForm from '../../Vacations/NewVacationForm/NewVacationForm';
 import UpdateVacationForm from '../../Vacations/UpdateVacationForm/UpdateVacationForm';
-import PageNotFound from '../PageNotFound/PageNotFound';
-import { Navigate } from 'react-router-dom';
-import store from '../../../Redux/Store';
+import VacationsList from '../../Vacations/VacationsList/VacationsList';
 
 export default function Routing() {
   // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);

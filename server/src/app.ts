@@ -7,6 +7,7 @@ import followController from './6-controllers/follow-controller';
 import { RouteNotFound } from './4-models/errors-model';
 import expressFileUpload from 'express-fileupload';
 import cors from 'cors';
+import path from 'path';
 
 // Create server:
 const server = express();
@@ -20,6 +21,7 @@ server.use(expressFileUpload());
 server.use('/api/', vacationsController);
 server.use('/api/', followController);
 server.use('/auth/', authController);
+server.use(express.static(path.join(__dirname, '1-assets')));
 
 // If route not found:
 server.use('*', (request: Request, response: Response, next: NextFunction) => {

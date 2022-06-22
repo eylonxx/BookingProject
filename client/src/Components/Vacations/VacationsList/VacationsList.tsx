@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import UserModel from '../../../Models/userModel';
 import VacationModel from '../../../Models/vacationModel';
 import store from '../../../Redux/Store';
 import followersService from '../../../Services/FollowersService';

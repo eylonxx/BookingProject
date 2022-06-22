@@ -1,12 +1,12 @@
 import axios from 'axios';
-import config from '../Utils/config';
 import VacationModel from '../Models/vacationModel';
 import {
-  fetchVacationsAction,
   addVacationAction,
-  updateVacationAction,
   deleteVacationAction,
+  fetchVacationsAction,
+  updateVacationAction,
 } from '../Redux/VacationsState';
+import config from '../Utils/config';
 
 import store from '../Redux/Store';
 
@@ -67,22 +67,23 @@ class VacationService {
     store.dispatch(addVacationAction(addedVacation));
     return addedVacation;
   }
+
   // Update an existing vacation:
   public async updateVacation(vacationToUpdate: VacationModel) {
     let sessionToken = window.sessionStorage.getItem('token');
 
     const { id } = vacationToUpdate;
-    console.log(vacationToUpdate);
+    console.log(vacationToUpdate.image);
 
     const bodyFormData = new FormData();
     bodyFormData.append('id', vacationToUpdate.id.toString());
     bodyFormData.append('description', vacationToUpdate.description);
     bodyFormData.append('destination', vacationToUpdate.destination);
-    bodyFormData.append('startingDate', vacationToUpdate.startingDate);
-    bodyFormData.append('endingDate', vacationToUpdate.endingDate);
+    bodyFormData.append('startingDate', vacationToUpdate.startingDate.substring(0, 10));
+    bodyFormData.append('endingDate', vacationToUpdate.endingDate.substring(0, 10));
     bodyFormData.append('price', vacationToUpdate.price.toString());
 
-    if (vacationToUpdate.image.length > 0) {
+    if (vacationToUpdate.image) {
       bodyFormData.append('image', vacationToUpdate.image, vacationToUpdate.image.name);
     }
 
@@ -94,6 +95,7 @@ class VacationService {
     });
 
     const updatedVacation = response.data;
+
     store.dispatch(updateVacationAction(updatedVacation));
     return updatedVacation;
   }

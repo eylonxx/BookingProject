@@ -1,16 +1,14 @@
-import React from 'react';
 import { Button, TextField } from '@mui/material';
-import { Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import VacationModel from '../../../Models/vacationModel';
-import vacationService from '../../../Services/VacationService';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import VacationModel from '../../../Models/vacationModel';
+import vacationService from '../../../Services/VacationService';
 import { handleErrorText } from '../../../Utils/formValidation';
 import './NewVacationForm.css';
 
@@ -22,6 +20,8 @@ export default function NewVacationForm() {
     // string for formdata
     vacation.followers = 0;
     vacation.image = vacation.image[0];
+    console.log(vacation);
+
     await vacationService.createVacation(vacation);
     navigate('/vacations');
   };

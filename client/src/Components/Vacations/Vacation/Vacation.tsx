@@ -1,26 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import VacationModel from '../../../Models/vacationModel';
-import vacationService from '../../../Services/VacationService';
-import './Vacation.css';
-import monke from '../../../Assets/Images/monke.jpg';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
+import monke from '../../../Assets/Images/monke.jpg';
+import VacationModel from '../../../Models/vacationModel';
 import store from '../../../Redux/Store';
-import followersService from '../../../Services/FollowersService';
 import { updateFollowVacationAction } from '../../../Redux/VacationsState';
+import followersService from '../../../Services/FollowersService';
+import vacationService from '../../../Services/VacationService';
+import './Vacation.css';
 
 interface VacationProps {
   vacation: VacationModel;
@@ -28,7 +24,7 @@ interface VacationProps {
   followed: boolean;
 }
 export default function Vacation(props: VacationProps): JSX.Element {
-  const { id, description, destination, startingDate, endingDate, price, followers } = props.vacation;
+  const { id, description, destination, startingDate, endingDate, price, followers, imageName } = props.vacation;
   //get all vacations that current user follows
 
   const userId: number = store.getState().authState.user?.id;

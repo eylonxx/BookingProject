@@ -1,11 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 import verifyAdmin from '../3-middleware/verify-admin';
 import verifyLoggedIn from '../3-middleware/verify-logged-in';
+import { RouteNotFound } from '../4-models/errors-model';
 import VacationModel from '../4-models/vacation-model';
 import vacationsLogic from '../5-logic/vacations-logic';
-import path from 'path';
-import fs from 'fs';
-import { RouteNotFound } from '../4-models/errors-model';
 
 const router = express.Router();
 
@@ -44,6 +44,7 @@ router.post('/vacations', verifyAdmin, async (req: Request, res: Response, next:
 router.put('/vacations/:id', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     req.body.id = +req.body.id;
+    req.body.image = req.files?.image;
     const vacation = new VacationModel(req.body);
     const updatedVacation = await vacationsLogic.updateVacation(vacation);
     res.json(updatedVacation);

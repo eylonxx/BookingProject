@@ -1,19 +1,18 @@
-import { useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import VacationModel from '../../../Models/vacationModel';
-import vacationService from '../../../Services/VacationService';
-import { useNavigate, useParams } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { Controller } from 'react-hook-form';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import { useEffect } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import VacationModel from '../../../Models/vacationModel';
+import store from '../../../Redux/Store';
+import vacationService from '../../../Services/VacationService';
 import { handleErrorText } from '../../../Utils/formValidation';
 import './UpdateVacationForm.css';
-import store from '../../../Redux/Store';
 
 export default function UpdateVacationForm() {
   const { register, handleSubmit, setValue, control } = useForm<VacationModel>();
@@ -22,11 +21,11 @@ export default function UpdateVacationForm() {
 
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
     vacation.id = +params.id;
-    console.log(vacation.id);
 
-    if (vacation.image.length > 0) {
+    if (vacation.image) {
       vacation.image = vacation.image[0];
     }
+
     await vacationService.updateVacation(vacation);
     navigate('/vacations');
   };
@@ -158,9 +157,7 @@ export default function UpdateVacationForm() {
                           {...field}
                           {...register('image')}
                           type="file"
-                          onChange={(e: any) => {
-                            console.log(e);
-                          }}
+                          onChange={(e: any) => {}}
                           label="Image"
                           InputLabelProps={{ shrink: true }}
                           error={error !== undefined}
@@ -272,7 +269,7 @@ export default function UpdateVacationForm() {
                       background: 'linear-gradient(60deg, rgba(84, 58, 183, 1) 0%, rgba(0, 172, 193, 1) 100%)',
                     }}
                   >
-                    Create
+                    Update
                   </Button>
                 </Box>
               </Paper>
