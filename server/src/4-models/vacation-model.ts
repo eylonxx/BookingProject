@@ -1,5 +1,5 @@
-import Joi from 'joi';
 import { UploadedFile } from 'express-fileupload';
+import Joi from 'joi';
 
 class VacationModel {
   public id: number;
@@ -28,7 +28,7 @@ class VacationModel {
     id: Joi.forbidden(),
     description: Joi.string().required(),
     destination: Joi.string().required(),
-    imageName: Joi.string().optional().min(10).max(50),
+    imageName: Joi.string().optional(),
     image: Joi.object().optional(),
     startingDate: Joi.string().required(),
     endingDate: Joi.string().required(),
@@ -41,7 +41,7 @@ class VacationModel {
     id: Joi.required(),
     description: Joi.string().required(),
     destination: Joi.string().required(),
-    imageName: Joi.string().optional().min(10).max(50),
+    imageName: Joi.string().optional(),
     image: Joi.object().optional(),
     startingDate: Joi.string().required(),
     endingDate: Joi.string().required(),

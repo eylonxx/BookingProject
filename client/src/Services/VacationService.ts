@@ -73,7 +73,6 @@ class VacationService {
     let sessionToken = window.sessionStorage.getItem('token');
 
     const { id } = vacationToUpdate;
-    console.log(vacationToUpdate.image);
 
     const bodyFormData = new FormData();
     bodyFormData.append('id', vacationToUpdate.id.toString());

@@ -10,7 +10,6 @@ import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import monke from '../../../Assets/Images/monke.jpg';
 import VacationModel from '../../../Models/vacationModel';
 import store from '../../../Redux/Store';
 import { updateFollowVacationAction } from '../../../Redux/VacationsState';
@@ -28,6 +27,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
   //get all vacations that current user follows
 
   const userId: number = store.getState().authState.user?.id;
+  const image = 'http://localhost:3001/images/' + imageName;
   const dates = `${startingDate} until ${endingDate}`;
   const navigate = useNavigate();
 
@@ -68,7 +68,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
           title={destination}
           subheader={dates}
         />
-        <CardMedia component="img" height="280" image={monke} alt="Destination's image" />
+        <CardMedia component="img" height="280" image={image} alt="Destination's image" />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {description} {followers}

@@ -1,4 +1,6 @@
+import fs from 'fs/promises';
 import { OkPacket } from 'mysql';
+import path from 'path';
 import { v4 as uuid } from 'uuid';
 import dal from '../2-utils/dal';
 import { ValidationError } from '../4-models/errors-model';
@@ -91,7 +93,7 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     SET 
     description = '${description}', 
     destination = '${destination}', 
-    ${vacation.imageName ? `imageName = ${vacation.imageName},` : ''}
+    ${vacation.imageName ? `imageName = '${vacation.imageName}',` : ''}
     startingDate = '${startingDate}', 
     endingDate = '${endingDate}', 
     price = ${price}
@@ -109,6 +111,9 @@ async function deleteVacation(id): Promise<VacationModel> {
     RETURNING *
     `;
   const deletedVacation = await dal.execute(sql);
+  const imageToDelete = deletedVacation[0].imageName;
+  const pathToDelete = path.parse(__dirname);
+  fs.unlink(path.join(pathToDelete.dir, '1-assets/images/') + imageToDelete);
 
   return deletedVacation[0];
 }

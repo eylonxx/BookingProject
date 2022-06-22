@@ -20,7 +20,6 @@ export default function NewVacationForm() {
     // string for formdata
     vacation.followers = 0;
     vacation.image = vacation.image[0];
-    console.log(vacation);
 
     await vacationService.createVacation(vacation);
     navigate('/vacations');
