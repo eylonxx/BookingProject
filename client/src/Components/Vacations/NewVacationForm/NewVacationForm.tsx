@@ -20,6 +20,7 @@ export default function NewVacationForm() {
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
     // vacation.price = +vacation.price;
     // string for formdata
+    vacation.followers = 0;
     vacation.image = vacation.image[0];
     await vacationService.createVacation(vacation);
     navigate('/vacations');

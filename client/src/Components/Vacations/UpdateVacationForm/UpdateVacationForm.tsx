@@ -19,13 +19,14 @@ export default function UpdateVacationForm() {
   const { register, handleSubmit, setValue, control } = useForm<VacationModel>();
   const navigate = useNavigate();
   const params = useParams();
+
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
     vacation.id = +params.id;
+    console.log(vacation.id);
+
     if (vacation.image.length > 0) {
       vacation.image = vacation.image[0];
     }
-    console.log(vacation);
-
     await vacationService.updateVacation(vacation);
     navigate('/vacations');
   };
@@ -280,20 +281,5 @@ export default function UpdateVacationForm() {
         </div>
       </div>
     </div>
-    // <form onSubmit={handleSubmit(onSubmit)}>
-    //   <label>Description:</label>
-    //   <input {...register('description')} />
-    //   <label>Destination:</label>
-    //   <input {...register('destination')} />
-    //   <label>imageName:</label>
-    //   <input {...register('imageName')} />
-    //   <label>Starting Date:</label>
-    //   <input type="date" {...register('startingDate')} />
-    //   <label>endingDate:</label>
-    //   <input type="date" {...register('endingDate')} />
-    //   <label>Price:</label>
-    //   <input {...register('price')} />
-    //   <button>Submit</button>
-    // </form>
   );
 }

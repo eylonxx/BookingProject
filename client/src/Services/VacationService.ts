@@ -47,6 +47,7 @@ class VacationService {
   // Add a new vacation:
   public async createVacation(newVacation: VacationModel): Promise<VacationModel> {
     let sessionToken = window.sessionStorage.getItem('token');
+
     const bodyFormData = new FormData();
     bodyFormData.append('description', newVacation.description);
     bodyFormData.append('destination', newVacation.destination);
@@ -71,8 +72,10 @@ class VacationService {
     let sessionToken = window.sessionStorage.getItem('token');
 
     const { id } = vacationToUpdate;
+    console.log(vacationToUpdate);
 
     const bodyFormData = new FormData();
+    bodyFormData.append('id', vacationToUpdate.id.toString());
     bodyFormData.append('description', vacationToUpdate.description);
     bodyFormData.append('destination', vacationToUpdate.destination);
     bodyFormData.append('startingDate', vacationToUpdate.startingDate);

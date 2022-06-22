@@ -38,7 +38,7 @@ class VacationModel {
   //put validate schema
 
   public static putValidationSchema = Joi.object({
-    id: Joi.forbidden(),
+    id: Joi.required(),
     description: Joi.string().required(),
     destination: Joi.string().required(),
     imageName: Joi.string().optional().min(10).max(50),

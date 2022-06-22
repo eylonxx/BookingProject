@@ -28,7 +28,6 @@ class AuthService {
   //logout
   public async logout() {
     window.sessionStorage.removeItem('token');
-    window.sessionStorage.removeItem('name');
     store.dispatch(logoutAction());
   }
   //get token, find user, remove token from redux

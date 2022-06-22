@@ -20,8 +20,7 @@ export default function VacationsList(): JSX.Element {
 
       const unsubscribe = store.subscribe(() => {
         setVacations(store.getState().vacationState.vacations);
-        setUserId(store.getState().authState.user.id);
-        console.log(store.getState().vacationState.vacations);
+        setUserId(store.getState().authState.user?.id);
         const loggedIn = store.getState().authState.isLoggedIn;
         if (loggedIn) setIsAdmin(store.getState().authState.user.role === 'Admin');
       });
@@ -31,7 +30,7 @@ export default function VacationsList(): JSX.Element {
     []
   );
   useEffect(() => {
-    if (userId !== null) followersService.getAllFollowedVacationsByUserId(userId);
+    if (userId) followersService.getAllFollowedVacationsByUserId(userId);
   }, [userId]);
 
   return (

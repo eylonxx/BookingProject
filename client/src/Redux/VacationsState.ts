@@ -94,7 +94,6 @@ export function VacationsReducer(
         }
         return vac;
       });
-      console.log(newState.vacations);
       break;
   }
   return newState;
