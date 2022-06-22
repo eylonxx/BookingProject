@@ -76,8 +76,11 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
   }
 
   const { id, description, destination, startingDate, endingDate, price } = vacation;
-
   if (vacation.image) {
+    // const currentImageToDelete = vacation.imageName;
+    // const pathToDelete = path.parse(__dirname);
+    // fs.unlink(path.join(pathToDelete.dir, '1-assets/images/') + currentImageToDelete);
+
     const dotIndex = vacation.image.name.lastIndexOf('.');
     const imageExtension = vacation.image.name.substring(dotIndex);
     vacation.imageName = uuid() + imageExtension;
