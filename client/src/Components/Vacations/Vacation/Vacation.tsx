@@ -24,6 +24,7 @@ interface VacationProps {
 }
 export default function Vacation(props: VacationProps): JSX.Element {
   const { id, description, destination, startingDate, endingDate, price, followers, imageName } = props.vacation;
+
   //get all vacations that current user follows
 
   const userId: number = store.getState().authState.user?.id;

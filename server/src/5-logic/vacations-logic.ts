@@ -20,6 +20,7 @@ async function getAllVacations(): Promise<VacationModel[]> {
     FROM vacations
     `;
   const vacations = await dal.execute(sql);
+
   return vacations;
 }
 
@@ -43,6 +44,8 @@ async function getOneVacation(id): Promise<VacationModel> {
 
 async function createVacation(vacation): Promise<VacationModel> {
   //joi validation
+  console.log(vacation.startingDate);
+
   const errors = vacation.validatePost();
   if (errors) {
     throw new ValidationError(errors);

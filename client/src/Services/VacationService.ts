@@ -23,6 +23,7 @@ class VacationService {
       })
       .then((response) => {
         vacations = response.data;
+
         vacations = vacations.map((vac) => {
           return {
             ...vac,
@@ -64,6 +65,7 @@ class VacationService {
     });
 
     const addedVacation = response.data;
+
     store.dispatch(addVacationAction(addedVacation));
     return addedVacation;
   }

@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import VacationModel from '../../../Models/vacationModel';
@@ -16,6 +16,7 @@ import './UpdateVacationForm.css';
 
 export default function UpdateVacationForm() {
   const { register, handleSubmit, setValue, control } = useForm<VacationModel>();
+  const [startingDate, setStartingDate] = useState('');
   const navigate = useNavigate();
   const params = useParams();
 
@@ -33,8 +34,8 @@ export default function UpdateVacationForm() {
   const validationHandler = {
     description: handleErrorText('Please enter a description', 'Must be between 4-255 characters'),
     destination: handleErrorText('Please enter a destination', 'Must be between 4-255 characters'),
-    startingDate: handleErrorText('Please enter a date', 'Must be between 4-16 characters'),
-    endingDate: handleErrorText('Please enter a date', 'Must be between 4-16 characters'),
+    startingDate: handleErrorText('Please enter a date', '', 'Starting date cannot be in the past'),
+    endingDate: handleErrorText('Please enter a date', '', 'Ending date must be after starting date'),
     price: handleErrorText('Please enter a price', 'Must be between 0-100,000'),
   };
 
@@ -175,6 +176,11 @@ export default function UpdateVacationForm() {
                         required: true,
                         minLength: 4,
                         maxLength: 255,
+                        validate: (value) => {
+                          let startDate = Date.parse(value);
+                          let now = new Date().getTime();
+                          return startDate >= now;
+                        },
                       }}
                       render={({ field, fieldState: { error } }) => (
                         <TextField
@@ -189,6 +195,10 @@ export default function UpdateVacationForm() {
                           }}
                           {...field}
                           {...register('startingDate')}
+                          onChange={(e) => {
+                            setStartingDate(e.target.value);
+                            field.onChange(e);
+                          }}
                           type="date"
                           InputLabelProps={{ shrink: true }}
                           label="Starting date"
@@ -206,6 +216,12 @@ export default function UpdateVacationForm() {
                         required: true,
                         minLength: 4,
                         maxLength: 255,
+                        validate: (value) => {
+                          let startDate = Date.parse(startingDate);
+                          let endDate = Date.parse(value);
+                          // validate date logic
+                          return startDate <= endDate;
+                        },
                       }}
                       render={({ field, fieldState: { error } }) => (
                         <TextField
