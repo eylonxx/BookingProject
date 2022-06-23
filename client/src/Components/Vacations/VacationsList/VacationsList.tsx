@@ -22,7 +22,8 @@ export default function VacationsList(): JSX.Element {
         setVacations(store.getState().vacationState.vacations);
         setUserId(store.getState().authState.user?.id);
         const loggedIn = store.getState().authState.isLoggedIn;
-        if (loggedIn) setIsAdmin(store.getState().authState.user.role === 'Admin');
+        const user = store.getState().authState.user;
+        if (loggedIn && user) setIsAdmin(user.role === 'Admin');
       });
 
       return () => unsubscribe();

@@ -3,15 +3,17 @@ import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import VacationModel from '../../../Models/vacationModel';
 import store from '../../../Redux/Store';
+import vacationService from '../../../Services/VacationService';
 import './VacationsChart.css';
 
 export default function VacationsChart() {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
   const [vacations, setVacations] = useState<VacationModel[]>([]);
-  const [filteredVacations, setFilteredVacations] = useState<VacationModel[]>([]);
 
   useEffect(() => {
+    vacationService.getAllVacations();
+
     setVacations(store.getState().vacationState.vacations);
     const unsubscribe = store.subscribe(() => {
       setVacations(store.getState().vacationState.vacations);
@@ -19,16 +21,21 @@ export default function VacationsChart() {
     return () => unsubscribe();
   }, []);
 
-  const vacationsFilter = vacations.filter((vac) => {
-    return vac.followers !== 0;
-  });
-
-  const labels = vacationsFilter.map((vac) => {
-    return vac.destination + ' #' + vac.id;
-  });
-  const values = vacationsFilter.map((vac) => {
-    return vac.followers;
-  });
+  const chartProps: { labels: string[]; values: number[] } = vacations.reduce(
+    (prev, curr) => {
+      if (curr.followers > 0) {
+        return {
+          labels: [...prev.labels, `${curr.destination} #${curr.id}`],
+          values: [...prev.values, curr.followers],
+        };
+      }
+      return prev;
+    },
+    {
+      labels: [],
+      values: [],
+    }
+  );
 
   const options = {
     responsive: true,
@@ -56,11 +63,11 @@ export default function VacationsChart() {
   };
 
   const data = {
-    labels,
+    labels: chartProps.labels,
     datasets: [
       {
         label: 'Followers',
-        data: values,
+        data: chartProps.values,
         color: 'white',
         //   values
         backgroundColor: 'rgba(250,250,250,0.5)',
