@@ -50,7 +50,11 @@ export default function VacationsList(): JSX.Element {
       {/* <button onClick={connect}>coonect</button>
       <button onClick={send}>send</button> */}
       <div className="VacationsList-links">
-        {isAdmin && <Button onClick={handleOpen}>Reports</Button>}
+        {isAdmin && (
+          <Button color="info" variant="contained" onClick={handleOpen}>
+            Reports
+          </Button>
+        )}
 
         <Button component={Link} to="/vacations/new" color="info" variant="contained">
           Add a vacation

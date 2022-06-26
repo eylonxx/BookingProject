@@ -3,7 +3,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -54,45 +53,48 @@ export default function Vacation(props: VacationProps): JSX.Element {
     <div className="Vacation">
       <Card sx={{ width: '450px', height: '500px', borderRadius: '15px' }}>
         <CardHeader
+          sx={{
+            p: 1,
+          }}
           action={
-            props.canEdit && (
-              <ButtonGroup aria-label="outlined primary button group">
+            <ButtonGroup aria-label="outlined primary button group">
+              {props.canEdit && (
                 <IconButton onClick={handleDelete} aria-label="delete">
-                  <DeleteIcon />
+                  <DeleteIcon sx={{ fontSize: '2rem' }} />
                 </IconButton>
+              )}
+              {props.canEdit && (
                 <IconButton onClick={handleEdit}>
-                  <EditIcon />
+                  <EditIcon sx={{ fontSize: '2rem' }} />
                 </IconButton>
-              </ButtonGroup>
-            )
+              )}
+              <IconButton
+                color={props.followed ? 'error' : 'default'}
+                // change color when active
+                onClick={() => {
+                  handleFollow(id, userId);
+                }}
+                aria-label="add to favorites"
+              >
+                <FavoriteIcon sx={{ fontSize: '2rem' }} />
+              </IconButton>
+            </ButtonGroup>
           }
           title={destination}
           subheader={dates}
         />
         <CardMedia component="img" height="280" image={image} alt="Destination's image" />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
+        <CardContent sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', p: 0, paddingTop: '4px' }}>
+          <Typography variant="body2" color="text.secondary" sx={{ overflowWrap: 'anywhere', p: 1 }}>
             {description}
           </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {price}
+          <Typography variant="h5" color="text.secondary">
+            {price}$
           </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton
-            color={props.followed ? 'error' : 'default'}
-            // change color when active
-            onClick={() => {
-              handleFollow(id, userId);
-            }}
-            aria-label="add to favorites"
-          >
-            <FavoriteIcon sx={{ fontSize: '2rem' }} />
-          </IconButton>
           <Typography variant="caption" color="text.secondary">
             Followers: {followers}
           </Typography>
-        </CardActions>
+        </CardContent>
       </Card>
     </div>
   );
