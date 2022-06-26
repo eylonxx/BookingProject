@@ -11,14 +11,7 @@
   margin: 0 auto;
 }
 .PageLayout > main {
-  height: 97vh;
-  margin: auto;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
+  margin: auto 0;
 }
-
-/* .PageLayout > footer {
-  display: flex;
-  height: 5vh;
-  justify-content: center;
-  align-items: center;
-} */
