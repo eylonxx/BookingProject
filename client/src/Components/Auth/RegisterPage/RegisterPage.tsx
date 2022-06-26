@@ -1,17 +1,15 @@
-import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import Paper from '@mui/material/Paper';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import { Controller, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 import UserModel from '../../../Models/userModel';
 import authService from '../../../Services/AuthService';
 import { handleErrorText } from '../../../Utils/formValidation';
-import Paper from '@mui/material/Paper';
-import CssBaseline from '@mui/material/CssBaseline';
-import { Link } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import './RegisterPage.css';
 
@@ -178,7 +176,7 @@ export default function RegisterPage() {
                           }}
                           {...field}
                           {...register('password')}
-                          type="text"
+                          type="password"
                           label="Password"
                           error={error !== undefined}
                           helperText={error ? validationHandler.password(error.type) : ''}
@@ -209,7 +207,6 @@ export default function RegisterPage() {
               </Paper>
             </Container>
           </ThemeProvider>
-          {/* <!--Content before waves--> */}
         </div>
 
         {/* <!--Waves Container--> */}

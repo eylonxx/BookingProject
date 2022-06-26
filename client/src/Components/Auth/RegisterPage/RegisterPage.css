@@ -29,6 +29,8 @@ p {
 
 .RegisterPage-inner-header {
   height: 65vh;
+  display: flex;
+  align-items: center;
   width: 100%;
   margin: 0;
   padding: 0;

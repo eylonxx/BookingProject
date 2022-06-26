@@ -1,17 +1,16 @@
-import { handleErrorText } from '../../../Utils/formValidation';
 import { Button, TextField } from '@mui/material';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import Paper from '@mui/material/Paper';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import { Controller, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CredentialsModel from '../../../Models/credentialsModel';
 import UserModel from '../../../Models/userModel';
 import authService from '../../../Services/AuthService';
-import CssBaseline from '@mui/material/CssBaseline';
-import Paper from '@mui/material/Paper';
-import { Link } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { handleErrorText } from '../../../Utils/formValidation';
 import './LoginPage.css';
 
 export default function LoginPage() {
@@ -116,7 +115,7 @@ export default function LoginPage() {
                           }}
                           {...field}
                           {...register('password')}
-                          type="text"
+                          type="password"
                           label="Password"
                           error={error !== undefined}
                           helperText={error ? validationHandler.password(error.type) : ' '}

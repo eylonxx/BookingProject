@@ -72,9 +72,9 @@ export default function Vacation(props: VacationProps): JSX.Element {
         <CardMedia component="img" height="280" image={image} alt="Destination's image" />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            {description} {followers}
+            {description}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body1" color="text.secondary">
             {price}
           </Typography>
         </CardContent>
@@ -89,6 +89,9 @@ export default function Vacation(props: VacationProps): JSX.Element {
           >
             <FavoriteIcon sx={{ fontSize: '2rem' }} />
           </IconButton>
+          <Typography variant="caption" color="text.secondary">
+            Followers: {followers}
+          </Typography>
         </CardActions>
       </Card>
     </div>
