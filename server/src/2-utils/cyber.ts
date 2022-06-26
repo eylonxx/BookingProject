@@ -1,5 +1,5 @@
-import { Request } from 'express';
 import crypto from 'crypto';
+import { Request } from 'express';
 import jwt from 'jsonwebtoken';
 import { UnauthorizedError } from '../4-models/errors-model';
 import Role from '../4-models/role-model';

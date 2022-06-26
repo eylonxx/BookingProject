@@ -1,25 +1,13 @@
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
-import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import VacationModel from '../../../Models/vacationModel';
-import store from '../../../Redux/Store';
-import vacationService from '../../../Services/VacationService';
 import './VacationsChart.css';
-
-export default function VacationsChart() {
+interface VacationChartProps {
+  vacations: VacationModel[];
+}
+export default function VacationsChart(props: VacationChartProps) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-  const [vacations, setVacations] = useState<VacationModel[]>([]);
-
-  useEffect(() => {
-    vacationService.getAllVacations();
-
-    setVacations(store.getState().vacationState.vacations);
-    const unsubscribe = store.subscribe(() => {
-      setVacations(store.getState().vacationState.vacations);
-    });
-    return () => unsubscribe();
-  }, []);
+  const vacations = props.vacations;
 
   const chartProps: { labels: string[]; values: number[] } = vacations.reduce(
     (prev, curr) => {
@@ -41,7 +29,8 @@ export default function VacationsChart() {
     responsive: true,
     scales: {
       y: {
-        ticks: { color: 'white', beginAtZero: true },
+        ticks: { color: 'white', beginAtZero: true, precision: 0 },
+        stepSize: 1,
       },
       x: {
         ticks: { color: 'white', beginAtZero: true },
@@ -77,7 +66,7 @@ export default function VacationsChart() {
 
   return (
     <div className="VacationsChart">
-      <Bar options={options} width={800} height={200} data={data} />
+      <Bar options={options} width={960} height={540} data={data} />
     </div>
   );
 }

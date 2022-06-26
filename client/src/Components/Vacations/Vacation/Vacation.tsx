@@ -52,7 +52,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
 
   return (
     <div className="Vacation">
-      <Card sx={{ width: '450px', height: '500px' }}>
+      <Card sx={{ width: '450px', height: '500px', borderRadius: '15px' }}>
         <CardHeader
           action={
             props.canEdit && (

@@ -47,6 +47,7 @@ async function register(user: UserModel): Promise<string> {
   WHERE id = LAST_INSERT_ID()`;
   const addedUsers = await dal.execute(sql);
   const addedUser = addedUsers[0];
+
   // Generate token:
   const token = cyber.getNewToken(addedUser);
 
