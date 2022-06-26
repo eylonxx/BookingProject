@@ -1,8 +1,4 @@
 import { Button } from '@mui/material';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
-import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import VacationModel from '../../../Models/vacationModel';
@@ -12,23 +8,14 @@ import socketService from '../../../Services/SocketService';
 import vacationService from '../../../Services/VacationService';
 
 import Vacation from '../Vacation/Vacation';
-import VacationsChart from '../VacationsChart/VacationsChart';
+import VacationsChartModal from '../VacationsChartsModal/VacationsChartModal';
 import './VacationsList.css';
-const style = {
-  maxWidth: 960,
-  maxHeigth: 540,
-  borderRadius: '5px',
-  justifyContent: 'center',
-  alignItems: 'center',
-  display: 'flex',
 
-  bgcolor: 'background.paper',
-};
 export default function VacationsList(): JSX.Element {
   const [vacations, setVacations] = useState<VacationModel[]>([]);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [userId, setUserId] = useState<number>(null);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -76,20 +63,8 @@ export default function VacationsList(): JSX.Element {
         ))}
       </div>
 
-      <div>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-description" sx={{ p: 2 }}>
-              {<VacationsChart vacations={vacations} />}
-            </Typography>
-          </Box>
-        </Modal>
+      <div className="VacationsList-modal">
+        <VacationsChartModal open={open} handleOpen={handleOpen} handleClose={handleClose} vacations={vacations} />
       </div>
     </div>
   );
