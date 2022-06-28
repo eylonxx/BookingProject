@@ -18,9 +18,6 @@ export default function NewVacationForm() {
   const navigate = useNavigate();
   const [startingDate, setStartingDate] = useState('');
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
-    // vacation.price = +vacation.price;
-    // string for formdata
-
     vacation.followers = 0;
     vacation.image = vacation.image[0];
 
@@ -32,7 +29,7 @@ export default function NewVacationForm() {
     description: handleErrorText('Please enter a description', 'Must be between 4-255 characters'),
     destination: handleErrorText('Please enter a destination', 'Must be between 4-255 characters'),
     image: handleErrorText('Please upload an image'),
-    startingDate: handleErrorText('Please enter a date', '', 'Starting date cannot be in the past'),
+    startingDate: handleErrorText('Please enter a date', '', 'Invalid starting date'),
     endingDate: handleErrorText('Please enter a date', '', 'Ending date must be after starting date'),
     price: handleErrorText('Please enter a price', 'Must be between 0-100,000'),
   };
@@ -230,6 +227,7 @@ export default function NewVacationForm() {
                           {...register('endingDate')}
                           type="date"
                           InputLabelProps={{ shrink: true }}
+                          InputProps={{ inputProps: { min: new Date().toISOString().split('T')[0] } }}
                           label="Ending date"
                           error={error !== undefined}
                           helperText={error ? validationHandler.endingDate(error.type) : ''}

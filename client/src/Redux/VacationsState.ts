@@ -78,9 +78,6 @@ export function VacationsReducer(
       const ids = action.payload.data.flatMap((obj: any) => obj.vacationId);
 
       newState.vacations = newState.vacations.map((vac) => {
-        //ids [1, 14, 15]
-        // isfollowed false
-
         if (ids.includes(vac.id)) vac.isFollowed = true;
         return vac;
       });

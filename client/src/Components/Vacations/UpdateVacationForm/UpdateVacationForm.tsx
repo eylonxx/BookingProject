@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import VacationModel from '../../../Models/vacationModel';
-import store from '../../../Redux/Store';
 import vacationService from '../../../Services/VacationService';
 import { handleErrorText } from '../../../Utils/formValidation';
 import './UpdateVacationForm.css';
@@ -34,20 +33,22 @@ export default function UpdateVacationForm() {
   const validationHandler = {
     description: handleErrorText('Please enter a description', 'Must be between 4-255 characters'),
     destination: handleErrorText('Please enter a destination', 'Must be between 4-255 characters'),
-    startingDate: handleErrorText('Please enter a date', '', 'Starting date cannot be in the past'),
+    startingDate: handleErrorText('Please enter a date', '', 'Invalid starting date'),
     endingDate: handleErrorText('Please enter a date', '', 'Ending date must be after starting date'),
     price: handleErrorText('Please enter a price', 'Must be between 0-100,000'),
   };
 
   useEffect(() => {
     const id: number = +params.id;
-    const vacToUpdate = store.getState().vacationState.vacations.find((vac) => vac.id === id);
-    setValue('description', vacToUpdate.description);
-    setValue('destination', vacToUpdate.destination);
-    setValue('startingDate', vacToUpdate.startingDate);
-    setValue('endingDate', vacToUpdate.endingDate);
-    setValue('price', vacToUpdate.price);
-  }, []);
+    // const vacToUpdate = store.getState().vacationState.vacations.find((vac) => vac.id === id);
+    vacationService.getOneVacation(id).then((vacToUpdate) => {
+      setValue('description', vacToUpdate.description);
+      setValue('destination', vacToUpdate.destination);
+      setValue('startingDate', vacToUpdate.startingDate);
+      setValue('endingDate', vacToUpdate.endingDate);
+      setValue('price', vacToUpdate.price);
+    });
+  });
 
   const theme = createTheme();
 
@@ -110,7 +111,6 @@ export default function UpdateVacationForm() {
                         />
                       )}
                     />
-
                     <Controller
                       name="destination"
                       control={control}
@@ -167,7 +167,6 @@ export default function UpdateVacationForm() {
                         </TextField>
                       )}
                     />
-
                     <Controller
                       name="startingDate"
                       control={control}
@@ -201,6 +200,7 @@ export default function UpdateVacationForm() {
                           }}
                           type="date"
                           InputLabelProps={{ shrink: true }}
+                          InputProps={{ inputProps: { min: new Date().toISOString().split('T')[0] } }}
                           label="Starting date"
                           error={error !== undefined}
                           helperText={error ? validationHandler.startingDate(error.type) : ''}
