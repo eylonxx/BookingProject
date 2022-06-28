@@ -1,10 +1,8 @@
 import jwtDecode from 'jwt-decode';
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserModel from '../../../Models/userModel';
 import { RelogAction } from '../../../Redux/AuthState';
 import store from '../../../Redux/Store';
-import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import Routing from '../Routing/Routing';
 import './PageLayout.css';

@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import VacationModel from '../../../Models/vacationModel';
+import socketService from '../../../Services/SocketService';
 import vacationService from '../../../Services/VacationService';
 import { handleErrorText } from '../../../Utils/formValidation';
 import './NewVacationForm.css';
@@ -20,8 +21,8 @@ export default function NewVacationForm() {
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
     vacation.followers = 0;
     vacation.image = vacation.image[0];
-
     await vacationService.createVacation(vacation);
+    socketService.notifyServer();
     navigate('/vacations');
   };
 

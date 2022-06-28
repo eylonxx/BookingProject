@@ -4,11 +4,11 @@ import { Server as SocketServer, Socket } from 'socket.io';
 function listen(httpServer: HttpServer): void {
   const socketServer = new SocketServer(httpServer, { cors: { origin: '*' } });
 
-  socketServer.sockets.on('connection', (socket: Socket) => {
-    console.log('client connected');
+  socketServer.on('connection', (socket: Socket) => {
+    console.log('client connected ' + socket.id);
 
-    socket.on('msg', () => {
-      console.log('client sent a message');
+    socket.on('update', () => {
+      socket.broadcast.emit('updateVacations');
     });
   });
 }

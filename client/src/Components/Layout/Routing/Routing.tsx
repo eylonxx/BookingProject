@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import socketService from '../../../Services/SocketService';
 import LoginPage from '../../Auth/LoginPage/LoginPage';
 import RegisterPage from '../../Auth/RegisterPage/RegisterPage';
 import NewVacationForm from '../../Vacations/NewVacationForm/NewVacationForm';
@@ -6,6 +7,8 @@ import UpdateVacationForm from '../../Vacations/UpdateVacationForm/UpdateVacatio
 import VacationsList from '../../Vacations/VacationsList/VacationsList';
 
 export default function Routing() {
+  socketService.connect();
+
   return (
     <div>
       <Routes>

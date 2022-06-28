@@ -13,6 +13,7 @@ import VacationModel from '../../../Models/vacationModel';
 import store from '../../../Redux/Store';
 import { updateFollowVacationAction } from '../../../Redux/VacationsState';
 import followersService from '../../../Services/FollowersService';
+import socketService from '../../../Services/SocketService';
 import vacationService from '../../../Services/VacationService';
 import './Vacation.css';
 
@@ -33,6 +34,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
 
   const handleDelete = async () => {
     await vacationService.deleteVacation(id);
+    socketService.notifyServer();
   };
 
   const handleEdit = () => {
@@ -45,7 +47,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
     } else {
       followersService.follow(vacationId, userId);
     }
-
+    socketService.notifyServer();
     store.dispatch(updateFollowVacationAction(vacationId));
   };
 

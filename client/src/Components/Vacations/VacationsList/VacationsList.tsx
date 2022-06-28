@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import VacationModel from '../../../Models/vacationModel';
 import store from '../../../Redux/Store';
 import followersService from '../../../Services/FollowersService';
-import socketService from '../../../Services/SocketService';
 import vacationService from '../../../Services/VacationService';
 
 import Vacation from '../Vacation/Vacation';
@@ -21,7 +20,6 @@ export default function VacationsList(): JSX.Element {
 
   useEffect(() => {
     vacationService.getAllVacations();
-    socketService.connect();
 
     const unsubscribe = store.subscribe(() => {
       setVacations(store.getState().vacationState.vacations);
@@ -36,14 +34,6 @@ export default function VacationsList(): JSX.Element {
   useEffect(() => {
     if (userId) followersService.getAllFollowedVacationsByUserId(userId);
   }, [userId]);
-
-  function connect(): void {
-    socketService.connect();
-  }
-
-  function send(): void {
-    socketService.send();
-  }
 
   return (
     <div className="VacationsList">

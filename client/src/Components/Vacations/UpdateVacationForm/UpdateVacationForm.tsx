@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import VacationModel from '../../../Models/vacationModel';
+import socketService from '../../../Services/SocketService';
 import vacationService from '../../../Services/VacationService';
 import { handleErrorText } from '../../../Utils/formValidation';
 import './UpdateVacationForm.css';
@@ -27,6 +28,7 @@ export default function UpdateVacationForm() {
     }
 
     await vacationService.updateVacation(vacation);
+    socketService.notifyServer();
     navigate('/vacations');
   };
 
@@ -48,7 +50,7 @@ export default function UpdateVacationForm() {
       setValue('endingDate', vacToUpdate.endingDate);
       setValue('price', vacToUpdate.price);
     });
-  });
+  }, []);
 
   const theme = createTheme();
 
