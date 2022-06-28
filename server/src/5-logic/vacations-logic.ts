@@ -24,7 +24,7 @@ async function getAllVacations(): Promise<VacationModel[]> {
   return vacations;
 }
 
-async function getOneVacation(id): Promise<VacationModel> {
+async function getOneVacation(id: number): Promise<VacationModel> {
   const sql = `
     SELECT
     id,
@@ -36,9 +36,9 @@ async function getOneVacation(id): Promise<VacationModel> {
     price,
     followers
     FROM vacations
-    WHERE id = ${id}
+    WHERE id = ?
     `;
-  const vacation = await dal.execute(sql);
+  const vacation = await dal.execute(sql, [id]);
   return vacation;
 }
 
@@ -65,9 +65,16 @@ async function createVacation(vacation): Promise<VacationModel> {
   const sql = `
     INSERT INTO
     vacations (description, destination, imageName, startingDate, endingDate, price)
-    VALUES('${description}', '${destination}', '${vacation.imageName}', '${startingDate}', '${endingDate}', ${price})
+    VALUES(?, ?, ?, ?, ?, ?)
     `;
-  const result: OkPacket = await dal.execute(sql);
+  const result: OkPacket = await dal.execute(sql, [
+    description,
+    destination,
+    vacation.imageName,
+    startingDate,
+    endingDate,
+    price,
+  ]);
   vacation.id = result.insertId;
   return vacation;
 }
@@ -97,26 +104,26 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
   const sql = `
     UPDATE vacations
     SET 
-    description = '${description}', 
-    destination = '${destination}', 
-    ${vacation.imageName ? `imageName = '${vacation.imageName}',` : ''}
-    startingDate = '${startingDate}', 
-    endingDate = '${endingDate}', 
-    price = ${price}
-    WHERE id = ${id}
+    description = ?, 
+    destination = ?, 
+    ${vacation.imageName ? `imageName = ${vacation.imageName},` : ''}
+    startingDate = ?, 
+    endingDate = ?, 
+    price = ?
+    WHERE id = ?
     `;
-  const updatedVacation = await dal.execute(sql);
+  const updatedVacation = await dal.execute(sql, [description, destination, startingDate, endingDate, price, id]);
 
   return updatedVacation;
 }
 
-async function deleteVacation(id): Promise<VacationModel> {
+async function deleteVacation(id: number): Promise<VacationModel> {
   let sql = `
     DELETE FROM vacations
-    WHERE id = ${id} 
+    WHERE id = ? 
     RETURNING *
     `;
-  const deletedVacation = await dal.execute(sql);
+  const deletedVacation = await dal.execute(sql, [id]);
   const imageToDelete = deletedVacation[0].imageName;
   const pathToDelete = path.parse(__dirname);
   fs.unlink(path.join(pathToDelete.dir, '1-assets/images/') + imageToDelete);

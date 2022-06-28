@@ -55,10 +55,11 @@ export default function VacationsList(): JSX.Element {
             Reports
           </Button>
         )}
-
-        <Button component={Link} to="/vacations/new" color="info" variant="contained">
-          Add a vacation
-        </Button>
+        {isAdmin && (
+          <Button component={Link} to="/vacations/new" color="info" variant="contained">
+            Add a vacation
+          </Button>
+        )}
       </div>
 
       <div className="VacationsList-vacations">

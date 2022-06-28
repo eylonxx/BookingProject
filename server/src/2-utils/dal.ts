@@ -7,13 +7,26 @@ const connection = mysql.createPool({
   database: 'booking',
 });
 
-function execute(sql: string): Promise<any> {
+// function execute(sql: string): Promise<any> {
+//   return new Promise<any>((resolve, reject) => {
+//     connection.query(sql, (err, result) => {
+//       if (err) {
+//         console.log(err);
+//         reject(err);
+//         return;
+//       }
+//       resolve(result);
+//     });
+//   });
+// }
+
+function execute(sql: string, values?: any) {
   return new Promise<any>((resolve, reject) => {
-    connection.query(sql, (err, result) => {
+    connection.query(sql, values, (err, result) => {
       if (err) {
         console.log(err);
-        reject(err);
-        return;
+
+        return reject(err);
       }
       resolve(result);
     });

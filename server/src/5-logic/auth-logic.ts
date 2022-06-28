@@ -9,9 +9,9 @@ async function checkUsername(username: string): Promise<boolean> {
   const sql = `
   SELECT username
   FROM users
-  WHERE username = '${username}'
+  WHERE username = ?
   `;
-  const users = await dal.execute(sql);
+  const users = await dal.execute(sql, [username]);
   return users.length > 0;
 }
 
@@ -24,24 +24,16 @@ async function register(user: UserModel): Promise<string> {
   if (await checkUsername(user.username)) {
     throw new ValidationError(`${user.username}' already exists`);
   }
-
   const { firstName, lastName, username, password } = user;
-  // Returns back token (JWT)
-
-  // Set role:
   user.role = Role.User;
-
-  //hash and salt
   user.password = cyber.hashPassword(password);
-
-  // Add to users collection:
   let sql = `
     INSERT INTO users
     (firstName, lastName, username, password, role)
-    VALUES('${firstName}', '${lastName}', '${username}', '${user.password}', '${user.role}') 
+    VALUES(?, ?, ?, ?, ?) 
     `;
 
-  await dal.execute(sql);
+  await dal.execute(sql, [firstName, lastName, username, user.password, user.role]);
   sql = `
   SELECT * FROM users
   WHERE id = LAST_INSERT_ID()`;
@@ -63,10 +55,10 @@ async function login(credentials: CredentialsModel): Promise<string> {
   // Check credentials:
   const sql = `
     SELECT * FROM users 
-    WHERE username = '${username}' AND password = '${credentials.password}';
+    WHERE username = ? AND password = ?;
 `;
 
-  const users = await dal.execute(sql);
+  const users = await dal.execute(sql, [username, credentials.password]);
 
   // If user not exist:
   if (users.length === 0) {

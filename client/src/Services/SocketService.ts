@@ -10,6 +10,11 @@ class SocketService {
   public send(): void {
     this.socket.emit('msg');
   }
+  public updateVacations(): void {
+    this.socket.on('update', () => {
+      console.log('updated a vacation!!');
+    });
+  }
 }
 const socketService = new SocketService();
 export default socketService;
