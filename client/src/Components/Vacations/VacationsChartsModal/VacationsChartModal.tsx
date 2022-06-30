@@ -1,15 +1,15 @@
-import { Box, Modal, Typography } from '@mui/material';
+import { Modal, Paper } from '@mui/material';
 import VacationModel from '../../../Models/vacationModel';
 import VacationsChart from '../VacationsChart/VacationsChart';
 
 const style = {
   maxWidth: 960,
   maxHeigth: 540,
+  padding: 1,
   borderRadius: '5px',
   justifyContent: 'center',
   alignItems: 'center',
   display: 'flex',
-
   bgcolor: 'background.paper',
 };
 
@@ -32,11 +32,9 @@ export default function VacationsChartModal(props: ModalProps) {
         aria-describedby="modal-modal-description"
         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-description" sx={{ p: 2 }}>
-            {<VacationsChart vacations={props.vacations} />}
-          </Typography>
-        </Box>
+        <Paper elevation={5} sx={style}>
+          {<VacationsChart vacations={props.vacations} />}
+        </Paper>
       </Modal>
     </div>
   );

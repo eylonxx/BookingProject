@@ -37,8 +37,6 @@ export default function VacationsList(): JSX.Element {
 
   return (
     <div className="VacationsList">
-      {/* <button onClick={connect}>coonect</button>
-      <button onClick={send}>send</button> */}
       <div className="VacationsList-links">
         {isAdmin && (
           <Button color="info" variant="contained" onClick={handleOpen}>

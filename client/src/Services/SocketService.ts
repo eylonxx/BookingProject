@@ -7,13 +7,13 @@ class SocketService {
     this.socket = io('http://localhost:3001');
 
     //listen to server here
-    this.socket.on('updateVacations', () => {
+    this.socket.on('vacationUpdated', () => {
       vacationService.getAllVacations();
     });
   }
 
   public notifyServer(): void {
-    this.socket.emit('update');
+    this.socket.emit('updateVacation');
   }
 }
 const socketService = new SocketService();

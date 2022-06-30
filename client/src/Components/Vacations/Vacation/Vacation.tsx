@@ -47,6 +47,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
     } else {
       followersService.follow(vacationId, userId);
     }
+
     socketService.notifyServer();
     store.dispatch(updateFollowVacationAction(vacationId));
   };

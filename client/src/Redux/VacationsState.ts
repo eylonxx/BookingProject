@@ -56,7 +56,10 @@ export function VacationsReducer(
 
   switch (action.type) {
     case VacationsActionType.FetchVacations:
-      newState.vacations = action.payload; // <-- here payload is all Vacations
+      newState.vacations = action.payload.map((vac: VacationModel, i: number) => {
+        return { ...vac, isFollowed: newState.vacations[i]?.isFollowed };
+      }); // <-- here payload is all Vacations
+
       break;
 
     case VacationsActionType.AddVacation:
