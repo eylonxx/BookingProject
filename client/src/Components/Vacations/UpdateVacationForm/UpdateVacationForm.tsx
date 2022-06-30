@@ -179,8 +179,8 @@ export default function UpdateVacationForm() {
                         minLength: 4,
                         maxLength: 255,
                         validate: (value) => {
-                          let startDate = Date.parse(value);
-                          let now = new Date().getTime();
+                          let now = new Date().toISOString().split('T')[0];
+                          let startDate = value;
                           return startDate >= now;
                         },
                       }}
@@ -220,10 +220,8 @@ export default function UpdateVacationForm() {
                         minLength: 4,
                         maxLength: 255,
                         validate: (value) => {
-                          let startDate = Date.parse(startingDate);
-                          let endDate = Date.parse(value);
-
-                          // validate date logic
+                          let startDate = startingDate;
+                          let endDate = value;
                           return startDate <= endDate;
                         },
                       }}

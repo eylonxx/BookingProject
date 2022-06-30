@@ -113,7 +113,7 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     SET 
     description = ?, 
     destination = ?, 
-    ${vacation.imageName ? `imageName = ${vacation.imageName},` : ''}
+    ${vacation.imageName ? `imageName = '${vacation.imageName}',` : ''}
     startingDate = ?, 
     endingDate = ?, 
     price = ?
