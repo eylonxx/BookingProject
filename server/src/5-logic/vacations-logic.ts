@@ -90,7 +90,6 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
   if (errors) {
     throw new ValidationError(errors);
   }
-
   vacation.startingDate = vacation.startingDate + 'T04:00:00.000Z';
   vacation.endingDate = vacation.endingDate + 'T04:00:00.000Z';
   const { id, description, destination, startingDate, endingDate, price } = vacation;

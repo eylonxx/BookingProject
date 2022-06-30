@@ -3,3 +3,6 @@
 .Vacation-followed-heart {
   color: red;
 }
+.Vacation-footer {
+  justify-self: flex-end;
+}

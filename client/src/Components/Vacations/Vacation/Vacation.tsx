@@ -86,14 +86,35 @@ export default function Vacation(props: VacationProps): JSX.Element {
           subheader={dates}
         />
         <CardMedia component="img" height="280" image={image} alt="Destination's image" />
-        <CardContent sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', p: 0, paddingTop: '4px' }}>
-          <Typography variant="body2" color="text.secondary" sx={{ overflowWrap: 'anywhere', p: 1 }}>
+        <CardContent
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            height: '28%',
+            paddingTop: '4px',
+            padding: '0px',
+          }}
+        >
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              overflowWrap: 'anywhere',
+              p: 1,
+              textAlign: 'center',
+              flexGrow: 1,
+              maxHeight: '90px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
             {description}
           </Typography>
-          <Typography variant="h5" color="text.secondary">
+          <Typography variant="h5" color="text.secondary" sx={{ textAlign: 'center', flexGrow: 0 }}>
             {price}$
           </Typography>
-          <Typography variant="caption" color="text.secondary">
+          <Typography variant="caption" color="text.secondary" sx={{ textAlign: 'center', flexGrow: 0 }}>
             Followers: {followers}
           </Typography>
         </CardContent>
