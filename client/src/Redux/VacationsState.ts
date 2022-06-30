@@ -82,6 +82,7 @@ export function VacationsReducer(
         return vac;
       });
       break;
+
     case VacationsActionType.UpdateFollowVacation:
       newState.vacations = newState.vacations.map((vac) => {
         if (vac.id === action.payload) {

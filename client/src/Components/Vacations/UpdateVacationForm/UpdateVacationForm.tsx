@@ -47,6 +47,7 @@ export default function UpdateVacationForm() {
       setValue('description', vacToUpdate.description);
       setValue('destination', vacToUpdate.destination);
       setValue('startingDate', vacToUpdate.startingDate);
+      setStartingDate(vacToUpdate.startingDate);
       setValue('endingDate', vacToUpdate.endingDate);
       setValue('price', vacToUpdate.price);
     });
@@ -221,6 +222,7 @@ export default function UpdateVacationForm() {
                         validate: (value) => {
                           let startDate = Date.parse(startingDate);
                           let endDate = Date.parse(value);
+
                           // validate date logic
                           return startDate <= endDate;
                         },

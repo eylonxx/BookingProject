@@ -91,6 +91,8 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     throw new ValidationError(errors);
   }
 
+  vacation.startingDate = vacation.startingDate + 'T04:00:00.000Z';
+  vacation.endingDate = vacation.endingDate + 'T04:00:00.000Z';
   const { id, description, destination, startingDate, endingDate, price } = vacation;
   if (vacation.image) {
     // const currentImageToDelete = vacation.imageName;
@@ -105,7 +107,6 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     //dont want to return the image
     delete vacation.image;
   }
-
   // check for empty image
   const sql = `
     UPDATE vacations
