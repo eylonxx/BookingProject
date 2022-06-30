@@ -42,9 +42,8 @@ async function getOneVacation(id: number): Promise<VacationModel> {
   return vacation;
 }
 
-async function createVacation(vacation): Promise<VacationModel> {
+async function createVacation(vacation: VacationModel): Promise<VacationModel> {
   //joi validation
-  console.log(vacation.startingDate);
 
   const errors = vacation.validatePost();
   if (errors) {
@@ -61,7 +60,14 @@ async function createVacation(vacation): Promise<VacationModel> {
     delete vacation.image;
   }
 
+  //fix timezone diff with mariadb
+  //since were gmt+3 and date is being saved as yyyy-mm-ddT00:00:00, it is being read as 3 hours earlier
+  //so i have pushed in 3 hours ahead
+  vacation.startingDate = vacation.startingDate + 'T03:00:00.000Z';
+  vacation.endingDate = vacation.endingDate + 'T03:00:00.000Z';
+
   const { description, destination, startingDate, endingDate, price } = vacation;
+
   const sql = `
     INSERT INTO
     vacations (description, destination, imageName, startingDate, endingDate, price)

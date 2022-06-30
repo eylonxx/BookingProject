@@ -43,6 +43,7 @@ class VacationService {
     const vacation = vacations.find((vac): boolean => {
       return vac.id === id;
     });
+
     return vacation;
   }
   // Add a new vacation:

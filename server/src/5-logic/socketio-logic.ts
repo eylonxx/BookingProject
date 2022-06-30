@@ -5,8 +5,7 @@ function listen(httpServer: HttpServer): void {
   const socketServer = new SocketServer(httpServer, { cors: { origin: '*' } });
 
   socketServer.on('connection', (socket: Socket) => {
-    console.log('client connected ' + socket.id);
-
+    // console.log('client connected');
     socket.on('update', () => {
       socket.broadcast.emit('updateVacations');
     });
