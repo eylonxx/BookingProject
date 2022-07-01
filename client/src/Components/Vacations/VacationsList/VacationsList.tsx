@@ -35,6 +35,22 @@ export default function VacationsList(): JSX.Element {
     if (userId) followersService.getAllFollowedVacationsByUserId(userId);
   }, [userId]);
 
+  const compareVacations = (vacation1: VacationModel, vacation2: VacationModel) => {
+    if (vacation1.isFollowed === vacation2.isFollowed) {
+      return vacation2.followers - vacation1.followers;
+    } else {
+      return vacation1.isFollowed ? -1 : 1;
+    }
+  };
+
+  const renderVacations = () => {
+    let temp = [...vacations];
+    let sortedTemp = temp.sort(compareVacations);
+    return sortedTemp.map((vacation) => {
+      return <Vacation followed={vacation.isFollowed} canEdit={isAdmin} key={vacation.id} vacation={vacation} />;
+    });
+  };
+
   return (
     <div className="VacationsList">
       <div className="VacationsList-links">
@@ -50,11 +66,7 @@ export default function VacationsList(): JSX.Element {
         )}
       </div>
 
-      <div className="VacationsList-vacations">
-        {vacations.map((vacation) => (
-          <Vacation followed={vacation.isFollowed} canEdit={isAdmin} key={vacation.id} vacation={vacation} />
-        ))}
-      </div>
+      <div className="VacationsList-vacations">{renderVacations()}</div>
 
       <div className="VacationsList-modal">
         <VacationsChartModal open={open} handleOpen={handleOpen} handleClose={handleClose} vacations={vacations} />
