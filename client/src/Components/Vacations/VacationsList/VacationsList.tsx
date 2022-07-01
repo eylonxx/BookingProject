@@ -31,6 +31,7 @@ export default function VacationsList(): JSX.Element {
 
     return () => unsubscribe();
   }, []);
+
   useEffect(() => {
     if (userId) followersService.getAllFollowedVacationsByUserId(userId);
   }, [userId]);

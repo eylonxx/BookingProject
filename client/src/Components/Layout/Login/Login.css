@@ -11,5 +11,6 @@
 }
 .Login-logout-button {
   position: absolute;
+  cursor: pointer;
   right: 2%;
 }
