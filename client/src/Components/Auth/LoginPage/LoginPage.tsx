@@ -5,10 +5,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import CredentialsModel from '../../../Models/credentialsModel';
 import UserModel from '../../../Models/userModel';
+import store from '../../../Redux/Store';
 import authService from '../../../Services/AuthService';
 import { handleErrorText } from '../../../Utils/formValidation';
 import './LoginPage.css';
@@ -19,7 +21,7 @@ export default function LoginPage() {
 
   async function sendData(credentials: CredentialsModel) {
     try {
-      const user = await authService.login(credentials);
+      await authService.login(credentials);
 
       reset();
       alert('You have been succesfully logged in.');
@@ -29,6 +31,10 @@ export default function LoginPage() {
       alert(e);
     }
   }
+
+  useEffect(() => {
+    if (store.getState().authState.user) navigate('/vacations');
+  }, []);
 
   const validationHandler = {
     username: handleErrorText('Please enter a username', 'Must be between 4-16 characters'),

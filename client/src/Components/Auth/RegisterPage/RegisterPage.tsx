@@ -21,8 +21,8 @@ export default function RegisterPage() {
       await authService.register(user);
       alert('You have been succesfully registered.');
       navigate('/vacations');
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      alert(error.response.data);
     }
   }
   const validationHandler = {

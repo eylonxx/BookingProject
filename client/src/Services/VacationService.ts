@@ -33,7 +33,7 @@ class VacationService {
           };
         });
       })
-      .catch((e) => console.log(e));
+      .catch((e) => alert(e));
     store.dispatch(fetchVacationsAction(vacations));
     return vacations;
   }
@@ -116,7 +116,7 @@ class VacationService {
         deletedVacation = res.data;
       })
       .catch((e) => {
-        console.log(e);
+        alert(e);
       });
 
     store.dispatch(deleteVacationAction(deletedVacation));

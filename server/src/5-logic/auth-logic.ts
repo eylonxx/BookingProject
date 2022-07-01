@@ -22,7 +22,7 @@ async function register(user: UserModel): Promise<string> {
   }
 
   if (await checkUsername(user.username)) {
-    throw new ValidationError(`${user.username}' already exists`);
+    throw new ValidationError(`'${user.username}' already exists, please pick another username`);
   }
   const { firstName, lastName, username, password } = user;
   user.role = Role.User;
