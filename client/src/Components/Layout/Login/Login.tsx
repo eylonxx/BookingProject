@@ -26,9 +26,10 @@ export default function Login() {
   const renderHeader = () => {
     if (isLoggedIn) {
       return (
-        <div>
-          <span>Hello, {name}! </span>
+        <div className="Login">
+          <span className="Login-hello">Hello, {name}!</span>
           <span
+            className="Login-logout-button"
             onClick={() => {
               handleLogout();
             }}
@@ -39,12 +40,12 @@ export default function Login() {
       );
     } else {
       return (
-        <div>
+        <div className="Login">
           <span>Hello guest!</span>
         </div>
       );
     }
   };
 
-  return <div className="Login">{renderHeader()}</div>;
+  return renderHeader();
 }

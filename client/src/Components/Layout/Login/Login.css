@@ -1,4 +1,15 @@
 .Login {
-  margin: auto 0;
   font-size: 30px;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Login-hello {
+  justify-self: center;
+}
+.Login-logout-button {
+  position: absolute;
+  right: 2%;
 }
