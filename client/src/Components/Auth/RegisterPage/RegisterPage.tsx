@@ -22,6 +22,8 @@ export default function RegisterPage() {
       alert('You have been succesfully registered.');
       navigate('/vacations');
     } catch (error: any) {
+      console.log(error);
+
       alert(error.response.data);
     }
   }

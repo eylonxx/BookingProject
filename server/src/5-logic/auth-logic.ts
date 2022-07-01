@@ -1,3 +1,4 @@
+import { OkPacket } from 'mysql';
 import cyber from '../2-utils/cyber';
 import dal from '../2-utils/dal';
 import CredentialsModel from '../4-models/credentials-model';
@@ -33,12 +34,15 @@ async function register(user: UserModel): Promise<string> {
     VALUES(?, ?, ?, ?, ?) 
     `;
 
-  await dal.execute(sql, [firstName, lastName, username, user.password, user.role]);
+  const result: OkPacket = await dal.execute(sql, [firstName, lastName, username, user.password, user.role]);
+  const userId = result.insertId;
+
   sql = `
   SELECT * FROM users
-  WHERE id = LAST_INSERT_ID()`;
+  WHERE id = ${userId}`;
   const addedUsers = await dal.execute(sql);
   const addedUser = addedUsers[0];
+  delete addedUser.password;
 
   // Generate token:
   const token = cyber.getNewToken(addedUser);
@@ -65,6 +69,7 @@ async function login(credentials: CredentialsModel): Promise<string> {
     throw new UnauthorizedError('Incorrect username or password');
   }
   const user = users[0];
+  delete user.password;
 
   // Generate token:
   const token = cyber.getNewToken(user);
