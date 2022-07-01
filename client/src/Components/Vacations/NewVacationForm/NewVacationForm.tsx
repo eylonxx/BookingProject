@@ -89,6 +89,8 @@ export default function NewVacationForm() {
                           }}
                           {...field}
                           {...register('description')}
+                          multiline
+                          rows={2}
                           type="text"
                           label="Description"
                           error={error !== undefined}

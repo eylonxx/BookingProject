@@ -108,6 +108,8 @@ export default function UpdateVacationForm() {
                           {...field}
                           {...register('description')}
                           type="text"
+                          multiline
+                          rows={2}
                           label="Description"
                           error={error !== undefined}
                           helperText={error ? validationHandler.description(error.type) : ''}
