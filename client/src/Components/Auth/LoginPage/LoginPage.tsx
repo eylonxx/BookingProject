@@ -28,7 +28,7 @@ export default function LoginPage() {
       navigate('/vacations');
     } catch (e: any) {
       reset();
-      alert(e);
+      alert(e.response.data);
     }
   }
 
