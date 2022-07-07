@@ -12,6 +12,7 @@ import VacationModel from '../../../Models/vacationModel';
 import socketService from '../../../Services/SocketService';
 import vacationService from '../../../Services/VacationService';
 import { handleErrorText } from '../../../Utils/formValidation';
+import notyfConfig from '../../../Utils/notyf';
 import './NewVacationForm.css';
 
 export default function NewVacationForm() {
@@ -23,6 +24,8 @@ export default function NewVacationForm() {
     vacation.image = vacation.image[0];
     await vacationService.createVacation(vacation);
     socketService.notifyServer();
+    notyfConfig.success('Created a new vacation!');
+
     navigate('/vacations');
   };
 

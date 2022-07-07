@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import store from '../../../Redux/Store';
 import authService from '../../../Services/AuthService';
+import notyfConfig from '../../../Utils/notyf';
 import './Login.css';
 
 export default function Login() {
@@ -20,6 +21,8 @@ export default function Login() {
 
   const handleLogout = async () => {
     await authService.logout();
+    notyfConfig.error('Logged out!');
+
     navigate('/login');
   };
 

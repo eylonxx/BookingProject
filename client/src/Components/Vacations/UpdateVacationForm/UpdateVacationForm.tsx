@@ -12,6 +12,7 @@ import VacationModel from '../../../Models/vacationModel';
 import socketService from '../../../Services/SocketService';
 import vacationService from '../../../Services/VacationService';
 import { handleErrorText } from '../../../Utils/formValidation';
+import notyfConfig from '../../../Utils/notyf';
 import './UpdateVacationForm.css';
 
 export default function UpdateVacationForm() {
@@ -29,6 +30,8 @@ export default function UpdateVacationForm() {
 
     await vacationService.updateVacation(vacation);
     socketService.notifyServer();
+    notyfConfig.success('Updated vacation!');
+
     navigate('/vacations');
   };
 

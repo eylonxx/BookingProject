@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { Notyf } from 'notyf';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,6 +14,7 @@ import UserModel from '../../../Models/userModel';
 import store from '../../../Redux/Store';
 import authService from '../../../Services/AuthService';
 import { handleErrorText } from '../../../Utils/formValidation';
+import notyfConfig from '../../../Utils/notyf';
 import './LoginPage.css';
 
 export default function LoginPage() {
@@ -22,9 +24,8 @@ export default function LoginPage() {
   async function sendData(credentials: CredentialsModel) {
     try {
       await authService.login(credentials);
-
       reset();
-      alert('You have been succesfully logged in.');
+      notyfConfig.success('Logged in!');
       navigate('/vacations');
     } catch (e: any) {
       reset();

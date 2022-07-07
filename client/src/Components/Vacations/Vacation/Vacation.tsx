@@ -15,6 +15,7 @@ import { updateFollowVacationAction } from '../../../Redux/VacationsState';
 import followersService from '../../../Services/FollowersService';
 import socketService from '../../../Services/SocketService';
 import vacationService from '../../../Services/VacationService';
+import notyfConfig from '../../../Utils/notyf';
 import './Vacation.css';
 
 interface VacationProps {
@@ -35,6 +36,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
   const handleDelete = async () => {
     await vacationService.deleteVacation(id);
     socketService.notifyServer();
+    notyfConfig.error('Deleted a vacation!');
   };
 
   const handleEdit = () => {
