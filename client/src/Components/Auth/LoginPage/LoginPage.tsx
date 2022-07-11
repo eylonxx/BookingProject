@@ -26,15 +26,17 @@ export default function LoginPage() {
       await authService.login(credentials);
       reset();
       notyfConfig.success('Logged in!');
+      //success notification
       navigate('/vacations');
     } catch (e: any) {
       reset();
-      alert(e.response.data);
+      notyfConfig.error(e.response.data);
     }
   }
 
   useEffect(() => {
     if (store.getState().authState.user) navigate('/vacations');
+    //if already logged in, go to vacation
   }, []);
 
   const validationHandler = {

@@ -18,6 +18,7 @@ class VacationService {
     await axios
       .get<VacationModel[]>(config.vacationsUrl, {
         headers: {
+          // auth
           Authorization: 'Bearer ' + sessionToken,
         },
       })
@@ -25,6 +26,7 @@ class VacationService {
         vacations = response.data;
 
         vacations = vacations.map((vac) => {
+          // return all vacations and change date and set isFollowed
           return {
             ...vac,
             startingDate: vac.startingDate.substring(0, 10),
@@ -35,6 +37,7 @@ class VacationService {
       })
       .catch((e) => alert(e));
     store.dispatch(fetchVacationsAction(vacations));
+    //update redux
     return vacations;
   }
   // Get one vacation by id:
@@ -46,10 +49,11 @@ class VacationService {
 
     return vacation;
   }
+
   // Add a new vacation:
   public async createVacation(newVacation: VacationModel): Promise<VacationModel> {
     let sessionToken = window.sessionStorage.getItem('token');
-
+    // append data to formdata to send to server (for images)
     const bodyFormData = new FormData();
     bodyFormData.append('description', newVacation.description);
     bodyFormData.append('destination', newVacation.destination);
@@ -68,6 +72,7 @@ class VacationService {
     const addedVacation = response.data;
 
     store.dispatch(addVacationAction(addedVacation));
+    //update redux
     return addedVacation;
   }
 
@@ -76,6 +81,7 @@ class VacationService {
     let sessionToken = window.sessionStorage.getItem('token');
 
     const { id } = vacationToUpdate;
+    // append data to formdata to send to server (for images)
 
     const bodyFormData = new FormData();
     bodyFormData.append('id', vacationToUpdate.id.toString());
@@ -85,6 +91,7 @@ class VacationService {
     bodyFormData.append('endingDate', vacationToUpdate.endingDate.substring(0, 10));
     bodyFormData.append('price', vacationToUpdate.price.toString());
 
+    //if theres an image append it (optional)
     if (vacationToUpdate.image) {
       bodyFormData.append('image', vacationToUpdate.image, vacationToUpdate.image.name);
     }
@@ -99,6 +106,7 @@ class VacationService {
     const updatedVacation = response.data;
 
     store.dispatch(updateVacationAction(updatedVacation));
+    //update redux
     return updatedVacation;
   }
 
@@ -120,6 +128,8 @@ class VacationService {
       });
 
     store.dispatch(deleteVacationAction(deletedVacation));
+    //update redux
+
     return deletedVacation;
   }
 }

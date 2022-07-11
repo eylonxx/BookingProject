@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import followLogic from '../5-logic/follow-logic';
 const router = express.Router();
 
-// POST http://localhost:3001/auth/register
+// POST http://localhost:3001/api/follow
 router.post('/follow', async (req: Request, res: Response, next: NextFunction) => {
   try {
     await followLogic.follow(req.body);
@@ -11,7 +11,7 @@ router.post('/follow', async (req: Request, res: Response, next: NextFunction) =
   }
 });
 
-// POST http://localhost:3001/auth/login
+// POST http://localhost:3001/api/unfollow
 router.post('/unfollow', async (req: Request, res: Response, next: NextFunction) => {
   try {
     await followLogic.unfollow(req.body);

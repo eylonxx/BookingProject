@@ -21,6 +21,7 @@ export default function VacationsList(): JSX.Element {
   useEffect(() => {
     vacationService.getAllVacations();
 
+    //subscribing for changes in vacations and who is logged in and wether he is an admin or not
     const unsubscribe = store.subscribe(() => {
       setVacations(store.getState().vacationState.vacations);
       setUserId(store.getState().authState.user?.id);
@@ -33,13 +34,16 @@ export default function VacationsList(): JSX.Element {
   }, []);
 
   useEffect(() => {
+    //getting followed vacations for a user
     if (userId) followersService.getAllFollowedVacationsByUserId(userId);
   }, [userId]);
 
   const compareVacations = (vacation1: VacationModel, vacation2: VacationModel) => {
+    //comparing vacations to sort in renderVacation.
     if (vacation1.isFollowed === vacation2.isFollowed) {
       return vacation2.followers - vacation1.followers;
     } else {
+      //return as first or as second between the two
       return vacation1.isFollowed ? -1 : 1;
     }
   };
@@ -47,6 +51,7 @@ export default function VacationsList(): JSX.Element {
   const renderVacations = () => {
     let temp = [...vacations];
     let sortedTemp = temp.sort(compareVacations);
+    //sorting by followed and number of followers => unfollowed by number of followers
     return sortedTemp.map((vacation) => {
       return <Vacation followed={vacation.isFollowed} canEdit={isAdmin} key={vacation.id} vacation={vacation} />;
     });
@@ -55,11 +60,13 @@ export default function VacationsList(): JSX.Element {
   return (
     <div className="VacationsList">
       <div className="VacationsList-links">
+        {/* modal for admins */}
         {isAdmin && (
           <Button color="info" variant="contained" onClick={handleOpen}>
             Reports
           </Button>
         )}
+        {/* create form for admins */}
         {isAdmin && (
           <Button component={Link} to="/vacations/new" color="info" variant="contained">
             Add a vacation
@@ -70,6 +77,7 @@ export default function VacationsList(): JSX.Element {
       <div className="VacationsList-vacations">{renderVacations()}</div>
 
       <div className="VacationsList-modal">
+        {/* rendering modal */}
         <VacationsChartModal open={open} handleOpen={handleOpen} handleClose={handleClose} vacations={vacations} />
       </div>
     </div>

@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import UserModel from '../../../Models/userModel';
 import authService from '../../../Services/AuthService';
 import { handleErrorText } from '../../../Utils/formValidation';
+import notyfConfig from '../../../Utils/notyf';
 
 import './RegisterPage.css';
 
@@ -19,12 +20,10 @@ export default function RegisterPage() {
   async function sendData(user: UserModel) {
     try {
       await authService.register(user);
-      alert('You have been succesfully registered.');
+      notyfConfig.success('Registered successfully!');
       navigate('/vacations');
     } catch (error: any) {
-      console.log(error);
-
-      alert(error.response.data);
+      notyfConfig.error(error.response.data);
     }
   }
   const validationHandler = {

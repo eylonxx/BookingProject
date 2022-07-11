@@ -6,6 +6,7 @@ function listen(httpServer: HttpServer): void {
 
   socketServer.on('connection', (socket: Socket) => {
     socket.on('updateVacation', () => {
+      //listen to event from server to update vacations
       socket.broadcast.emit('vacationUpdated');
     });
   });

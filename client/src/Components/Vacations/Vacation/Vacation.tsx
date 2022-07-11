@@ -25,9 +25,7 @@ interface VacationProps {
 }
 export default function Vacation(props: VacationProps): JSX.Element {
   const { id, description, destination, startingDate, endingDate, price, followers, imageName } = props.vacation;
-
-  //get all vacations that current user follows
-
+  //certain functions available only for admins
   const userId: number = store.getState().authState.user?.id;
   const image = 'http://localhost:3001/images/' + imageName;
   const dates = `${startingDate} until ${endingDate}`;
@@ -44,13 +42,15 @@ export default function Vacation(props: VacationProps): JSX.Element {
   };
 
   const handleFollow = async (vacationId: number, userId: number) => {
+    //update follows
     if (props.followed) {
       followersService.unfollow(vacationId, userId);
+      socketService.notifyServer();
     } else {
       followersService.follow(vacationId, userId);
+      socketService.notifyServer();
     }
 
-    socketService.notifyServer();
     store.dispatch(updateFollowVacationAction(vacationId));
   };
 
@@ -63,26 +63,31 @@ export default function Vacation(props: VacationProps): JSX.Element {
           }}
           action={
             <ButtonGroup aria-label="outlined primary button group">
+              {/* only for admins */}
               {props.canEdit && (
                 <IconButton onClick={handleDelete} aria-label="delete">
                   <DeleteIcon sx={{ fontSize: '2rem' }} />
                 </IconButton>
               )}
+              {/* only for admins */}
               {props.canEdit && (
                 <IconButton onClick={handleEdit}>
                   <EditIcon sx={{ fontSize: '2rem' }} />
                 </IconButton>
               )}
-              <IconButton
-                color={props.followed ? 'error' : 'default'}
-                // change color when active
-                onClick={() => {
-                  handleFollow(id, userId);
-                }}
-                aria-label="add to favorites"
-              >
-                <FavoriteIcon sx={{ fontSize: '2rem' }} />
-              </IconButton>
+              {/* only for users */}
+              {!props.canEdit && (
+                <IconButton
+                  color={props.followed ? 'error' : 'default'}
+                  // change color when active
+                  onClick={() => {
+                    handleFollow(id, userId);
+                  }}
+                  aria-label="add to favorites"
+                >
+                  <FavoriteIcon sx={{ fontSize: '2rem' }} />
+                </IconButton>
+              )}
             </ButtonGroup>
           }
           title={destination}

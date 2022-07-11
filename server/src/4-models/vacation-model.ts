@@ -24,6 +24,8 @@ class VacationModel {
     this.followers = vacation.followers;
   }
 
+  // JOI VALIDATION
+
   public static postValidationSchema = Joi.object({
     id: Joi.forbidden(),
     description: Joi.string().required(),
@@ -35,8 +37,8 @@ class VacationModel {
     price: Joi.number().required().positive().min(0).max(100000),
     followers: Joi.number().optional().positive(),
   });
-  //put validate schema
 
+  //put validate schema
   public static putValidationSchema = Joi.object({
     id: Joi.required(),
     description: Joi.string().required(),

@@ -9,6 +9,7 @@ import './PageLayout.css';
 
 export default function PageLayout() {
   const navigate = useNavigate();
+  //useEffect in top level component, checking for token and relogging (so redux stays updated on refresh)
   useEffect(() => {
     let token = window.sessionStorage.getItem('token');
     if (token) {

@@ -22,11 +22,12 @@ export default function Login() {
   const handleLogout = async () => {
     await authService.logout();
     notyfConfig.error('Logged out!');
-
+    //go to /login after logging out
     navigate('/login');
   };
 
   const renderHeader = () => {
+    //conditional rendering hello \ guest
     if (isLoggedIn) {
       return (
         <div className="Login">

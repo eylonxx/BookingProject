@@ -43,8 +43,6 @@ async function getOneVacation(id: number): Promise<VacationModel> {
 }
 
 async function createVacation(vacation: VacationModel): Promise<VacationModel> {
-  //joi validation
-
   const errors = vacation.validatePost();
   if (errors) {
     throw new ValidationError(errors);
@@ -94,10 +92,7 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
   vacation.endingDate = vacation.endingDate + 'T04:00:00.000Z';
   const { id, description, destination, startingDate, endingDate, price } = vacation;
   if (vacation.image) {
-    // const currentImageToDelete = vacation.imageName;
-    // const pathToDelete = path.parse(__dirname);
-    // fs.unlink(path.join(pathToDelete.dir, '1-assets/images/') + currentImageToDelete);
-
+    //get image name
     const dotIndex = vacation.image.name.lastIndexOf('.');
     const imageExtension = vacation.image.name.substring(dotIndex);
     vacation.imageName = uuid() + imageExtension;
@@ -107,6 +102,7 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     delete vacation.image;
   }
   // check for empty image
+  //if theres a new image, update it, otherwise keep original
   const sql = `
     UPDATE vacations
     SET 
@@ -132,6 +128,7 @@ async function deleteVacation(id: number): Promise<VacationModel> {
   const deletedVacation = await dal.execute(sql, [id]);
   const imageToDelete = deletedVacation[0].imageName;
   const pathToDelete = path.parse(__dirname);
+  //deleting from path
   fs.unlink(path.join(pathToDelete.dir, '1-assets/images/') + imageToDelete);
 
   return deletedVacation[0];

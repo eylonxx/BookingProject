@@ -24,6 +24,7 @@ export default function UpdateVacationForm() {
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
     vacation.id = +params.id;
 
+    //check for image, if not keep current image
     if (vacation.image) {
       vacation.image = vacation.image[0];
     }
@@ -35,6 +36,7 @@ export default function UpdateVacationForm() {
     navigate('/vacations');
   };
 
+  //form validation and error handler.
   const validationHandler = {
     description: handleErrorText('Please enter a description', 'Must be between 4-255 characters'),
     destination: handleErrorText('Please enter a destination', 'Must be between 4-255 characters'),
@@ -45,7 +47,7 @@ export default function UpdateVacationForm() {
 
   useEffect(() => {
     const id: number = +params.id;
-    // const vacToUpdate = store.getState().vacationState.vacations.find((vac) => vac.id === id);
+    //set values in textfields, in useeffect to keep on refresh.
     vacationService.getOneVacation(id).then((vacToUpdate) => {
       setValue('description', vacToUpdate.description);
       setValue('destination', vacToUpdate.destination);
@@ -183,6 +185,7 @@ export default function UpdateVacationForm() {
                         required: true,
                         minLength: 4,
                         maxLength: 255,
+                        // validate starting and ending time logic
                         validate: (value) => {
                           let now = new Date().toISOString().split('T')[0];
                           let startDate = value;
@@ -224,6 +227,7 @@ export default function UpdateVacationForm() {
                         required: true,
                         minLength: 4,
                         maxLength: 255,
+                        // validate starting and ending time logic
                         validate: (value) => {
                           let startDate = startingDate;
                           let endDate = value;

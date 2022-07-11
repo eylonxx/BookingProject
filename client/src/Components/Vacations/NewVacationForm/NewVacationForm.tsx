@@ -19,8 +19,10 @@ export default function NewVacationForm() {
   const { register, handleSubmit, control } = useForm<VacationModel>();
   const navigate = useNavigate();
   const [startingDate, setStartingDate] = useState('');
+
   const sendData: SubmitHandler<VacationModel> = async (vacation) => {
     vacation.followers = 0;
+    //initialize followers
     vacation.image = vacation.image[0];
     await vacationService.createVacation(vacation);
     socketService.notifyServer();
@@ -29,6 +31,7 @@ export default function NewVacationForm() {
     navigate('/vacations');
   };
 
+  //form validation and error handler.
   const validationHandler = {
     description: handleErrorText('Please enter a description', 'Must be between 4-255 characters'),
     destination: handleErrorText('Please enter a destination', 'Must be between 4-255 characters'),
@@ -170,6 +173,7 @@ export default function NewVacationForm() {
                         required: true,
                         minLength: 4,
                         maxLength: 255,
+                        // validate starting and ending time logic
                         validate: (value) => {
                           let startDate = Date.parse(value);
                           let now = new Date().getTime();
@@ -211,6 +215,7 @@ export default function NewVacationForm() {
                         required: true,
                         minLength: 4,
                         maxLength: 255,
+                        // validate starting and ending time logic
                         validate: (value) => {
                           let startDate = Date.parse(startingDate);
                           let endDate = Date.parse(value);

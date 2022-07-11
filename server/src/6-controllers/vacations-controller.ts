@@ -9,6 +9,7 @@ import vacationsLogic from '../5-logic/vacations-logic';
 
 const router = express.Router();
 
+// GET http://localhost:3001/api/vacations
 router.get('/vacations', verifyLoggedIn, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const vacations = await vacationsLogic.getAllVacations();
@@ -18,6 +19,7 @@ router.get('/vacations', verifyLoggedIn, async (req: Request, res: Response, nex
   }
 });
 
+// GET http://localhost:3001/api/vacations/:id
 router.get('/vacations/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = +req.params.id;
@@ -28,9 +30,11 @@ router.get('/vacations/:id', async (req: Request, res: Response, next: NextFunct
   }
 });
 
+// POST http://localhost:3001/api/vacations
 router.post('/vacations', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     //vacation info from form
+    //check for image
     req.body.image = req.files?.image;
 
     const vacation = new VacationModel(req.body);
@@ -41,6 +45,7 @@ router.post('/vacations', verifyAdmin, async (req: Request, res: Response, next:
   }
 });
 
+// PUT http://localhost:3001/api/vacations/:id
 router.put('/vacations/:id', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     req.body.id = +req.body.id;
@@ -53,26 +58,13 @@ router.put('/vacations/:id', verifyAdmin, async (req: Request, res: Response, ne
   }
 });
 
+// DELETE http://localhost:3001/api/vacations/:id
 router.delete('/vacations/:id', verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = +req.params.id;
     const deletedVac = await vacationsLogic.deleteVacation(id);
 
     res.json(deletedVac).status(204);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.get('/vacations/images/:imageName', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const imageName = req.params.imageName;
-    const absolutePath = path.join(__dirname, '..', '1-assets', 'images', imageName);
-
-    if (!fs.existsSync(absolutePath)) {
-      throw new RouteNotFound(req.method, req.originalUrl);
-    }
-    res.sendFile(absolutePath);
   } catch (error) {
     next(error);
   }

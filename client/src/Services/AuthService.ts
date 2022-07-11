@@ -13,7 +13,7 @@ class AuthService {
     const token = response.data;
     window.sessionStorage.setItem('token', token);
     store.dispatch(registerAction(token));
-    //save token to redux, login right after registration
+    //save token to redux
   }
   //login
   public async login(credentials: CredentialsModel): Promise<UserModel> {
@@ -23,20 +23,20 @@ class AuthService {
     window.sessionStorage.setItem('token', token);
     store.dispatch(loginAction(token));
     return user;
-    //save token to redux
+    //save token to redux, return user
   }
   //logout
   public async logout() {
     window.sessionStorage.removeItem('token');
     store.dispatch(logoutAction());
+    //get token, find user, remove token from redux
   }
-  //get token, find user, remove token from redux
 
   //isloggedin
   public isLoggedIn(): boolean {
     return store.getState().authState.user !== null;
+    //if user logged in or not
   }
-  //get token, verify token, used for redux
 }
 const authService = new AuthService();
 export default authService;

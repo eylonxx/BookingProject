@@ -13,7 +13,7 @@ function getNewToken(user: UserModel): string {
   const payload = { user };
 
   // Generate new token:
-  const token = jwt.sign(payload, secret, { expiresIn: '3h' }); // 3h, 40m, 5d
+  const token = jwt.sign(payload, secret, { expiresIn: '3h' }); // expire in 3 hours
 
   // Return token:
   return token;

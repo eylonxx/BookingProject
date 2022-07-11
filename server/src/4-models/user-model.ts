@@ -17,6 +17,7 @@ class UserModel {
     this.password = user.password;
     this.role = user.role;
   }
+  // JOI VALIDATION
   public static postValidationSchema = Joi.object({
     id: Joi.forbidden(),
     firstName: Joi.string().required().min(2).max(16),

@@ -13,6 +13,7 @@ class FollowersService {
   public async getAllFollowedVacationsByUserId(userId: number) {
     const vacs: string[] = await axios.get(config.getAllFollowedVacs + `/${userId}`);
     store.dispatch(updateFollowingAction(vacs));
+    //update redux
   }
 }
 const followersService = new FollowersService();

@@ -23,10 +23,13 @@ async function register(user: UserModel): Promise<string> {
   }
 
   if (await checkUsername(user.username)) {
+    //check for duplicate username
     throw new ValidationError(`'${user.username}' already exists, please pick another username`);
   }
   const { firstName, lastName, username, password } = user;
+  //deconstruct from user
   user.role = Role.User;
+  //hash password
   user.password = cyber.hashPassword(password);
   let sql = `
     INSERT INTO users
@@ -43,6 +46,7 @@ async function register(user: UserModel): Promise<string> {
   const addedUsers = await dal.execute(sql);
   const addedUser = addedUsers[0];
   delete addedUser.password;
+  //not sending password back
 
   // Generate token:
   const token = cyber.getNewToken(addedUser);
@@ -64,7 +68,7 @@ async function login(credentials: CredentialsModel): Promise<string> {
 
   const users = await dal.execute(sql, [username, credentials.password]);
 
-  // If user not exist:
+  // If user doesnt exist:
   if (users.length === 0) {
     throw new UnauthorizedError('Incorrect username or password');
   }

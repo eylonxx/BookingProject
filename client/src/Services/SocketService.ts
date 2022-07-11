@@ -13,6 +13,7 @@ class SocketService {
   }
 
   public notifyServer(): void {
+    //ping backend after change
     this.socket.emit('updateVacation');
   }
 }

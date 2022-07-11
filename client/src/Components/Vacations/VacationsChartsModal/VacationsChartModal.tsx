@@ -2,6 +2,7 @@ import { Modal, Paper } from '@mui/material';
 import VacationModel from '../../../Models/vacationModel';
 import VacationsChart from '../VacationsChart/VacationsChart';
 
+//modal styling
 const style = {
   maxWidth: 960,
   maxHeigth: 540,
@@ -13,6 +14,7 @@ const style = {
   bgcolor: 'background.paper',
 };
 
+//interface for modal props to be passed down from vacationsList
 interface ModalProps {
   vacations: VacationModel[];
   open: boolean;

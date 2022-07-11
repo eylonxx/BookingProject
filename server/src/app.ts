@@ -22,6 +22,7 @@ expressServer.use(expressFileUpload());
 expressServer.use('/api/', vacationsController);
 expressServer.use('/api/', followController);
 expressServer.use('/auth/', authController);
+//server images
 expressServer.use(express.static(path.join(__dirname, '1-assets')));
 
 // If route not found:

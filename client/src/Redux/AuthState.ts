@@ -1,14 +1,14 @@
 import jwtDecode from 'jwt-decode';
 import UserModel from '../Models/userModel';
 
-// 1. Auth State - The global state relate to Auth:
+// Auth State - The global state related to Auth:
 export class AuthState {
   public user: UserModel = null;
   public token: string = null;
   public isLoggedIn: boolean = false;
 }
 
-// 2. Auth Action Type - list of actions we can do on the above AuthState:
+// Auth Action Type - list of actions we can do on the above AuthState:
 export enum AuthActionType {
   Register = 'Register',
   Login = 'Login',
@@ -16,13 +16,13 @@ export enum AuthActionType {
   Relog = 'Relog',
 }
 
-// 3. Product Action - interface for building a single action from the above AuthActionType
+// Product Action - interface for building a single action from the above AuthActionType
 export interface AuthAction {
   type: AuthActionType; // The type of the acton to perform.
   payload?: any; // The data we need to do that action
 }
 
-// 4. Action Creators - Functions for creating suitable Action objects:
+// Action Creators - Functions for creating suitable Action objects:
 export function registerAction(token: string): AuthAction {
   const action: AuthAction = { type: AuthActionType.Register, payload: token };
   return action;
@@ -40,7 +40,7 @@ export function RelogAction(user: UserModel, token: string): AuthAction {
   return action;
 }
 
-// 5. Auth Reducer - Do any of the above actions:
+// Auth Reducer - Do any of the above actions:
 export function AuthReducer(currentState: AuthState = new AuthState(), action: AuthAction): AuthState {
   const newState = { ...currentState };
   switch (action.type) {
@@ -52,6 +52,7 @@ export function AuthReducer(currentState: AuthState = new AuthState(), action: A
       newState.isLoggedIn = true;
       break;
     case AuthActionType.Relog:
+      // relogging on refresh action
       newState.user = action.payload.user;
       newState.token = action.payload.token;
       newState.isLoggedIn = true;

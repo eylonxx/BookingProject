@@ -10,6 +10,7 @@ export default function VacationsChart(props: VacationChartProps) {
   const vacations = props.vacations;
 
   const chartProps: { labels: string[]; values: number[] } = vacations.reduce(
+    //logic for figuring out which vacations to show on chart
     (prev, curr) => {
       if (curr.followers > 0) {
         return {
@@ -26,6 +27,7 @@ export default function VacationsChart(props: VacationChartProps) {
   );
 
   const options = {
+    //chart options
     responsive: true,
     scales: {
       y: {
@@ -52,6 +54,7 @@ export default function VacationsChart(props: VacationChartProps) {
   };
 
   const data = {
+    // data for the chart
     labels: chartProps.labels,
     datasets: [
       {

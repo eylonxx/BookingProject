@@ -20,6 +20,7 @@ class VacationModel {
     this.price = vacation.price;
     this.followers = vacation.followers;
     this.isFollowed = false;
+    // starts as false
   }
 }
 
