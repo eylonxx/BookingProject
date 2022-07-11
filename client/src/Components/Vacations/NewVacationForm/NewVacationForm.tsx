@@ -175,8 +175,8 @@ export default function NewVacationForm() {
                         maxLength: 255,
                         // validate starting and ending time logic
                         validate: (value) => {
-                          let startDate = Date.parse(value);
-                          let now = new Date().getTime();
+                          let now = new Date().toISOString().split('T')[0];
+                          let startDate = value;
                           return startDate >= now;
                         },
                       }}
