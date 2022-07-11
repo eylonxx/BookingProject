@@ -1,10 +1,11 @@
 import mysql from 'mysql';
+import config from './config';
 
 const connection = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'booking',
+  host: config.sqlHost,
+  user: config.sqlUser,
+  password: config.sqlPassword,
+  database: config.sqlDatabase,
 });
 
 function execute(sql: string, values?: any) {
