@@ -39,6 +39,6 @@ expressServer.use('*', (request: Request, response: Response, next: NextFunction
 expressServer.use(catchAll);
 
 // Listen on port 3001:
-const httpServer = expressServer.listen(config.port, () => console.log('Listening... on port 3001'));
+const httpServer = expressServer.listen(config.port, () => console.log('Listening...'));
 
 socketioLogic.listen(httpServer);

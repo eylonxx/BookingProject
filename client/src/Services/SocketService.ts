@@ -4,7 +4,7 @@ import vacationService from './VacationService';
 class SocketService {
   private socket: Socket;
   public connect(): void {
-    this.socket = io('http://localhost:3001');
+    this.socket = io('https://eylon-booking.herokuapp.com');
 
     //listen to server here
     this.socket.on('vacationUpdated', () => {

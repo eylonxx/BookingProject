@@ -19,13 +19,13 @@ class DevelopmentConfig extends Config {
 class ProductionConfig extends Config {
   public port = +process.env.PORT; // Will be set by the cloud
   public sqlHost = 'eu-cdbr-west-03.cleardb.net';
-  public sqlUser = 'bf98c8d69dba80';
-  public sqlPassword = '84dfb53f';
-  public sqlDatabase = 'heroku_2d9cbe8338d257c';
+  public sqlUser = 'bf4dde671cdab9';
+  public sqlPassword = '4dbc3b0d';
+  public sqlDatabase = 'heroku_fa919691a77cc5c';
 }
 
 // Connection String
-//bf98c8d69dba80:84dfb53f@eu-cdbr-west-03.cleardb.net/heroku_2d9cbe8338d257c?reconnect=true
+//mysql://bf4dde671cdab9:4dbc3b0d@eu-cdbr-west-03.cleardb.net/heroku_fa919691a77cc5c?reconnect=true
 
 mysql: const config = process.env.NODE_ENV === 'development' ? new DevelopmentConfig() : new ProductionConfig();
 

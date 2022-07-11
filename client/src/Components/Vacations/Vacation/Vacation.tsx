@@ -27,7 +27,7 @@ export default function Vacation(props: VacationProps): JSX.Element {
   const { id, description, destination, startingDate, endingDate, price, followers, imageName } = props.vacation;
   //certain functions available only for admins
   const userId: number = store.getState().authState.user?.id;
-  const image = 'http://localhost:3001/images/' + imageName;
+  const image = 'https://eylon-booking.herokuapp.com//images/' + imageName;
   const dates = `${startingDate} until ${endingDate}`;
   const navigate = useNavigate();
 
