@@ -162,7 +162,7 @@ function deleteVacation(id) {
                     deletedVacation = _a.sent();
                     imageToDelete = deletedVacation[0].imageName;
                     //deleting from path
-                    promises_1.default.unlink('./1-assets/images/' + imageToDelete);
+                    promises_1.default.unlink('./1-assets/images/') + imageToDelete;
                     return [2 /*return*/, deletedVacation[0]];
             }
         });

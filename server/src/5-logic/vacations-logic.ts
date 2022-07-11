@@ -96,7 +96,7 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     const dotIndex = vacation.image.name.lastIndexOf('.');
     const imageExtension = vacation.image.name.substring(dotIndex);
     vacation.imageName = uuid() + imageExtension;
-    await vacation.image.mv('./build/1-assets/images/' + vacation.imageName);
+    await vacation.image.mv('./1-assets/images/' + vacation.imageName);
 
     //dont want to return the image
     delete vacation.image;
@@ -127,9 +127,8 @@ async function deleteVacation(id: number): Promise<VacationModel> {
     `;
   const deletedVacation = await dal.execute(sql, [id]);
   const imageToDelete = deletedVacation[0].imageName;
-  const pathToDelete = path.parse(__dirname);
   //deleting from path
-  fs.unlink(path.join(pathToDelete.dir, '1-assets/images/') + imageToDelete);
+  fs.unlink('./1-assets/images/') + imageToDelete;
 
   return deletedVacation[0];
 }
