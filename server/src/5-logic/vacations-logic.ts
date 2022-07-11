@@ -52,7 +52,7 @@ async function createVacation(vacation: VacationModel): Promise<VacationModel> {
     const dotIndex = vacation.image.name.lastIndexOf('.');
     const imageExtension = vacation.image.name.substring(dotIndex);
     vacation.imageName = uuid() + imageExtension;
-    await vacation.image.mv('./build/1-assets/images/' + vacation.imageName);
+    await vacation.image.mv('./1-assets/images/' + vacation.imageName);
 
     //dont want to return the image
     delete vacation.image;
