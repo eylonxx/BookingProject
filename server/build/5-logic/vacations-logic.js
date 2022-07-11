@@ -40,7 +40,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var promises_1 = __importDefault(require("fs/promises"));
-var path_1 = __importDefault(require("path"));
 var uuid_1 = require("uuid");
 var dal_1 = __importDefault(require("../2-utils/dal"));
 var errors_model_1 = require("../4-models/errors-model");
@@ -135,7 +134,7 @@ function updateVacation(vacation) {
                     dotIndex = vacation.image.name.lastIndexOf('.');
                     imageExtension = vacation.image.name.substring(dotIndex);
                     vacation.imageName = (0, uuid_1.v4)() + imageExtension;
-                    return [4 /*yield*/, vacation.image.mv('./build/1-assets/images/' + vacation.imageName)];
+                    return [4 /*yield*/, vacation.image.mv('./1-assets/images/' + vacation.imageName)];
                 case 1:
                     _a.sent();
                     //dont want to return the image
@@ -153,7 +152,7 @@ function updateVacation(vacation) {
 }
 function deleteVacation(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var sql, deletedVacation, imageToDelete, pathToDelete;
+        var sql, deletedVacation, imageToDelete;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -162,9 +161,8 @@ function deleteVacation(id) {
                 case 1:
                     deletedVacation = _a.sent();
                     imageToDelete = deletedVacation[0].imageName;
-                    pathToDelete = path_1.default.parse(__dirname);
                     //deleting from path
-                    promises_1.default.unlink(path_1.default.join(pathToDelete.dir, '1-assets/images/') + imageToDelete);
+                    promises_1.default.unlink('./1-assets/images/' + imageToDelete);
                     return [2 /*return*/, deletedVacation[0]];
             }
         });
