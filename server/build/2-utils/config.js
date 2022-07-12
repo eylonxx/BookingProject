@@ -46,14 +46,14 @@ var ProductionConfig = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.port = +process.env.PORT; // Will be set by the cloud
         _this.sqlHost = 'eu-cdbr-west-03.cleardb.net';
-        _this.sqlUser = 'b9cf27198bbd0b';
-        _this.sqlPassword = 'b9fdc46a';
-        _this.sqlDatabase = 'heroku_f69562d07216ce5';
+        _this.sqlUser = 'b1784a4ac0446a';
+        _this.sqlPassword = '68d3d83f';
+        _this.sqlDatabase = 'heroku_a50491fa91e7abc';
         return _this;
     }
     return ProductionConfig;
 }(Config));
 // Connection String
-// mysql://b9cf27198bbd0b:b9fdc46a@eu-cdbr-west-03.cleardb.net/heroku_f69562d07216ce5?reconnect=true
+// mysql://b1784a4ac0446a:68d3d83f@eu-cdbr-west-03.cleardb.net/heroku_a50491fa91e7abc?reconnect=true
 mysql: var config = process.env.NODE_ENV === 'development' ? new DevelopmentConfig() : new ProductionConfig();
 exports.default = config;
