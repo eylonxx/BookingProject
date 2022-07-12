@@ -8,7 +8,7 @@ class Config {
 }
 
 class DevelopmentConfig extends Config {
-  public vacationsUrl = 'http://localhost:3001/api/vacations/';
+  public vacationsUrl = 'http://localhost:3001/api/vacations';
   public loginUrl = 'http://localhost:3001/auth/login';
   public registerUrl = 'http://localhost:3001/auth/register';
   public followUrl = 'http://localhost:3001/api/follow';
