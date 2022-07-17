@@ -1,5 +1,7 @@
 # BookingProject
 
+![](https://i.imgur.com/tcL0fjk.png)
+
 ## REQUIREMENTS
 Import the database to your XAMPP phpmyadmin MariaDB.
 
